@@ -12,6 +12,9 @@ module.exports = {
         "primary-label": "#283D3B",
         gray: colors.gray,
       },
+      backgroundImage: {
+        "hero-pattern": "url('/bg-auth.svg')",
+      },
     },
   },
   plugins: [require("daisyui")],
