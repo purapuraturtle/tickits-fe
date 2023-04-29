@@ -94,23 +94,23 @@ function Order() {
                 CineOne21 Cinema
               </p>
               <div className="flex flex-col gap-4 w-full border-b pb-10">
-                <div className="flex justify-between  text-sm">
-                  <p className="text-[#6B6B6B] ">Movie selected</p>
-                  <p className="font-semibold text-[#14142B]">
+                <div className="flex justify-between text-sm">
+                  <p className="text-[#6B6B6B] w-[6.563rem] ">Movie selected</p>
+                  <p className="font-semibold text-end text-[#14142B] w-[10.8rem]">
                     Spider-Man: Homecoming
                   </p>
                 </div>
-                <div className="flex justify-between  text-sm">
+                <div className="flex justify-between text-sm">
                   <p className="text-[#6B6B6B] ">Tuesday, 07 July 2020</p>
                   <p className="font-semibold text-[#14142B]">02:00pm</p>
                 </div>
-                <div className="flex justify-between  text-sm">
+                <div className="flex justify-between text-sm">
                   <p className="text-[#6B6B6B] ">One ticket price</p>
                   <p className="font-semibold text-[#14142B]">$10</p>
                 </div>
                 <div className="flex justify-between  text-sm">
-                  <p className="text-[#6B6B6B] ">Seat choosed</p>
-                  <div className="flex flex-wrap max-w-[200px] font-semibold text-[#14142B] justify-end">
+                  <p className="text-[#6B6B6B] w-[6rem] ">Seat choosed</p>
+                  <div className="flex flex-wrap max-w-[10.8rem] font-semibold text-[#14142B] justify-end">
                     {onSelected.map((item, idx) => (
                       <p key={idx}>{idx >= 1 ? ", " + item : item}</p>
                     ))}
