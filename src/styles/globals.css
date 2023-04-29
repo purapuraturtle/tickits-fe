@@ -18,7 +18,7 @@
 
 @layer components {
   .global-px {
-    @apply px-10 lg:px-32;
+    @apply px-5 md:px-10 lg:px-32;
   }
   .mw-global {
     @apply mx-auto;
