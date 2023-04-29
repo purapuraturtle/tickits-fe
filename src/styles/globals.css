@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -13,5 +13,17 @@
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+  }
+} */
+
+@layer components {
+  .global-px {
+    @apply px-10 lg:px-32;
+  }
+  .mw-global {
+    @apply mx-auto;
+  }
+  .btn {
+    @apply px-8 capitalize font-bold;
   }
 }
