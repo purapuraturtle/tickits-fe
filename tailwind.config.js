@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require("tailwindcss/colors");
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,13 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        gray: colors.gray,
+      backgroundImage: {
+        "hero-pattern": "url('/bg-auth.svg')",
       },
     },
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["dark"],
+    themes: ["light"],
   },
 };
