@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -7,6 +8,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        "primary-label": "#283D3B",
+        gray: colors.gray,
+      },
       backgroundImage: {
         "hero-pattern": "url('/bg-auth.svg')",
       },
@@ -14,6 +19,19 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light"],
+    themes: [
+      {
+        default: {
+          primary: "#197278",
+          secondary: "#EDDDD4",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+          info: "#C44536",
+          error: "#772E25",
+          success: "#283D3B",
+          "base-100": "#ffffff",
+        },
+      },
+    ],
   },
 };
