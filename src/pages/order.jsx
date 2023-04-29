@@ -1,11 +1,15 @@
 import Image from "next/image";
 import cineOne21 from "@/Assets/cineone21.svg";
 import Seat from "@/components/Seat";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Layout from "@/components/Layout";
 
 function Order() {
   return (
-    <>
-      <main className="px-4 lg:px-[4.375rem] py-[3.75rem] select-none">
+    <Layout title={"Order"}>
+      <Header />
+      <main className="global-px py-[3.75rem] mt-16 select-none bg-slate-300/20">
         <section className="flex flex-col-reverse lg:flex-row w-full gap-6 justify-between">
           <div className="lg:flex-[2]">
             <h1 className="font-bold mb-6 text-2xl text-[#14142B]">
@@ -15,9 +19,7 @@ function Order() {
               <p className="w-[50%] font-semibold md:text-2xl text-black">
                 Spider-Man: Homecoming
               </p>
-              <button className="font-bold text-sm text-[#5F2EEA] bg-[#EFF0F6] px-6 py-4 rounded-lg">
-                Change movie
-              </button>
+              <button className="btn btn-secondary">Change movie</button>
             </div>
             <h1 className="font-bold text-[#14142B] mt-12 mb-6 text-2xl">
               Choose Your Seat
@@ -29,35 +31,33 @@ function Order() {
                 <Seat />
               </div>
 
-              <div className="mt-8 ">
+              <div className="mt-8">
                 <p className="mb-5 font-semibold text-lg">Seating key</p>
-                <div className="flex justify-between">
+                <div className="flex justify-between flex-wrap gap-y-4">
                   <div className="flex gap-1 md:gap-4">
-                    <div className="w-4 h-4 md:w-6 md:h-6 rounded-md bg-[#D6D8E7]"></div>
+                    <div className="w-4 h-4 md:w-6 md:h-6 rounded-md bg-secondary"></div>
                     <p className="text-xs md:text-base">Available</p>
                   </div>
                   <div className="flex gap-1 md:gap-4">
-                    <div className="w-4 h-4 md:w-6 md:h-6 rounded-md bg-[#5F2EEA]"></div>
+                    <div className="w-4 h-4 md:w-6 md:h-6 rounded-md bg-primary"></div>
                     <p className="text-xs md:text-base">Selected</p>
                   </div>
                   <div className="flex gap-1 md:gap-4">
-                    <div className="w-4 h-4 md:w-6 md:h-6 rounded-md bg-[#F589D7]"></div>
+                    <div className="w-4 h-4 md:w-6 md:h-6 rounded-md bg-info"></div>
                     <p className="text-xs md:text-base">Love nest</p>
                   </div>
                   <div className="flex gap-1 md:gap-4">
-                    <div className="w-4 h-4 md:w-6 md:h-6 rounded-md bg-[#6E7191]"></div>
+                    <div className="w-4 h-4 md:w-6 md:h-6 rounded-md bg-success"></div>
                     <p className="text-xs md:text-base">Sold</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-4 md:flex-row justify-between mt-10">
-              <button className="md:w-[18.75rem] py-4 text-base font-bold text-[#5F2EEA] border border-[#5F2EEA] rounded-md">
+            <div className="flex flex-col gap-4 md:gap-64 md:flex-row justify-between mt-10">
+              <button className="btn btn-primary btn-outline flex-1">
                 Change your movie
               </button>
-              <button className="md:w-[18.75rem] py-4 text-base font-bold text-white bg-[#5F2EEA] rounded-md shadow-md">
-                Checkout now
-              </button>
+              <button className="btn btn-primary flex-1">Checkout now</button>
             </div>
           </div>
           <div className="lg:flex-1">
@@ -99,7 +99,8 @@ function Order() {
           </div>
         </section>
       </main>
-    </>
+      <Footer />
+    </Layout>
   );
 }
 
