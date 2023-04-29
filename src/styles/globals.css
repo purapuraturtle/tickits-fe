@@ -21,7 +21,7 @@
     @apply px-10 lg:px-32;
   }
   .mw-global {
-    @apply max-w-7xl mx-auto;
+    @apply mx-auto;
   }
   .btn {
     @apply px-8 capitalize font-bold;
