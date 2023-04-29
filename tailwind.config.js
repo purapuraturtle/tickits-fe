@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,14 +9,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#283D3B",
-        success: "#197278",
-        info: "#EDDDD4",
-        error: "#772E25",
-        secondary: "#C44536",
+        "primary-label": "#283D3B",
+        gray: colors.gray,
       },
     },
   },
   plugins: [require("daisyui")],
-  daisyui: { theme: ["autumn"] },
+  daisyui: {
+    themes: [
+      {
+        default: {
+          primary: "#197278",
+          secondary: "#f6d860",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+        },
+      },
+    ],
+  },
 };
