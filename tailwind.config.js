@@ -20,9 +20,12 @@ module.exports = {
       {
         default: {
           primary: "#197278",
-          secondary: "#f6d860",
+          secondary: "#EDDDD4",
           accent: "#37cdbe",
           neutral: "#3d4451",
+          info: "#C44536",
+          error: "#772E25",
+          success: "#283D3B",
           "base-100": "#ffffff",
         },
       },
