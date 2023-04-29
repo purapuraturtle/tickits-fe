@@ -4,8 +4,32 @@ import Seat from "@/components/Seat";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
+import { useState } from "react";
 
 function Order() {
+  // const onSelected = [];
+  const [onSelected, setSelectSeat] = useState([]);
+
+  const handleSelected = (blockName, blockNumber) => {
+    const seat = `${blockName}-${blockNumber}`;
+    console.log(`memilih kursi ${seat}`);
+
+    // Cek apakah seat sudah ada pada array onSelected
+    const index = onSelected.indexOf(seat);
+    if (index !== -1) {
+      // Jika sudah ada, hapus data pada indeks tersebut dari array
+      const newSelected = [...onSelected];
+      newSelected.splice(index, 1);
+      setSelectSeat(newSelected);
+      console.log(`${seat} telah dihapus dari array onSelected.`);
+    } else {
+      // Jika belum ada, tambahkan seat ke array onSelected
+      const newSelected = [...onSelected, seat];
+      setSelectSeat(newSelected);
+      console.log(newSelected);
+    }
+  };
+
   return (
     <Layout title={"Order"}>
       <Header />
@@ -28,7 +52,7 @@ function Order() {
               <p className="mb-2 text-center font-semibold">Screen</p>
 
               <div className="w-full flex flex-col gap-2 mt-6">
-                <Seat />
+                <Seat handleSelected={handleSelected} />
               </div>
 
               <div className="mt-8">
@@ -86,7 +110,14 @@ function Order() {
                 </div>
                 <div className="flex justify-between  text-sm">
                   <p className="text-[#6B6B6B] ">Seat choosed</p>
-                  <p className="font-semibold text-[#14142B]">C4, C5, C6</p>
+                  <div className="flex flex-wrap max-w-[200px] font-semibold text-[#14142B] justify-end">
+                    {onSelected.map((item, idx) => (
+                      <p key={idx}>{idx >= 1 ? ", " + item : item}</p>
+                    ))}
+                  </div>
+                  {/* <p className="font-semibold text-[#14142B]">
+                    {onSelected[0]}
+                  </p> */}
                 </div>
               </div>
               <div className="flex justify-between w-full py-6">
