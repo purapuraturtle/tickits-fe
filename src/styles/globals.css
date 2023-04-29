@@ -26,4 +26,8 @@
   .btn {
     @apply px-8 capitalize font-bold;
   }
+
+  .table-ticket td {
+    @apply pl-10 text-start;
+  }
 }
