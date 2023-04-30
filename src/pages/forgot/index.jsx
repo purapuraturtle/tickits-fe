@@ -20,7 +20,7 @@ function Forgot() {
             Fill your complete email
           </p>
           <p className="text-lg text-[#8692a6] mt-[10px] lg:mt-0">
-            we'll send a link to your email shortly
+            we&apos;ll send a link to your email shortly
           </p>
 
           <p className="mt-12 text-base text-[#4E4B66]">Email</p>
