@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 
 function Header() {
   const navList = [
-    { title: "Movies", url: "/" },
+    { title: "Movies", url: "/movies" },
     { title: "Cinemas", url: "/" },
     { title: "Buy Ticket", url: "/" },
   ];
