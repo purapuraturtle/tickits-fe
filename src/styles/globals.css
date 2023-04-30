@@ -26,4 +26,21 @@
   .btn {
     @apply px-8 capitalize font-bold;
   }
+
+  .table-ticket {
+    @apply border-2 border-solid border-black shadow-2xl;
+  }
+  .table-ticket td {
+    @apply pl-10 text-start;
+  }
+  .ticket-cut {
+    @apply relative;
+  }
+  .ticket-cut::before {
+    @apply w-10 h-5 rounded-t-full -bottom-1 -left-5 flex absolute bg-slate-300 border border-b-0 shadow-inner;
+    content: "";
+  }
+  .admin-input {
+    @apply input input-bordered input-primary rounded w-full;
+  }
 }

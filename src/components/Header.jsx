@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
-import SearchBar from './SearchBar';
+import SearchBar from "./SearchBar";
 
 function Header() {
   const navList = [
@@ -28,7 +28,7 @@ function Header() {
 
   return (
     <>
-      <header className="fixed top-0 w-full">
+      <header className="fixed top-0 w-full z-40">
         <div className="mw-global w-full global-px flex py-7 justify-between items-center bg-white lg:bg-opacity-90 lg:backdrop-blur-sm">
           <div className="flex items-center gap-14">
             <Link href={"/"}>
