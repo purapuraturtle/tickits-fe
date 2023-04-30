@@ -23,11 +23,20 @@ function Signup() {
   };
   return (
     <>
-      <div className="flex">
+      <div className="lg:flex">
         <SideForAuth />
-        <div className="ml-[83px] mt-[176px]">
-          <p className="text-[#121212] text-[26px] font-semibold">
+        <div className="w-full m-auto  ml-6 lg:ml-[4%] lg:w-[405.63px] mt-[54px] min-[1440px]:ml-[83px] lg:mt-[176px] ">
+          <Image
+            src="/icon-blue.svg"
+            width={120}
+            height={62}
+            className="lg:hidden "
+          />
+          <p className="text-[#121212] text-[26px] font-semibold hidden lg:inline-block">
             Fill your additional details
+          </p>
+          <p className="text-4xl font-semibold text-[#121212] mt-12 lg:hidden">
+            Sign Up
           </p>
           <p className="mt-12 text-base text-[#4E4B66]">Email</p>
           <input
@@ -36,7 +45,7 @@ function Signup() {
             onChange={(e) => {
               setFormData({ ...formData, email: e.target.value });
             }}
-            className="mt-3 outline-none border border-solid border-[#dedede] w-[400px] h-16 p-6"
+            className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] lg:w-[400px] h-16 p-6"
             placeholder=" Write your email"
           />
           <p className="mt-9 text-base text-[#4E4B66]">Password</p>
@@ -46,7 +55,7 @@ function Signup() {
             onChange={(e) => {
               setFormData({ ...formData, password: e.target.value });
             }}
-            className="mt-3 outline-none border border-solid border-[#dedede] w-[400px] h-16 p-6"
+            className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] lg:w-[400px] h-16 p-6"
             placeholder=" Write your password"
           />
           <div className="mt-8">
@@ -54,9 +63,9 @@ function Signup() {
               <input
                 type="checkbox"
                 id="checkbox"
-                className="h-5 w-5 text-red-500 rounded focus:ring-0 focus:outline-none"
+                className="h-5 w-5 text-red-500 rounded focus:ring-0 focus:outline-none lg:inline-block hidden"
               />
-              <span className="text-[#696F79] ml-[21px]">
+              <span className="text-[#696F79] ml-[21px] hidden lg:inline-block">
                 I agree to terms & conditions
               </span>
             </label>
@@ -64,7 +73,7 @@ function Signup() {
           <button
             type="submit"
             onClick={handleSignUp}
-            className="rounded bg-[#9570FE] text-white font--bold p-5 w-[400px] h-[64px] mt-7"
+            className="rounded bg-[#9570FE] text-white font--bold p-5 w-[95%] lg:w-[400px] h-[64px] mt-7"
           >
             Join for free now
           </button>
@@ -79,12 +88,12 @@ function Signup() {
               Log in
             </span>
           </p>
-          <div className="flex items-center mt-10">
-            <hr className="w-40 h-[1px] bg-[#dedede]" />
+          <div className="flex items-center mt-10 w-full">
+            <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede]" />
             <p className="text-[#aaaaaa] ml-9 text-xs">Or</p>
-            <hr className="w-40 h-[1px] bg-[#dedede] ml-9" />
+            <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede] ml-9" />
           </div>
-          <div className="flex">
+          <div className="flex justify-center lg:justify-normal">
             <div className="flex cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-[182px] h-[64px]">
               <Image
                 src="/google.svg"
