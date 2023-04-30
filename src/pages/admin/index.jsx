@@ -263,7 +263,7 @@ function CreateSchedule() {
           <div className="w-full md:w-1/3 flex flex-col">
             <h1 className="font-bold text-xl mb-6">Premiere Location</h1>
             <div className="w-full flex flex-col gap-5 p-4 bg-base-100 rounded-lg">
-              <div className="dropdown">
+              <div className="dropdown z-0">
                 <label
                   tabIndex={0}
                   className="btn btn-sm btn-ghost bg-base-300 hover:bg-slate-400"
