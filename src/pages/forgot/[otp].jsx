@@ -20,7 +20,7 @@ function Otp() {
             Fill your new password
           </p>
           <p className="text-lg text-[#8692a6] mt-[10px] lg:mt-0">
-            we'll reset the password for you
+            we&apos;ll reset the password for you
           </p>
 
           <p className="mt-12 text-base text-[#4E4B66]">Email</p>
