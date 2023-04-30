@@ -2,7 +2,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
-import placeholder from "@/Assets/profile";
+import placeholder from "@/Assets/profile/placeholder.png";
 import { useState } from "react";
 
 function Profile() {
