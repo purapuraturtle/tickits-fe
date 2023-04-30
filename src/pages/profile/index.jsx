@@ -2,7 +2,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
-import placeholder from "@/Assets/placeholder.png";
+import placeholder from "@/Assets/profile/placeholder.png";
 import { useState } from "react";
 
 function Profile() {
@@ -48,7 +48,7 @@ function Profile() {
             </div>
             <div className="pt-8 px-8 pb-20">
               <p className="mb-6">Loyalty Points</p>
-              <div className="w-[80%] md:w-[40%] lg:w-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
+              <div className="w-[80%] md:w-[45%] lg:w-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
                 <p>Moviegoers</p>
                 <p className="text-2xl mt-5">
                   320 <span className="text-xs">points</span>
