@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       colors: {
         "primary-label": "#283D3B",
+        "primary-placeholder": "#A0A3BD",
         gray: colors.gray,
       },
       shadow: {
