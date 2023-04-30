@@ -2,22 +2,24 @@ import SideForAuth from "@/components/AuthSide";
 import Image from "next/image";
 import { useState } from "react";
 import { register } from "@/utils/https/allAxios";
+import { useRouter } from "next/router";
 
 function Signup() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const handleSignUp = (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
-    const { email, password } = formData;
-    register(email, password)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    try {
+      const { email, password } = formData;
+      const result = await register(email, password);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -60,6 +62,7 @@ function Signup() {
             </label>
           </div>
           <button
+            type="submit"
             onClick={handleSignUp}
             className="rounded bg-[#9570FE] text-white font--bold p-5 w-[400px] h-[64px] mt-7"
           >
@@ -67,7 +70,14 @@ function Signup() {
           </button>
           <p className="text-[#696F79] mt-8 text-center">
             Do you already have an account?{" "}
-            <span className="text-[#9570FE]">Log in</span>
+            <span
+              onClick={() => {
+                router.push("/login");
+              }}
+              className="text-[#9570FE] cursor-pointer"
+            >
+              Log in
+            </span>
           </p>
           <div className="flex items-center mt-10">
             <hr className="w-40 h-[1px] bg-[#dedede]" />
