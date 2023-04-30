@@ -5,8 +5,10 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 function Order() {
+  const router = useRouter();
   // const onSelected = [];
   const [onSelected, setSelectSeat] = useState([]);
   const [price, setPrice] = useState(10);
@@ -44,7 +46,12 @@ function Order() {
               <p className="w-[50%] font-semibold md:text-2xl text-black">
                 Spider-Man: Homecoming
               </p>
-              <button className="btn btn-secondary">Change movie</button>
+              <button
+                onClick={() => router.push("/movies")}
+                className="btn btn-secondary"
+              >
+                Change movie
+              </button>
             </div>
             <h1 className="font-bold text-[#14142B] mt-12 mb-6 text-2xl">
               Choose Your Seat
@@ -79,7 +86,10 @@ function Order() {
               </div>
             </div>
             <div className="flex flex-col gap-4 md:gap-64 md:flex-row justify-between mt-10">
-              <button className="btn btn-primary btn-outline flex-1">
+              <button
+                onClick={() => router.push("/movies")}
+                className="btn btn-primary btn-outline flex-1"
+              >
                 Change your movie
               </button>
               <button className="btn btn-primary flex-1">Checkout now</button>
