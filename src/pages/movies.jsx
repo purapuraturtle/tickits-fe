@@ -35,7 +35,7 @@ function Movies() {
   return (
     <Layout title={"All Movies"}>
       <Header />
-      <main className="w-full global-px flex flex-col items-center justify-center mt-24 py-10 bg-slate-300/20">
+      <main className="w-full min-h-[47vh] global-px flex flex-col items-center mt-24 py-10 bg-slate-300/20">
         <h1 className="text-2xl font-bold mb-4 mr-auto">All Movies</h1>
         <div className="w-full flex flex-col gap-4">
           {isLoading
