@@ -9,6 +9,7 @@ import { useState } from "react";
 function Order() {
   // const onSelected = [];
   const [onSelected, setSelectSeat] = useState([]);
+  const [price, setPrice] = useState(10);
 
   const handleSelected = (blockName, blockNumber) => {
     const seat = `${blockName}-${blockNumber}`;
@@ -106,7 +107,7 @@ function Order() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <p className="text-[#6B6B6B] ">One ticket price</p>
-                  <p className="font-semibold text-[#14142B]">$10</p>
+                  <p className="font-semibold text-[#14142B]">${price}</p>
                 </div>
                 <div className="flex justify-between  text-sm">
                   <p className="text-[#6B6B6B] w-[6rem] ">Seat choosed</p>
@@ -124,7 +125,9 @@ function Order() {
                 <p className="font-semibold text-lg text-black">
                   Total Payment
                 </p>
-                <p className="font-bold text-2xl text-font-primary ">$30</p>
+                <p className="font-bold text-2xl text-font-primary ">
+                  ${price * onSelected.length}
+                </p>
               </div>
             </div>
           </div>
