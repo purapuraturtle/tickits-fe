@@ -4,8 +4,8 @@ import Link from 'next/link';
 function Footer() {
   return (
     <footer className="top-0 w-full border-t-2">
-      <div className="mw-global w-full global-px flex flex-col md:flex-row pt-16 pb-10 justify-between gap-10">
-        <div className="flex flex-col gap-7 max-w-xs">
+      <div className="mw-global w-full global-px flex flex-wrap flex-col md:flex-row pt-16 pb-10 justify-between gap-10">
+        <div className="flex flex-col gap-7 lg:max-w-xs w-screen lg:w-auto">
           <Link href={"/"}>
             <Image
               src="/images/logo.svg"
@@ -14,7 +14,7 @@ function Footer() {
               alt={`Tickits`}
             />
           </Link>
-          <p className="text-primary-label">
+          <p className="text-primary-label  max-w-xs">
             Stop waiting in line. Buy tickets conveniently, watch movies
             quietly.
           </p>
@@ -30,13 +30,14 @@ function Footer() {
         </div>
         <div className="flex-1 flex flex-col gap-3  text-primary-label">
           <p className="font-bold mb-5 text-black">Our Sponsor</p>
-          <div className="flex flex-wrap flex-row md:flex-col gap-3 gap-x-10 f">
+          <div className="flex flex-wrap flex-row md:flex-col gap-3 gap-x-10 items-center md:items-start">
             {" "}
             <Link href={"/"} className="mb-3">
               <Image
                 src={"/images/ebuid.svg"}
                 width={122}
                 height={46}
+                className="h-6 md:h-auto"
                 alt=""
               ></Image>
             </Link>
@@ -45,14 +46,16 @@ function Footer() {
                 src={"/images/cineone21.svg"}
                 width={174}
                 height={27}
+                className="h-6 md:h-auto"
                 alt=""
               ></Image>
             </Link>
-            <Link href={"/"} className="mb-3">
+            <Link href={"/"} className="mb-3 px-5 md:px-0">
               <Image
                 src={"/images/hiflix.svg"}
                 width={80}
                 height={25}
+                className="h-6 md:h-auto"
                 alt=""
               ></Image>
             </Link>
@@ -156,6 +159,9 @@ function Footer() {
             </Link>
           </div>
         </div>
+      </div>
+      <div className="flex items-center justify-center text-center px-10 pb-10">
+        © 2023 Tickitz. All Rights Reserved.
       </div>
     </footer>
   );

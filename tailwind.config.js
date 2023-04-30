@@ -12,6 +12,9 @@ module.exports = {
         "primary-label": "#283D3B",
         gray: colors.gray,
       },
+      shadow: {
+        "mobile-navbar": "0px 4px 16px 0px #BABABA14",
+      },
       backgroundImage: {
         "hero-pattern": "url('/bg-auth.svg')",
       },
