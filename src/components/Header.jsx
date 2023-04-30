@@ -127,13 +127,13 @@ function Header() {
         </div>
         <div
           className={`h-screen bg-black transition-all ${
-            !drawer ? `bg-opacity-80 visible` : `bg-opacity-0 invisible hidden`
+            drawer ? `bg-opacity-80 visible` : `bg-opacity-0 invisible hidden`
           } lg:hidden`}
           onClick={() => setDrawer(!drawer)}
         >
           <div
             className={`bg-white w-full flex flex-col transform-gpu transition-all z-10 ${
-              !drawer ? `translate-x-0` : `-translate-x-full`
+              drawer ? `translate-x-0` : `-translate-x-full`
             }  `}
             onClick={(e) => {
               e.stopPropagation();
