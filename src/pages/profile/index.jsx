@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 import placeholder from "@/Assets/profile/placeholder.png";
 import { useState } from "react";
+import Link from "next/link";
 
 function Profile() {
   const [showNew, setShowNew] = useState(false);
@@ -69,7 +70,9 @@ function Profile() {
                   <p className="w-36">Account Settings</p>
                   <div className="h-1 w-36 bg-primary absolute bottom-0"></div>
                 </div>
-                <p className="text-[#AAAAAA]">Order History</p>
+                <Link href={"profile/history"}>
+                  <p className="text-[#AAAAAA]">Order History</p>
+                </Link>
               </div>
               <div className="px-8 py-14">
                 <div className="border-b">
