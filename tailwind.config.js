@@ -19,6 +19,9 @@ module.exports = {
       backgroundImage: {
         "hero-pattern": "url('/bg-auth.svg')",
       },
+      screens: {
+        md: "770px",
+      },
     },
   },
   plugins: [require("daisyui")],
