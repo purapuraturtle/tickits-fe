@@ -12,7 +12,7 @@ export default function Home() {
 
       <main>
         <section className="mw-global global-px bg-white">
-          <div className="min-h-screen flex flex-col md:flex-row pt-28 gap-5 w-full md:items-center md:gap-10 lg:gap-40">
+          <div className="min-h-screen flex flex-col md:flex-row pt-28 md:pt-0 gap-5 w-full md:items-center md:gap-10 lg:gap-40">
             <div className="md:flex-1 flex  flex-col gap-2 md:gap-4">
               <p className="text-primary-placeholder text-base md:text-2xl">
                 Nearest Cinema, Newest Movie,
