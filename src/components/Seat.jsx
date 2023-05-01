@@ -1,13 +1,20 @@
+import { orderAction } from "@/redux/slice/order";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function SeatRow({ isBooked, handleSelect, blockName, blockNumber }) {
+  const dispatch = useDispatch();
+  const seatsRedux = useSelector((state) => state.order.dataSeat);
+  const onReduxSeat =
+    seatsRedux && seatsRedux.includes(`${blockName}${blockNumber}`);
   const onBooking = isBooked && isBooked.includes(`${blockName}${blockNumber}`);
   // console.log(onBooking);
-  const [isSelected, setSelected] = useState(false);
+  const [isSelected, setSelected] = useState(onReduxSeat);
   const handleClick = () => {
     if (onBooking) return;
+    dispatch(orderAction.addSeats(`${blockName}${blockNumber}`));
     setSelected(!isSelected);
-    handleSelect(blockName, blockNumber);
+    // handleSelect(blockName, blockNumber);
   };
   return (
     <div
