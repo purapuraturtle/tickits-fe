@@ -1,8 +1,17 @@
+import { orderAction } from "@/redux/slice/order";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
 
 function CardMovies(props) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const handleBooking = () => {
+    const payload = { id: props.id, name: props.name };
+    dispatch(orderAction.addMovieId(payload));
+    router.push("/order");
+  };
   return (
     <div className="w-full h-fit flex flex-col md:flex-row rounded-md bg-base-100 shadow-xl overflow-hidden">
       <figure>
@@ -44,10 +53,7 @@ function CardMovies(props) {
           <button className="btn btn-outline btn-primary flex-1">
             Details
           </button>
-          <button
-            onClick={() => router.push("/order")}
-            className="btn btn-primary flex-1"
-          >
+          <button onClick={handleBooking} className="btn btn-primary flex-1">
             Book Now
           </button>
         </div>
