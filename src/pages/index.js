@@ -67,22 +67,29 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="mw-global global-px flex gap-4 pt-1 pb-16 overflow-x-scroll bg-accent no-scrollbar">
+        <div className="mw-global global-px flex gap-4 pt-1 pb-16 overflow-x-scroll overflow-y-clip bg-accent no-scrollbar relative">
           {Array("", "", "", "", "", "", "").map((item, idx) => (
-            <div
-              className={`${
-                idx === 0 ? "" : ""
-              } group flex-shrink-0 p-8 bg-white/20 border-2 border-white rounded-md  flex flex-col text-center gap-5 hover:bg-white`}
-              key={idx}
-            >
-              <Image
-                src={
-                  "https://res.cloudinary.com/dare4eibk/image/upload/v1682705686/movies/movie-image-Spider-Man:HomeComming.png"
-                }
-                alt=""
-                width={150}
-                height={250}
-              ></Image>
+            <div className="group flex-shrink-0 w-56" key={idx}>
+              <div
+                className={`p-8 w-56 bg-white/20 border-2 border-white rounded-md flex flex-col text-center gap-5 hover:bg-white group-hover:absolute group-hover:shadow-list-movie z-10`}
+              >
+                <Image
+                  src={
+                    "https://res.cloudinary.com/dare4eibk/image/upload/v1682705686/movies/movie-image-Spider-Man:HomeComming.png"
+                  }
+                  alt=""
+                  width={150}
+                  height={250}
+                ></Image>
+                <div class="group-hover:flex flex-col gap-y-3 hidden">
+                  <p class="font-bold text-lg text-primary-title text-center">
+                    Nama Film
+                  </p>
+                  <p class="text-xs text-gray-400 text-center">
+                    Cat1, Cat2, Cat3
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -144,9 +151,11 @@ export default function Home() {
                 height={250}
               ></Image>
               <div className="flex flex-col gap-1">
-                <p className="font-bold text-xl">Nama Film</p>
-                <p className="text-sm text-gray-500">
-                  Action, Category2, Category3
+                <p class="font-bold text-lg text-primary-title text-center">
+                  Nama Film
+                </p>
+                <p class="text-xs text-gray-400 text-center">
+                  Cat1, Cat2, Cat3
                 </p>
               </div>
               <button className="btn btn-sm btn-block btn-accent border-primary text-primary mt-3 font-normal hover:border-primary-focus">

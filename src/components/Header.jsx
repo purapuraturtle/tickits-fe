@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import SearchBar from "./SearchBar";
 
@@ -25,6 +26,12 @@ function Header() {
   const [search, setSearch] = useState("");
   const [searchBar, setSearchBar] = useState(false);
   const [drawer, setDrawer] = useState(false);
+
+  const router = useRouter();
+
+  const navigate = (path, options = "") => {
+    return router.push(path, options);
+  };
 
   return (
     <>
@@ -92,7 +99,10 @@ function Header() {
             </div>
             <div className="m-auto">
               <div>
-                <button className="btn btn-primary text-white btn-sm h-10 m-auto">
+                <button
+                  className="btn btn-primary text-white btn-sm h-10 m-auto"
+                  onClick={() => navigate("/signup")}
+                >
                   Sign Up
                 </button>
               </div>

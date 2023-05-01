@@ -16,9 +16,10 @@ module.exports = {
         body: "#4E4B66",
         gray: colors.gray,
       },
-      shadow: {
+      boxShadow: {
         "mobile-navbar": "0px 4px 16px 0px #BABABA14",
         "movie-landing-hero": "8px 16px 30px 0px #0000004D",
+        "list-movie": "0px 8px 30px 0px #BABABA40",
       },
       backgroundImage: {
         "hero-pattern": "url('/bg-auth.svg')",
