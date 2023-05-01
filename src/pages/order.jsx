@@ -19,40 +19,40 @@ function Order() {
   const controller = useMemo(() => new AbortController(), []);
   // const onSelected = [];
   const [dataHistorySeat, setHistorySeat] = useState([]);
-  const [onSelected, setSelectSeat] = useState([]);
+  // const [onSelected, setSelectSeat] = useState([]);
   const [price, setPrice] = useState(10);
 
-  const handleSelected = (blockName, blockNumber) => {
-    const seat = `${blockName}${blockNumber}`;
-    console.log(`memilih kursi ${seat}`);
+  // const handleSelected = (blockName, blockNumber) => {
+  //   const seat = `${blockName}${blockNumber}`;
+  //   console.log(`memilih kursi ${seat}`);
 
-    // Cek apakah seat sudah ada pada array onSelected
-    const index = onSelected.indexOf(seat);
-    if (index !== -1) {
-      // Jika sudah ada, hapus data pada indeks tersebut dari array
-      const newSelected = [...onSelected];
-      newSelected.splice(index, 1);
-      setSelectSeat(newSelected);
-      // console.log(`${seat} telah dihapus dari array onSelected.`);
-    } else {
-      // Jika belum ada, tambahkan seat ke array onSelected
-      const newSelected = [...onSelected, seat];
-      setSelectSeat(newSelected);
-      console.log(newSelected);
-    }
-  };
+  //   // Cek apakah seat sudah ada pada array onSelected
+  //   const index = onSelected.indexOf(seat);
+  //   if (index !== -1) {
+  //     // Jika sudah ada, hapus data pada indeks tersebut dari array
+  //     const newSelected = [...onSelected];
+  //     newSelected.splice(index, 1);
+  //     setSelectSeat(newSelected);
+  //     // console.log(`${seat} telah dihapus dari array onSelected.`);
+  //   } else {
+  //     // Jika belum ada, tambahkan seat ke array onSelected
+  //     const newSelected = [...onSelected, seat];
+  //     setSelectSeat(newSelected);
+  //     console.log(newSelected);
+  //   }
+  // };
 
   const handleCheckout = async () => {
-    const onBookingFormatted = onSelected.map((seat) => {
-      return {
-        block_name: seat.substring(0, 1),
-        block_number: seat.substring(1),
-      };
-    });
+    // const onBookingFormatted = onSelected.map((seat) => {
+    //   return {
+    //     block_name: seat.substring(0, 1),
+    //     block_number: seat.substring(1),
+    //   };
+    // });
     const data = {
-      dataSeats: onBookingFormatted,
+      // dataSeats: onBookingFormatted,
       teathstudioId: 8,
-      totalPrice: price * onSelected.length,
+      totalPrice: price * orderRedux.dataSeat.length,
     };
     dispatch(orderAction.addOrder(data));
     // setLoading(true);
@@ -127,7 +127,7 @@ function Order() {
 
               <div className="w-full flex flex-col gap-2 mt-6">
                 <Seat
-                  handleSelected={handleSelected}
+                  // handleSelected={handleSelected}
                   seatHistory={dataHistorySeat}
                 />
               </div>
@@ -164,7 +164,7 @@ function Order() {
 
               <button
                 onClick={handleCheckout}
-                disabled={onSelected.length < 1}
+                disabled={orderRedux.dataSeat.length < 1}
                 className="btn btn-primary flex-1"
               >
                 Checkout now
@@ -198,7 +198,7 @@ function Order() {
                 <div className="flex justify-between  text-sm">
                   <p className="text-[#6B6B6B] w-[6rem] ">Seat choosed</p>
                   <div className="flex flex-wrap max-w-[10.8rem] font-semibold text-[#14142B] justify-end">
-                    {onSelected.map((item, idx) => (
+                    {orderRedux.dataSeat.map((item, idx) => (
                       <p key={idx}>{idx >= 1 ? ", " + item : item}</p>
                     ))}
                   </div>
@@ -209,7 +209,7 @@ function Order() {
                   Total Payment
                 </p>
                 <p className="font-bold text-2xl text-font-primary ">
-                  ${price * onSelected.length}
+                  ${price * orderRedux.dataSeat.length}
                 </p>
               </div>
             </div>

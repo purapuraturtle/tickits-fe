@@ -2,7 +2,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { getGenre } from "@/utils/https/getGenre";
-import { set } from "lodash";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import placeholder from "@/Assets/profile/poster.png";
@@ -28,7 +27,7 @@ function CreateSchedule() {
   const [location, setLocation] = useState("CGV Jakarta Selatan");
   const [teather, setTeather] = useState(0);
   const [addTime, setAddTime] = useState("");
-  const [showTime, setShowTime] = useState(false);
+  const [dataTime, setDataTime] = useState([]);
   const [image, setImage] = useState();
   const [form, setForm] = useState({
     movie_name: "",
@@ -39,6 +38,7 @@ function CreateSchedule() {
     director: "",
     aktors: "",
     sinopsis: "",
+    open_date: "",
   });
 
   const onChangeForm = (event) => {
@@ -95,15 +95,21 @@ function CreateSchedule() {
       aktors: form.aktors,
       sinopsis: form.sinopsis,
     };
-    const bodyTeatherStudio = {
+    // NEXT RESPONSE
+    const bodyTeatherStudio = dataTime.map((time) => ({
       teather_id: teather,
-    };
+      open_date: form.open_date,
+      open_time: time,
+      price: 10,
+      movie_id: 1, //response movie
+    }));
     console.log(bodyMovie);
     console.log(bodyTeatherStudio);
   };
 
   const handleAddTime = () => {
-    setShowTime(true);
+    setDataTime([...dataTime, addTime]);
+    setAddTime("");
   };
 
   useEffect(() => {
@@ -124,7 +130,7 @@ function CreateSchedule() {
                 <div className="p-5 border border-primary rounded relative">
                   {/* IMG */}
                   <label htmlFor="image" className="cursor-pointer">
-                    <span className="w-full h-full flex bg-slate-500">
+                    <span className="w-full md:w-[150px] h-full flex bg-slate-500">
                       <Image
                         src={showSetImage()}
                         alt="img-movie"
@@ -286,7 +292,7 @@ function CreateSchedule() {
                       name="sinopsis"
                       onChange={onChangeForm}
                       className="textarea textarea-primary w-full rounded"
-                      placeholder="Type sinopsis movie"
+                      placeholder="Type synopsis movie"
                     >
                       {form.sinopsis}
                     </textarea>
@@ -370,14 +376,14 @@ function CreateSchedule() {
             </div>
             <h1 className="font-bold text-2xl mt-4 lg:mt-10 mb-6">Showtimes</h1>
             <div className="w-full flex flex-col gap-5 py-4 px-8 bg-base-100 rounded-lg">
-              {/* RELEASE DATE */}
+              {/* OPEN DATE */}
               <div className="form-control flex-1">
-                <label className="label" htmlFor="release-date"></label>
+                <label className="label" htmlFor="open-date"></label>
                 <input
                   type="date"
-                  id="release-date"
-                  name="release_date"
-                  value={form.release_date}
+                  id="open-date"
+                  name="open_date"
+                  value={form.open_date}
                   onChange={onChangeForm}
                   className="input input-bordered input-primary rounded"
                 />
@@ -388,17 +394,24 @@ function CreateSchedule() {
                   value={addTime}
                   onChange={(e) => setAddTime(e.target.value)}
                   className="flex-1 border border-primary-focus outline-none w-20 rounded-md px-4"
-                  placeholder="08:30am"
+                  placeholder="ex 08:30"
                 />
 
                 <button
                   className="btn btn-primary btn-outline w-fit px-3 "
                   onClick={handleAddTime}
+                  disabled={addTime === "" || addTime.length < 4}
                 >
-                  <i className="bi bi-plus text-2xl text-primary"></i>
+                  <i className="bi bi-plus text-2xl"></i>
                 </button>
               </div>
-              <p className="w-10">{showTime && addTime}</p>
+              <div className="w-full flex flex-wrap justify-center transition-all gap-4">
+                {dataTime.map((item, idx) => (
+                  <p key={idx} className="font-bold transition-all">
+                    {item}
+                  </p>
+                ))}
+              </div>
             </div>
             <button className="btn btn-primary mt-10" onClick={handleSubmit}>
               Save
