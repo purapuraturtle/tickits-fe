@@ -1,7 +1,10 @@
 <div align="center">
-    <img src="./public/digital-wallet.png" alt="Logo" width="80" height="80">
+    <img src="./public/images/logo-rect.svg" alt="Logo" width="80" height="80">
 
-  <h2 align="center">Tickitz</h2>
+  <h2 align="center">Tickits</h2>
+
+<br>
+<img src="https://skillicons.dev/icons?i=react,next,javascript,html,css,redux,tailwind,vercel" />
 
   <p align="center">
     <a href="https://tickits-fe.vercel.app/">View Demo</a>
@@ -12,14 +15,13 @@
   </p>
 </div>
 
-## Tickitz
+## Tickits
 
-FazzPay E-Wallet is a web-based application for storing and managing electronic money.
+Tickits is a web-based application for ticket booking movies and cinemas.
 
 ## Build With
 
 This application is built using React.js, Next.js, Redux, axios, Lodash, Chart.js, React-Pin-Field, TailwindCSS, and DaisyUI.
-<img src="https://skillicons.dev/icons?i=react,next,javascript,html,css,redux,tailwind,vercel" />
 
 ## Features
 
