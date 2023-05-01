@@ -11,10 +11,14 @@ module.exports = {
       colors: {
         "primary-label": "#283D3B",
         "primary-placeholder": "#A0A3BD",
+        "primary-title": "#14142B",
+        "primary-line": "#DEDEDE",
+        body: "#4E4B66",
         gray: colors.gray,
       },
       shadow: {
         "mobile-navbar": "0px 4px 16px 0px #BABABA14",
+        "movie-landing-hero": "8px 16px 30px 0px #0000004D",
       },
       backgroundImage: {
         "hero-pattern": "url('/bg-auth.svg')",
@@ -31,7 +35,7 @@ module.exports = {
         default: {
           primary: "#197278",
           secondary: "#EDDDD4",
-          accent: "#37cdbe",
+          accent: "#F5F6F8",
           neutral: "#3d4451",
           info: "#C44536",
           error: "#772E25",

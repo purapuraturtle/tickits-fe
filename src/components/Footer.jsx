@@ -1,9 +1,9 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 function Footer() {
   return (
-    <footer className="top-0 w-full border-t-2">
+    <footer className="top-0 w-full">
       <div className="mw-global w-full global-px flex flex-wrap flex-col md:flex-row pt-16 pb-10 justify-between gap-10">
         <div className="flex flex-col gap-7 lg:max-w-xs w-screen max-w-xs md:max-w-4xl lg:w-auto">
           <Link href={"/"}>
@@ -31,7 +31,6 @@ function Footer() {
         <div className="flex-1 flex flex-col gap-3  text-primary-label">
           <p className="font-bold mb-5 text-black">Our Sponsor</p>
           <div className="flex flex-wrap flex-row md:flex-col gap-3 gap-x-10 items-start justify-start md:items-start">
-            {" "}
             <Link href={"/"} className="mb-3">
               <Image
                 src={"/images/ebuid.svg"}

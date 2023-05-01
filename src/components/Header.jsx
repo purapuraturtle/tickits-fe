@@ -29,7 +29,7 @@ function Header() {
   return (
     <>
       <header className="fixed top-0 w-full z-40">
-        <div className="mw-global w-full global-px flex py-7 justify-between items-center bg-white lg:bg-opacity-90 lg:backdrop-blur-sm z-20 ">
+        <div className="mw-global w-full global-px flex py-4 md:py-7 justify-between items-center bg-white lg:bg-opacity-90 lg:backdrop-blur-sm z-20 ">
           <div className="flex items-center gap-14">
             <Link href={"/"}>
               <Image
@@ -37,6 +37,7 @@ function Header() {
                 width={128}
                 height={32}
                 alt={`Tickits`}
+                className="w-24 md:w-32"
               />
             </Link>
             <nav className="hidden lg:flex gap-7 lg:gap-8 xl:gap-12 2xl:gap-14 list-none">
