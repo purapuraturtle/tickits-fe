@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 
 function Header() {
   const navList = [
-    { title: "Movies", url: "/" },
+    { title: "Movies", url: "/movies" },
     { title: "Cinemas", url: "/" },
     { title: "Buy Ticket", url: "/" },
   ];
@@ -29,7 +29,7 @@ function Header() {
   return (
     <>
       <header className="fixed top-0 w-full z-40">
-        <div className="mw-global w-full global-px flex py-7 justify-between items-center bg-white lg:bg-opacity-90 lg:backdrop-blur-sm">
+        <div className="mw-global w-full global-px flex py-7 justify-between items-center bg-white lg:bg-opacity-90 lg:backdrop-blur-sm z-20 ">
           <div className="flex items-center gap-14">
             <Link href={"/"}>
               <Image
@@ -78,7 +78,7 @@ function Header() {
                 </svg>
               </button>
               <div
-                className={`absolute bg-white shadow rounded-md right-0 top-12 p-3 ${
+                className={`absolute bg-white shadow rounded-md right-0 top-[4.5rem] p-3 ${
                   !searchBar && `invisible`
                 }`}
               >
@@ -126,9 +126,19 @@ function Header() {
           </div>
         </div>
         <div
-          className={`h-screen bg-black bg-opacity-80 ${!drawer && "hidden"}`}
+          className={`h-screen bg-black transition-all ${
+            drawer ? `bg-opacity-80 visible` : `bg-opacity-0 invisible hidden`
+          } lg:hidden`}
+          onClick={() => setDrawer(!drawer)}
         >
-          <div className="bg-white w-full flex flex-col">
+          <div
+            className={`bg-white w-full flex flex-col transform-gpu transition-all z-10 ${
+              drawer ? `translate-x-0` : `-translate-x-full`
+            }  `}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <div className="global-px mw-global w-full pt-3 pb-10 border-gray-200">
               <SearchBar
                 value={search}
@@ -181,7 +191,7 @@ function Header() {
             </Link>
             <hr />
             <div className="global-px mw-global pt-8 pb-4 text-primary-label text-center text-sm">
-              © 2020 Tickitz. All Rights Reserved.
+              © {new Date().getFullYear()} Tickitz. All Rights Reserved.
             </div>
           </div>
         </div>
