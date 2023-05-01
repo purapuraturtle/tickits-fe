@@ -117,7 +117,7 @@ function Profile() {
                         Phone Number
                       </label>
                       <input
-                        type="number"
+                        type="text"
                         id="phoneNumber"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none  pl-20 pr-6 rounded focus:border-primary "
                       />
