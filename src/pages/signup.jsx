@@ -17,6 +17,7 @@ function Signup() {
       const { email, password } = formData;
       const result = await register(email, password);
       console.log(result);
+      router.push("/login");
     } catch (error) {
       console.log(error);
     }
@@ -25,10 +26,10 @@ function Signup() {
     <>
       <div className="lg:flex">
         <SideForAuth />
-        <form className="lg:flex-[1]">
-          <div className="w-full m-auto ml-6 lg:ml-[83px] min-[1440px]:ml-[83px] mt-[54px] lg:mt-[176px] lg:w-[75%] ">
+        <form className="lg:flex-[1] min-[1440px]:flex-[1.3]">
+          <div className="w-full m-auto ml-6 lg:m-[83px] mt-[54px] lg:mt-[176px] lg:w-[75%] ">
             <Image
-              src="/icon-blue.svg"
+              src="/logo.svg"
               width={120}
               height={62}
               className="lg:hidden "
@@ -74,7 +75,7 @@ function Signup() {
             <button
               type="submit"
               onClick={handleSignUp}
-              className="rounded bg-[#9570FE] text-white font--bold p-5 w-[95%]  h-[64px] mt-7"
+              className="rounded btn-primary text-white font--bold p-5 w-[95%]  h-[64px] mt-7"
             >
               Join for free now
             </button>
