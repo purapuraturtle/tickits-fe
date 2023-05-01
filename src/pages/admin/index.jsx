@@ -2,8 +2,10 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { getGenre } from "@/utils/https/getGenre";
+import { set } from "lodash";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import placeholder from "@/Assets/profile/poster.png";
 
 function ListCategory({ name, listCategory, handleClick }) {
   const isCategory = listCategory && listCategory.includes(name);
@@ -25,6 +27,9 @@ function CreateSchedule() {
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState("CGV Jakarta Selatan");
   const [teather, setTeather] = useState(0);
+  const [addTime, setAddTime] = useState("");
+  const [showTime, setShowTime] = useState(false);
+  const [image, setImage] = useState();
   const [form, setForm] = useState({
     movie_name: "",
     category: "",
@@ -43,6 +48,17 @@ function CreateSchedule() {
         [event.target.name]: event.target.value,
       };
     });
+  };
+
+  const onChangeFile = (event) => {
+    setImage(event.target.files[0]);
+  };
+
+  const showSetImage = () => {
+    if (image) {
+      return URL.createObjectURL(image);
+    }
+    return placeholder;
   };
 
   const fetching = async () => {
@@ -86,11 +102,16 @@ function CreateSchedule() {
     console.log(bodyTeatherStudio);
   };
 
+  const handleAddTime = () => {
+    setShowTime(true);
+  };
+
   useEffect(() => {
     fetching();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // console.log(category);
+
   return (
     <Layout title={"Create Schedule"}>
       <Header />
@@ -100,12 +121,26 @@ function CreateSchedule() {
             <h1 className="font-bold text-xl mb-6">Movie Description</h1>
             <div className="w-full flex flex-col bg-base-100 rounded-lg p-5 gap-5">
               <span className="flex flex-col md:flex-row gap-5">
-                <div className="p-5 border border-primary rounded">
+                <div className="p-5 border border-primary rounded relative">
                   {/* IMG */}
-                  <span
-                    onClick={handleSubmit}
-                    className="w-40 h-64 flex bg-slate-500"
-                  ></span>
+                  <label htmlFor="image" className="cursor-pointer">
+                    <span className="w-full h-full flex bg-slate-500">
+                      <Image
+                        src={showSetImage()}
+                        alt="img-movie"
+                        width={100}
+                        height={100}
+                        className="w-full h-full object-cover"
+                      />
+                    </span>
+                    <input
+                      type="file"
+                      name="image"
+                      id="image"
+                      hidden
+                      onChange={onChangeFile}
+                    />
+                  </label>
                 </div>
                 <div className="flex-1 flex flex-col justify-between">
                   {/* MOVIE NAME */}
@@ -266,13 +301,13 @@ function CreateSchedule() {
               <div className="dropdown">
                 <label
                   tabIndex={0}
-                  className="btn btn-sm btn-ghost bg-base-300 hover:bg-slate-400"
+                  className="btn btn-sm btn-ghost bg-base-300 hover:bg-slate-400 lg:w-[16.375rem]"
                 >
                   {location}
                 </label>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg"
+                  className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg lg:w-[16.375rem]"
                 >
                   <li onClick={() => setLocation("CGV Jakarta Selatan")}>
                     <a>CGV Jakarta Selatan</a>
@@ -282,19 +317,22 @@ function CreateSchedule() {
                   </li>
                 </ul>
               </div>
-              <div className="w-full flex flex-wrap justify-between gap-2">
+              <div className="w-full flex flex-wrap justify-between ">
                 <div
                   onClick={() => setTeather(1)}
                   className={`w-fit flex items-center px-3 py-2 hover:shadow-lg cursor-pointer border-2 ${
                     teather === 1 ? "border-primary" : "border-base-100"
                   } rounded-lg`}
                 >
-                  <Image
-                    src="/images/ebuid.svg"
-                    alt="ebuid"
-                    width={80}
-                    height={31}
-                  />
+                  <div className="w-20">
+                    <Image
+                      src="/images/ebuid.svg"
+                      alt="ebuid"
+                      width={50}
+                      height={31}
+                      className="w-full"
+                    />
+                  </div>
                 </div>
                 <div
                   onClick={() => setTeather(2)}
@@ -302,12 +340,15 @@ function CreateSchedule() {
                     teather === 2 ? "border-primary" : "border-base-100"
                   } rounded-lg`}
                 >
-                  <Image
-                    src="/images/hiflix.svg"
-                    alt="ebuid"
-                    width={89}
-                    height={27}
-                  />
+                  <div className="w-20">
+                    <Image
+                      src="/images/hiflix.svg"
+                      alt="ebuid"
+                      width={50}
+                      height={27}
+                      className="w-full"
+                    />
+                  </div>
                 </div>
                 <div
                   onClick={() => setTeather(3)}
@@ -315,15 +356,53 @@ function CreateSchedule() {
                     teather === 3 ? "border-primary" : "border-base-100"
                   } rounded-lg`}
                 >
-                  <Image
-                    src="/images/cineone21.svg"
-                    alt="ebuid"
-                    width={109}
-                    height={15}
-                  />
+                  <div className="w-20">
+                    <Image
+                      src="/images/cineone21.svg"
+                      alt="ebuid"
+                      width={50}
+                      height={15}
+                      className="w-full"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+            <h1 className="font-bold text-2xl mt-4 lg:mt-10 mb-6">Showtimes</h1>
+            <div className="w-full flex flex-col gap-5 py-4 px-8 bg-base-100 rounded-lg">
+              {/* RELEASE DATE */}
+              <div className="form-control flex-1">
+                <label className="label" htmlFor="release-date"></label>
+                <input
+                  type="date"
+                  id="release-date"
+                  name="release_date"
+                  value={form.release_date}
+                  onChange={onChangeForm}
+                  className="input input-bordered input-primary rounded"
+                />
+              </div>
+              <div className="flex gap-2 justify-end">
+                <input
+                  type="text"
+                  value={addTime}
+                  onChange={(e) => setAddTime(e.target.value)}
+                  className="flex-1 border border-primary-focus outline-none w-20 rounded-md px-4"
+                  placeholder="08:30am"
+                />
+
+                <button
+                  className="btn btn-primary btn-outline w-fit px-3 "
+                  onClick={handleAddTime}
+                >
+                  <i className="bi bi-plus text-2xl text-primary"></i>
+                </button>
+              </div>
+              <p className="w-10">{showTime && addTime}</p>
+            </div>
+            <button className="btn btn-primary mt-10" onClick={handleSubmit}>
+              Save
+            </button>
           </div>
         </section>
       </main>
