@@ -10,7 +10,7 @@ function TicketResult() {
     <>
       <Header />
       <div className="w-full flex justify-center items-center bg-slate-400/20 global-px mt-24 py-16">
-        <section className="w-full max-w-[1440px] flex flex-col justify-center items-center bg-white rounded-md p-5 md:px-10">
+        <section className="w-full max-w-[1440px] flex flex-col justify-center items-center bg-white rounded-md p-5 md:px-[10%]">
           <h1 className="text-2xl font-bold mb-5">Proof of Payment</h1>
           <div className="w-full flex flex-row text-center overflow-hidden">
             <div className="flex-1 flex flex-col border border-black border-r-0 rounded-s-lg overflow-hidden">
