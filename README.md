@@ -1,38 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+    <img src="./public/digital-wallet.png" alt="Logo" width="80" height="80">
 
-## Getting Started
+  <h2 align="center">Tickitz</h2>
 
-First, run the development server:
+  <p align="center">
+    <a href="https://tickits-fe.vercel.app/">View Demo</a>
+    ·
+    <a href="mailto:purapuraturtle69@gmail.com">Report Bug</a>
+    ·
+    <a href="mailto:purapuraturtle69@gmail.com">Request Feature</a>
+  </p>
+</div>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Tickitz
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+FazzPay E-Wallet is a web-based application for storing and managing electronic money.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Build With
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+This application is built using React.js, Next.js, Redux, axios, Lodash, Chart.js, React-Pin-Field, TailwindCSS, and DaisyUI.
+<img src="https://skillicons.dev/icons?i=react,next,javascript,html,css,redux,tailwind,vercel" />
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Tickitz has several main features:
 
-## Learn More
+-
+-
 
-To learn more about Next.js, take a look at the following resources:
+## How to run the application
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To run the application, follow these steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Clone this repository to your computer.
+2. Open a terminal in the repository directory and run the `npm install` command to install all required dependencies.
+3. After it finishes, run the `npm run dev` command to run the application.
+4. Open a browser and visit `http://localhost:3000` to see the application.
 
-## Deploy on Vercel
+## Contributions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If you would like to contribute to this project, please send a pull request to this repository. We greatly appreciate your contributions.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Documentation
+
+Waiting

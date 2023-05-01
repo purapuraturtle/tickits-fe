@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 function SeatRow({ isBooked, handleSelect, blockName, blockNumber }) {
-  const onBooking =
-    isBooked && isBooked.includes(`${blockName}-${blockNumber}`);
+  const onBooking = isBooked && isBooked.includes(`${blockName}${blockNumber}`);
   // console.log(onBooking);
   const [isSelected, setSelected] = useState(false);
   const handleClick = () => {
@@ -25,7 +24,7 @@ function SeatRow({ isBooked, handleSelect, blockName, blockNumber }) {
   );
 }
 
-function seat({ handleSelected }) {
+function seat({ handleSelected, seatHistory }) {
   const seatA = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   const seatB = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   const seatC = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -34,26 +33,11 @@ function seat({ handleSelected }) {
   const seatF = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   const seatG = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
-  const onBooking = ["A-5", "A-6", "C-8", "F-2"];
+  const onBooking = seatHistory.map((item) => {
+    return `${item.block_name}${item.block_number}`;
+  });
   // console.log(onBooking);
-  // const onSelected = [];
-  // const handleSelected = (blockName, BlockNumber) => {
-  //   const seat = `${blockName}-${BlockNumber}`;
 
-  //   console.log(`memilih kursi ${seat}`);
-
-  //   // Cek apakah seat sudah ada pada array onSelected
-  //   const index = onSelected.indexOf(seat);
-  //   if (index !== -1) {
-  //     // Jika sudah ada, hapus data pada indeks tersebut dari array
-  //     onSelected.splice(index, 1);
-  //     console.log(`${seat} telah dihapus dari array onSelected.`);
-  //   } else {
-  //     // Jika belum ada, tambahkan seat ke array onSelected
-  //     onSelected.push(seat);
-  //     console.log(onSelected);
-  //   }
-  // };
   return (
     <>
       <div className="w-full flex justify-between gap-2 mb-6">

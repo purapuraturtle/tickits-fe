@@ -4,17 +4,26 @@ import Seat from "@/components/Seat";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
+import { getHistorySeat } from "@/utils/https/transaction";
+import { useDispatch, useSelector } from "react-redux";
+import { orderAction } from "@/redux/slice/order";
 
 function Order() {
+  const reduxStore = useSelector((state) => state.user);
+  const orderRedux = useSelector((state) => state.order);
+  // console.log(reduxStore);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const controller = useMemo(() => new AbortController(), []);
   // const onSelected = [];
+  const [dataHistorySeat, setHistorySeat] = useState([]);
   const [onSelected, setSelectSeat] = useState([]);
   const [price, setPrice] = useState(10);
 
   const handleSelected = (blockName, blockNumber) => {
-    const seat = `${blockName}-${blockNumber}`;
+    const seat = `${blockName}${blockNumber}`;
     console.log(`memilih kursi ${seat}`);
 
     // Cek apakah seat sudah ada pada array onSelected
@@ -24,7 +33,7 @@ function Order() {
       const newSelected = [...onSelected];
       newSelected.splice(index, 1);
       setSelectSeat(newSelected);
-      console.log(`${seat} telah dihapus dari array onSelected.`);
+      // console.log(`${seat} telah dihapus dari array onSelected.`);
     } else {
       // Jika belum ada, tambahkan seat ke array onSelected
       const newSelected = [...onSelected, seat];
@@ -32,6 +41,63 @@ function Order() {
       console.log(newSelected);
     }
   };
+
+  const handleCheckout = async () => {
+    const onBookingFormatted = onSelected.map((seat) => {
+      return {
+        block_name: seat.substring(0, 1),
+        block_number: seat.substring(1),
+      };
+    });
+    const data = {
+      dataSeats: onBookingFormatted,
+      teathstudioId: 8,
+      totalPrice: price * onSelected.length,
+    };
+    dispatch(orderAction.addOrder(data));
+    // setLoading(true);
+    // const onBookingFormatted = onSelected.map((seat) => {
+    //   return {
+    //     block_name: seat.substring(0, 1),
+    //     block_number: seat.substring(1),
+    //   };
+    // });
+    // // console.log(onBookingFormatted);
+    // const body = {
+    //   user_id: "61ae12bb-0ba4-48dd-9bf5-833f324b14b0",
+    //   movie_id: "c86f937b-ea07-495c-9047-da30a1b758e5",
+    //   teathStudio_id: 8,
+    //   seat: onBookingFormatted,
+    //   payment_id: 1,
+    // };
+    // try {
+    //   const result = await createBooking(body, controller);
+    //   console.log(result);
+    //   setLoading(false);
+    //   if (result.status && result.status === 200) {
+    //     router.push("/ticket-result");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
+  const fetching = async () => {
+    const token = reduxStore.data.data.token;
+    const id = 8;
+    try {
+      const result = await getHistorySeat(token, id, controller);
+      // console.log(result);
+      setHistorySeat(result.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetching();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout title={"Order"}>
@@ -44,7 +110,7 @@ function Order() {
             </h1>
             <div className="flex bg-white justify-between px-4 items-center lg:px-12 py-9 rounded-md">
               <p className="w-[50%] font-semibold md:text-2xl text-black">
-                Spider-Man: Homecoming
+                {orderRedux.movieName}
               </p>
               <button
                 onClick={() => router.push("/movies")}
@@ -60,7 +126,10 @@ function Order() {
               <p className="mb-2 text-center font-semibold">Screen</p>
 
               <div className="w-full flex flex-col gap-2 mt-6">
-                <Seat handleSelected={handleSelected} />
+                <Seat
+                  handleSelected={handleSelected}
+                  seatHistory={dataHistorySeat}
+                />
               </div>
 
               <div className="mt-8">
@@ -92,7 +161,14 @@ function Order() {
               >
                 Change your movie
               </button>
-              <button className="btn btn-primary flex-1">Checkout now</button>
+
+              <button
+                onClick={handleCheckout}
+                disabled={onSelected.length < 1}
+                className="btn btn-primary flex-1"
+              >
+                Checkout now
+              </button>
             </div>
           </div>
           <div className="lg:flex-1">
@@ -108,7 +184,7 @@ function Order() {
                 <div className="flex justify-between text-sm">
                   <p className="text-[#6B6B6B] w-[6.563rem] ">Movie selected</p>
                   <p className="font-semibold text-end text-[#14142B] w-[10.8rem]">
-                    Spider-Man: Homecoming
+                    {orderRedux.movieName}
                   </p>
                 </div>
                 <div className="flex justify-between text-sm">
@@ -126,9 +202,6 @@ function Order() {
                       <p key={idx}>{idx >= 1 ? ", " + item : item}</p>
                     ))}
                   </div>
-                  {/* <p className="font-semibold text-[#14142B]">
-                    {onSelected[0]}
-                  </p> */}
                 </div>
               </div>
               <div className="flex justify-between w-full py-6">
