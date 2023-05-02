@@ -19,10 +19,24 @@ const orderSlice = createSlice({
         movieName: action.payload.name,
       };
     },
+    addSeats: (prevState, action) => {
+      // Cek apakah seat sudah ada pada array onSelected
+      const index = prevState.dataSeat.indexOf(action.payload);
+      if (index !== -1) {
+        // Jika sudah ada, hapus data pada indeks tersebut dari array
+        const newSelected = [...prevState.dataSeat];
+        newSelected.splice(index, 1);
+        return { ...prevState, dataSeat: newSelected };
+      } else {
+        // Jika belum ada, tambahkan seat ke array
+        const newSelected = [...prevState.dataSeat, action.payload];
+        return { ...prevState, dataSeat: newSelected };
+      }
+    },
     addOrder: (prevState, action) => {
       return {
         ...prevState,
-        dataSeat: action.payload.dataSeats,
+        // dataSeat: action.payload.dataSeats,
         teathstudioId: action.payload.teathstudioId,
         totalPrice: action.payload.totalPrice,
       };
