@@ -1,11 +1,16 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Layout from "@/components/Layout";
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import Layout from '@/components/Layout';
+import { getMovies } from '@/utils/https/movies';
 
-export default function Home() {
+function Home({ movies, error }) {
+  const router = useRouter();
+  const handleNavigate = (url) => router.push(url);
+
   return (
     <Layout>
       <Header />
@@ -68,26 +73,17 @@ export default function Home() {
         </section>
 
         <div className="mw-global global-px flex gap-4 pt-1 pb-16 overflow-x-scroll overflow-y-clip bg-accent no-scrollbar relative">
-          {Array("", "", "", "", "", "", "").map((item, idx) => (
+          {movies.map(({ category, image, movie_name }, idx) => (
             <div className="group flex-shrink-0 w-56" key={idx}>
               <div
                 className={`p-8 w-56 bg-white/20 border-2 border-white rounded-md flex flex-col text-center gap-5 hover:bg-white group-hover:absolute group-hover:shadow-list-movie z-10`}
               >
-                <Image
-                  src={
-                    "https://res.cloudinary.com/dare4eibk/image/upload/v1682705686/movies/movie-image-Spider-Man:HomeComming.png"
-                  }
-                  alt=""
-                  width={150}
-                  height={250}
-                ></Image>
+                <Image src={image} alt="" width={150} height={250}></Image>
                 <div class="group-hover:flex flex-col gap-y-3 hidden">
                   <p class="font-bold text-lg text-primary-title text-center">
-                    Nama Film
+                    {movie_name}
                   </p>
-                  <p class="text-xs text-gray-400 text-center">
-                    Cat1, Cat2, Cat3
-                  </p>
+                  <p class="text-xs text-gray-400 text-center">{category}</p>
                 </div>
               </div>
             </div>
@@ -135,30 +131,26 @@ export default function Home() {
           </button>
         </div>
         <div className="mw-global global-px flex gap-4 pt-1 pb-16 overflow-x-scroll bg-white no-scrollbar">
-          {Array("", "", "", "", "", "", "").map((item, idx) => (
+          {movies.map(({ id, category, image, movie_name }, idx) => (
             <div
               className={`${
                 idx === 0 ? "" : ""
               } flex-shrink-0 flex-grow-0 w-56 p-8 bg-white/20 border-[0.5px] border-primary-line rounded-md flex flex-col  items-center text-center gap-5`}
               key={idx}
             >
-              <Image
-                src={
-                  "https://res.cloudinary.com/dare4eibk/image/upload/v1682705686/movies/movie-image-Spider-Man:HomeComming.png"
-                }
-                alt=""
-                width={150}
-                height={250}
-              ></Image>
-              <div className="flex flex-col gap-1">
+              <Image src={image} alt="" width={150} height={250}></Image>
+              <div className="flex flex-col gap-1 mb-3">
                 <p class="font-bold text-lg text-primary-title text-center">
-                  Nama Film
+                  {movie_name}
                 </p>
-                <p class="text-xs text-gray-400 text-center">
-                  Cat1, Cat2, Cat3
-                </p>
+                <p class="text-xs text-gray-400 text-center">{category}</p>
               </div>
-              <button className="btn btn-sm btn-block btn-accent border-primary text-primary mt-3 font-normal hover:border-primary-focus">
+              <button
+                className="mt-auto btn btn-sm btn-block btn-accent border-primary text-primary font-normal hover:border-primary-focus"
+                onClick={() => {
+                  handleNavigate(`/movies/${id}`);
+                }}
+              >
                 Details
               </button>
             </div>
@@ -190,3 +182,29 @@ export default function Home() {
     </Layout>
   );
 }
+
+export async function getStaticProps(ctx) {
+  try {
+    const controller = new AbortController();
+    const result = await getMovies(
+      { limit: 10, page: 1, search: "" },
+      controller
+    );
+    return {
+      props: {
+        error: "",
+        movies: result.data.data,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      props: {
+        error,
+        movies: [],
+      },
+    };
+  }
+}
+
+export default Home;
