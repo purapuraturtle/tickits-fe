@@ -129,8 +129,8 @@ function Profile() {
                       <Image
                         src={setImgProfile()}
                         alt="profile-img"
-                        width={50}
-                        height={50}
+                        width={200}
+                        height={200}
                         className="w-full h-full object-contain rounded-full"
                       />
                     )}
@@ -143,7 +143,9 @@ function Profile() {
                     onChange={handleImageChange}
                   />
                 </label>
-                <p className="mt-8 font-semibold text-xl">Jonas El Rodriguez</p>
+                <p className="mt-8 font-semibold text-xl">{`${
+                  userStore.first_name
+                } ${" "} ${userStore.last_name}`}</p>
                 <p className="text-sm text-neutral">Moviegoers</p>
               </div>
             </div>
