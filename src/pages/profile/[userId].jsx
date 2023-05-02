@@ -3,12 +3,50 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 import placeholder from "@/Assets/profile/placeholder.png";
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { getProfile, editProfile } from "@/utils/https/user";
+import { useSelector } from "react-redux";
 
 function Profile() {
+  const controller = useMemo(() => new AbortController(), []);
+  const userStore = useSelector((state) => state.user.data.data);
+  // console.log(userStore);
+  const token = userStore.token;
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [iconSave, setIconSave] = useState(false);
+  const [data, setData] = useState({});
+  const [form, setForm] = useState({
+    image: null,
+    first_name: "",
+    last_name: "",
+    phone: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "phone" && isNaN(value)) {
+      return;
+    }
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+    console.log(value);
+  };
+
+  const handleImageChange = (e) => {
+    const { name, files } = e.target;
+    setForm((prevForm) => ({ ...prevForm, [name]: files[0] }));
+    if (e) {
+      setIconSave((prevState) => !prevState);
+    }
+  };
+
+  const setImgProfile = () => {
+    if (form.image) {
+      return URL.createObjectURL(form.image);
+    }
+    return placeholder;
+  };
 
   const handleShowNew = () => {
     setShowNew(!showNew);
@@ -18,7 +56,48 @@ function Profile() {
     setShowConfirm(!showConfirm);
   };
 
-  console.log(showNew);
+  const fetching = async () => {
+    try {
+      const result = await getProfile(token, controller);
+      const resultData = result.data.data[0];
+      console.log(resultData);
+      setData(resultData);
+      setForm(resultData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const editProfile = async () => {
+  //   try {
+  //     const result = await editProfile(token, controller);
+  //     console.log(result);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const Submit = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await editProfile(
+        token,
+        form.first_name,
+        form.last_name,
+        form.phone,
+        form.image,
+        controller
+      );
+      console.log(result.data.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetching();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout title={"Profile"}>
@@ -36,13 +115,31 @@ function Profile() {
                 </div>
               </div>
               <div className="flex flex-col items-center mt-8">
-                <div className="w-[8.5rem] h-[8.5rem] rounded-full">
-                  <Image
-                    src={placeholder}
-                    alt="profile-img"
-                    className="w-full h-full object-cover rounded-full"
+                <label htmlFor="image">
+                  <div className="w-[8.5rem] h-[8.5rem] rounded-full">
+                    <Image
+                      src={setImgProfile()}
+                      alt="profile-img"
+                      width={200}
+                      height={200}
+                      className="w-full h-full object-contain rounded-full"
+                    />
+                  </div>
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    hidden
+                    onChange={handleImageChange}
                   />
-                </div>
+                </label>
+                {iconSave && (
+                  <button className="btn btn-primary btn-outline px-4">
+                    <i className="bi bi-check-square text-xl cursor-pointer">
+                      <span className="text-lg"> Save</span>
+                    </i>
+                  </button>
+                )}
                 <p className="mt-8 font-semibold text-xl">Jonas El Rodriguez</p>
                 <p className="text-sm text-neutral">Moviegoers</p>
               </div>
@@ -87,6 +184,10 @@ function Profile() {
                       <input
                         type="text"
                         id="firstName"
+                        name="first_name"
+                        value={form.first_name}
+                        onChange={handleInputChange}
+                        placeholder="Input First Name"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -97,6 +198,10 @@ function Profile() {
                       <input
                         type="text"
                         id="lastName"
+                        name="last_name"
+                        value={form.last_name}
+                        onChange={handleInputChange}
+                        placeholder="Input Last Name"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -109,6 +214,9 @@ function Profile() {
                       <input
                         type="text"
                         id="email"
+                        value={data.email}
+                        disabled
+                        placeholder="Input Email"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -119,6 +227,10 @@ function Profile() {
                       <input
                         type="text"
                         id="phoneNumber"
+                        name="phone"
+                        value={form.phone === "null" ? "" : form.phone}
+                        onChange={handleInputChange}
+                        placeholder="Input Number"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none  pl-20 pr-6 rounded focus:border-primary "
                       />
                       <span className="absolute left-0 bottom-3 px-4 py-2 border-r h-10">
@@ -138,6 +250,7 @@ function Profile() {
                     <input
                       type={showNew ? "text" : "password"}
                       id="firstName"
+                      placeholder="Input New Password"
                       className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border  outline-none py-5 px-6 rounded focus:border-primary"
                     />
                     <i
@@ -154,6 +267,7 @@ function Profile() {
                     <input
                       type={showConfirm ? "text" : "password"}
                       id="lastName"
+                      placeholder="Input Confirm Password"
                       className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                     />
                     <i
@@ -164,7 +278,10 @@ function Profile() {
                     ></i>
                   </div>
                 </div>
-                <button className="mt-14 btn btn-primary w-full md:w-[40%]">
+                <button
+                  className="mt-14 btn btn-primary w-full md:w-[40%]"
+                  onClick={Submit}
+                >
                   Update changes
                 </button>
               </div>
