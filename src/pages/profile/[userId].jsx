@@ -3,12 +3,47 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 import placeholder from "@/Assets/profile/placeholder.png";
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { getProfile, editProfile } from "@/utils/https/user";
+import { useSelector } from "react-redux";
+import { values } from "lodash";
 
 function Profile() {
+  const controller = useMemo(() => new AbortController(), []);
+  const userStore = useSelector((state) => state.user.data.data);
+  // console.log(userStore);
+  const token = userStore.token;
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [iconSave, setIconSave] = useState(false);
+  const [data, setData] = useState({});
+  const [form, setForm] = useState({
+    image: null,
+    first_name: "",
+    last_name: "",
+    phone: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+    console.log(value);
+  };
+
+  const handleImageChange = (e) => {
+    const { name, files } = e.target;
+    setForm((prevForm) => ({ ...prevForm, [name]: files[0] }));
+    console.log(files);
+  };
+
+  const setImgProfile = () => {
+    console.log(form.image);
+    if (form.image) {
+      return URL.createObjectURL(form.image);
+    }
+    return placeholder;
+  };
 
   const handleShowNew = () => {
     setShowNew(!showNew);
@@ -18,7 +53,29 @@ function Profile() {
     setShowConfirm(!showConfirm);
   };
 
-  console.log(showNew);
+  const fetching = async () => {
+    try {
+      const result = await getProfile(token, controller);
+      const resultData = result.data.data[0];
+      setData(resultData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editProfile = async () => {
+    try {
+      const result = await editProfile(token, controller);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetching();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout title={"Profile"}>
@@ -37,11 +94,20 @@ function Profile() {
               </div>
               <div className="flex flex-col items-center mt-8">
                 <div className="w-[8.5rem] h-[8.5rem] rounded-full">
-                  <Image
-                    src={placeholder}
-                    alt="profile-img"
-                    className="w-full h-full object-cover rounded-full"
-                  />
+                  <label htmlFor="image">
+                    <Image
+                      src={setImgProfile()}
+                      alt="profile-img"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                    <input
+                      type="file"
+                      id="image"
+                      hidden
+                      onChange={handleImageChange}
+                    />
+                    <i className="bi bi-check-square text-2xl text-primary cursor-pointer"></i>
+                  </label>
                 </div>
                 <p className="mt-8 font-semibold text-xl">Jonas El Rodriguez</p>
                 <p className="text-sm text-neutral">Moviegoers</p>
@@ -87,6 +153,9 @@ function Profile() {
                       <input
                         type="text"
                         id="firstName"
+                        name="first_name"
+                        onChange={handleInputChange}
+                        placeholder="Input First Name"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -97,6 +166,9 @@ function Profile() {
                       <input
                         type="text"
                         id="lastName"
+                        name="last_name"
+                        onChange={handleInputChange}
+                        placeholder="Input Last Name"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -109,6 +181,8 @@ function Profile() {
                       <input
                         type="text"
                         id="email"
+                        value={data.email}
+                        placeholder="Input Email"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -119,6 +193,9 @@ function Profile() {
                       <input
                         type="text"
                         id="phoneNumber"
+                        name="phone"
+                        onChange={handleInputChange}
+                        placeholder="Input Number"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none  pl-20 pr-6 rounded focus:border-primary "
                       />
                       <span className="absolute left-0 bottom-3 px-4 py-2 border-r h-10">
@@ -138,6 +215,7 @@ function Profile() {
                     <input
                       type={showNew ? "text" : "password"}
                       id="firstName"
+                      placeholder="Input New Password"
                       className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border  outline-none py-5 px-6 rounded focus:border-primary"
                     />
                     <i
@@ -154,6 +232,7 @@ function Profile() {
                     <input
                       type={showConfirm ? "text" : "password"}
                       id="lastName"
+                      placeholder="Input Confirm Password"
                       className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                     />
                     <i
