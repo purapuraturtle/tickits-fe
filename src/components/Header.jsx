@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
-import SearchBar from "./SearchBar";
+import SearchBar from './SearchBar';
 
 function Header() {
   const navList = [
@@ -26,6 +27,8 @@ function Header() {
   const [search, setSearch] = useState("");
   const [searchBar, setSearchBar] = useState(false);
   const [drawer, setDrawer] = useState(false);
+
+  const user = useSelector((state) => state.user);
 
   const router = useRouter();
 
@@ -97,15 +100,30 @@ function Header() {
                 />
               </div>
             </div>
-            <div className="m-auto">
-              <div>
-                <button
-                  className="btn btn-primary text-white btn-sm h-10 m-auto"
-                  onClick={() => navigate("/signup")}
-                >
-                  Sign Up
-                </button>
-              </div>
+            <div className="m-auto relative min-w-[3rem] min-h-[1rem]">
+              {user.isFulfilled ? (
+                <Link href={"/profile"}>
+                  <div className="avatar absolute h-full -translate-y-5">
+                    <div className="w-14 h-14 rounded-full">
+                      <Image
+                        src={user.data?.image || "/images/profile.png"}
+                        alt="photo"
+                        width={56}
+                        height={56}
+                      />
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <div>
+                  <button
+                    className="btn btn-primary text-white btn-sm h-10 m-auto"
+                    onClick={() => navigate("/signup")}
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="flex lg:hidden" key={"drawerBtnParent"}>
@@ -180,7 +198,7 @@ function Header() {
             <hr />
             <Link
               className="global-px mw-global font-semibold py-4 flex items-center gap-2"
-              href={"/"}
+              href={"/movies"}
             >
               Movies
             </Link>
@@ -188,7 +206,7 @@ function Header() {
             <hr />
             <Link
               className="global-px mw-global font-semibold py-4 flex items-center gap-2"
-              href={"/"}
+              href={"/cinemas"}
             >
               Cinemas
             </Link>
@@ -196,10 +214,49 @@ function Header() {
             <hr />
             <Link
               className="global-px mw-global font-semibold py-4 flex items-center gap-2"
-              href={"/"}
+              href={"/order"}
             >
               Buy Ticket
             </Link>
+            <hr />
+
+            {user.isFulfilled ? (
+              <div className="flex global-px py-4">
+                <div
+                  className="flex flex-col gap-3 mx-auto items-center  cursor-pointer"
+                  onClick={() => navigate("/profile")}
+                >
+                  <div className="avatar h-full">
+                    <div className="w-10 h-10 rounded-full">
+                      <Image
+                        src={user.data.image || "/images/profile.png"}
+                        alt="photo"
+                        width={56}
+                        height={56}
+                      />
+                    </div>
+                  </div>
+                  <div className="">
+                    <p className="font-semibold">{`${user.data.first_name} ${user.data.last_name}`}</p>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="global-px flex flex-col py-4 gap-4">
+                <button
+                  className="btn btn-block btn-accent  m-auto"
+                  onClick={() => navigate("/signup")}
+                >
+                  Login
+                </button>
+                <button
+                  className="btn btn-block text-white m-auto"
+                  onClick={() => navigate("/signup")}
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
             <hr />
             <div className="global-px mw-global pt-8 pb-4 text-primary-label text-center text-sm">
               © {new Date().getFullYear()} Tickitz. All Rights Reserved.
