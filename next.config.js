@@ -9,6 +9,12 @@ const nextConfig = {
         port: "",
         pathname: "/dare4eibk/image/upload/**",
       },
+      {
+        protocol: "http",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/dare4eibk/image/upload/**",
+      },
     ],
   },
 };
