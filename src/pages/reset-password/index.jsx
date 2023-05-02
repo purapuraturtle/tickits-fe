@@ -44,11 +44,11 @@ function Forgot() {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              onClick={handleEmail}
               className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] lg:w-[95%]  h-16 p-6"
               placeholder=" Write your email"
             />
             <button
+              onClick={handleEmail}
               type="submit"
               className="flex justify-center rounded btn-primary text-white font--bold p-5 w-[95%] h-[64px] mt-7 "
             >

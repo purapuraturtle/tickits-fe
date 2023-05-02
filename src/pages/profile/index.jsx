@@ -14,15 +14,14 @@ function Profile() {
   const dispatch = useDispatch();
   const controller = useMemo(() => new AbortController(), []);
   const userStore = useSelector((state) => state.user.data);
-  const token = useSelector((state) => state.user.data?.data?.token);
+  const token = useSelector((state) => state.user.data?.token);
   const img = userStore.image;
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [iconSave, setIconSave] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
   const [form, setForm] = useState({
-    image: null,
+    image: "",
     first_name: "",
     last_name: "",
     phone: "",
@@ -39,9 +38,6 @@ function Profile() {
   const handleImageChange = (e) => {
     const { name, files } = e.target;
     setForm((prevForm) => ({ ...prevForm, [name]: files[0] }));
-    if (e) {
-      setIconSave((prevState) => !prevState);
-    }
   };
 
   const setImgProfile = () => {
@@ -96,7 +92,6 @@ function Profile() {
       dispatch(
         usersAction.editProfile({ first_name, last_name, image, phone })
       );
-      setIconSave(false);
       console.log(result);
     } catch (error) {
       console.log(error);
@@ -132,8 +127,8 @@ function Profile() {
                       <Image
                         src={setImgProfile()}
                         alt="profile-img"
-                        width={50}
-                        height={50}
+                        width={200}
+                        height={200}
                         className="w-full h-full object-contain rounded-full"
                       />
                     )}
@@ -146,14 +141,9 @@ function Profile() {
                     onChange={handleImageChange}
                   />
                 </label>
-                {iconSave && (
-                  <button className="btn btn-primary btn-outline px-4">
-                    <i className="bi bi-check-square text-xl cursor-pointer">
-                      <span className="text-lg"> Save</span>
-                    </i>
-                  </button>
-                )}
-                <p className="mt-8 font-semibold text-xl">Jonas El Rodriguez</p>
+                <p className="mt-8 font-semibold text-xl">{`${
+                  userStore.first_name
+                } ${" "} ${userStore.last_name}`}</p>
                 <p className="text-sm text-neutral">Moviegoers</p>
               </div>
             </div>

@@ -1,11 +1,29 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 function Payment() {
+  const router = useRouter();
   const [active, setActive] = useState(null);
+  const [fill, setFill] = useState(false);
+  const movieName = useSelector((state) => state.order?.movieName);
+  const cinema = useSelector((state) => state.order?.cinemaName);
+  const tickets = useSelector((state) => state.order?.dataSeat?.length);
+  const payment = useSelector((state) => state.order?.totalPrice);
+  const firstName = useSelector((state) => state.user?.data?.first_name);
+  const lastName = useSelector((state) => state.user?.data?.last_name);
+  const email = useSelector((state) => state.user?.data?.email);
+  const phone = useSelector((state) => state.user?.data?.phone);
+  console.log(firstName + lastName);
+  useEffect(() => {
+    if (!firstName || !lastName || !email || !phone) {
+      setFill(true);
+    }
+  });
 
   const handleDivClick = (index) => {
     setActive(index);
@@ -32,13 +50,13 @@ function Payment() {
                 <div className="flex mt-6 border-b border-[#E6E6E6] border-solid pb-5 w-[95%]">
                   <p className="text-[#6B6B6B] flex-[1] text-xl">Movie title</p>
                   <p className="text-xl flex-[2] text-[#000000] text-right">
-                    Spider-Man:Homecoming
+                    {movieName}
                   </p>
                 </div>
                 <div className="flex mt-6 border-b border-[#E6E6E6] border-solid pb-5 w-[95%]">
                   <p className="text-[#6B6B6B] text-xl flex-[1]">Cinema name</p>
                   <p className="text-xl flex-[2] text-[#000000] text-right">
-                    CineOne21 Cinema
+                    {cinema}
                   </p>
                 </div>
                 <div className="flex mt-6 border-b border-[#E6E6E6] border-solid pb-5 w-[95%]">
@@ -46,7 +64,8 @@ function Payment() {
                     Number of tickets
                   </p>
                   <p className="text-xl flex-[2] text-[#000000] text-right">
-                    3 pieces
+                    {tickets}
+                    {""}pieces
                   </p>
                 </div>
                 <div className="flex mt-6  pb-5 w-[95%]">
@@ -54,7 +73,7 @@ function Payment() {
                     Total payment
                   </p>
                   <p className="text-xl flex-[2] text-[#000000] text-right">
-                    $30,00
+                    {payment} $
                   </p>
                 </div>
               </div>
@@ -68,19 +87,11 @@ function Payment() {
               <div className="flex flex-wrap justify-center gap-6 pt-14">
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
-                    active === 0 ? "bg-primary" : ""
-                  }`}
-                  onClick={() => handleDivClick(0)}
-                >
-                  <Image src="/gpay.svg" width={74} height={30} />
-                </div>
-                <div
-                  className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
                     active === 1 ? "bg-primary" : ""
                   }`}
                   onClick={() => handleDivClick(1)}
                 >
-                  <Image src="/visa.svg" width={80} height={25.9} />
+                  <Image src="/gpay.svg" width={74} height={30} />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -88,7 +99,7 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(2)}
                 >
-                  <Image src="/gopay.svg" width={106} height={35} />
+                  <Image src="/visa.svg" width={80} height={25.9} />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -96,7 +107,7 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(3)}
                 >
-                  <Image src="/paypal.svg" width={31} height={37} />
+                  <Image src="/gopay.svg" width={106} height={35} />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -104,7 +115,7 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(4)}
                 >
-                  <Image src="/dana.svg" width={108} height={31} />
+                  <Image src="/paypal.svg" width={31} height={37} />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -112,7 +123,7 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(5)}
                 >
-                  <Image src="/bca.svg" width={85} height={28} />
+                  <Image src="/dana.svg" width={108} height={31} />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -120,13 +131,21 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(6)}
                 >
+                  <Image src="/bca.svg" width={85} height={28} />
+                </div>
+                <div
+                  className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
+                    active === 7 ? "bg-primary" : ""
+                  }`}
+                  onClick={() => handleDivClick(7)}
+                >
                   <Image src="/bri.svg" width={45} height={38} />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center ${
-                    active === 7 ? "bg-primary" : ""
+                    active === 8 ? "bg-primary" : ""
                   }`}
-                  onClick={() => handleDivClick(7)}
+                  onClick={() => handleDivClick(8)}
                 >
                   <Image src="/ovo.svg" width={92} height={30} />
                 </div>
@@ -142,7 +161,12 @@ function Payment() {
               </p>
             </div>
             <div className="flex justify-between mt-10 pb-[72px] gap-6">
-              <button className="border-[3px] border-solid border-primary text-primary flex items-center justify-center w-[300px] h-14">
+              <button
+                onClick={() => {
+                  router.push("/order");
+                }}
+                className="border-[3px] border-solid border-primary text-primary flex items-center justify-center w-[300px] h-14"
+              >
                 Previous step
               </button>
               <button className="bg-primary text-white w-[300px] h-14">
@@ -154,19 +178,39 @@ function Payment() {
         <div className="ml-6 lg:ml-32 min-[1300px]:ml-0 min-[1300px]:w-[400px] h-[548px] bg-white mt-[206px] mr-6 lg:mr-32 min-[1300px]:flex-[1]">
           <p className="ml-10 mt-12 text-[#696F79]">Full Name</p>
           <input
+            value={
+              firstName === null || lastName === null
+                ? ""
+                : firstName + lastName
+            }
             className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
             placeholder="Input your full name"
           />
           <p className="ml-10 mt-12 text-[#696F79]">Email</p>
           <input
+            value={email}
             className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
             placeholder="Input your full email"
           />
           <p className="ml-10 mt-12 text-[#696F79]">Phone Number</p>
           <input
+            value={phone === null ? "" : phone}
             className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
             placeholder="Input your phone number"
           />
+          {fill && (
+            <p className="ml-10 bg-yellow-200 w-[85%] text-center mt-11">
+              Fill Your Data Correctly{" "}
+              <span
+                onClick={() => {
+                  router.push("/profile");
+                }}
+                className="cursor-pointer text-black font-bold"
+              >
+                Click Here To Fill Your Data
+              </span>
+            </p>
+          )}
         </div>
       </div>
       <Footer />
