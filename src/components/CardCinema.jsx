@@ -1,7 +1,20 @@
-import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { orderAction } from "@/redux/slice/order";
 
 function CardCinema(props) {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const handleBooking = () => {
+    const payload = {
+      image: props.image,
+      cinemaName: props.name,
+      time: props.time,
+    };
+    dispatch(orderAction.addDataBookNow(payload));
+    router.push("/order");
+  };
   return (
     <>
       <div className="md:w-[21rem] h-[20rem] bg-white shadow-md hover:scale-105 transition-all rounded-md">
@@ -33,7 +46,12 @@ function CardCinema(props) {
             <p className="font-semibold">${props.price}.00/seat</p>
           </div>
           <div className="flex justify-between items-center mt-4">
-            <div className="btn btn-primary px-4 rounded ">Book now</div>
+            <div
+              className="btn btn-primary px-4 rounded"
+              onClick={handleBooking}
+            >
+              Book now
+            </div>
             <p className="text-primary cursor-pointer">Add to cart</p>
           </div>
         </div>

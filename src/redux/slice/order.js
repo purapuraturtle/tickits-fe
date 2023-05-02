@@ -4,6 +4,9 @@ const initialState = {
   dataSeat: [],
   movieId: null,
   movieName: null,
+  cinemaName: null,
+  image: null,
+  time: null,
   teathstudioId: null,
   totalPrice: null,
 };
@@ -17,6 +20,16 @@ const orderSlice = createSlice({
         ...prevState,
         movieId: action.payload.id,
         movieName: action.payload.name,
+        cinemaName: action.payload.cinemaName,
+        image: action.payload.image
+      };
+    },
+    addDataBookNow: (prevState, action) => {
+      return {
+        ...prevState,
+        cinemaName: action.payload.cinemaName,
+        image: action.payload.image,
+        time: action.payload.time
       };
     },
     addSeats: (prevState, action) => {
