@@ -9,8 +9,6 @@ const nextConfig = {
         port: "",
         pathname: "/dare4eibk/image/upload/**",
       },
-    ],
-    remotePatterns: [
       {
         protocol: "http",
         hostname: "res.cloudinary.com",
