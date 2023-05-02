@@ -13,8 +13,8 @@ export const getProfile = (token, controller) => {
 export const editProfile = (token, first_name, last_name, phone, image, controller) => {
   const formData = new FormData()
   formData.append("image", image);
-  formData.append("firstname", first_name);
-  formData.append("lastname", last_name);
+  formData.append("first_name", first_name);
+  formData.append("last_name", last_name);
   formData.append("phone", phone);
   const url = `${baseUrl}/auth/edit`;
   return axios.patch(url, formData, {
