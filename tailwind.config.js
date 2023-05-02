@@ -25,7 +25,7 @@ module.exports = {
         "hero-pattern": "url('/bg-auth.svg')",
       },
       screens: {
-        md: "770px",
+        md: "768px",
       },
     },
   },

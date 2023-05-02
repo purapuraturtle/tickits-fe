@@ -60,22 +60,13 @@ function Profile() {
     try {
       const result = await getProfile(token, controller);
       const resultData = result.data.data[0];
-      console.log(resultData);
+      // console.log(resultData);
       setData(resultData);
       setForm(resultData);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const editProfile = async () => {
-  //   try {
-  //     const result = await editProfile(token, controller);
-  //     console.log(result);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const Submit = async (e) => {
     e.preventDefault();
@@ -146,7 +137,7 @@ function Profile() {
             </div>
             <div className="pt-8 px-8 pb-20">
               <p className="mb-6">Loyalty Points</p>
-              <div className="w-[80%] md:w-[45%] lg:w-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
+              <div className="w-[80%] md:w-[45%] lg:w-full md:h-40 lg:h-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
                 <p>Moviegoers</p>
                 <p className="text-2xl mt-5">
                   320 <span className="text-xs">points</span>
