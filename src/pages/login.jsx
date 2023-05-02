@@ -30,17 +30,17 @@ function Login() {
       <div className="lg:flex">
         <SideForAuth />
         <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
-          <div className="lg:ml-[83px] ml-6 pt-[55px] lg:w-[75%]">
+          <div className=" ml-6 lg:ml-[83px] pt-[54px] lg:pt-[176px] lg:w-[75%] ">
             <Image
               src="/logo.svg"
               width={120}
               height={62}
               className="lg:hidden "
             />
-            <p className="font-semibold text-5xl mt-[50px] lg:mt-[176px] text-[#121212]">
+            <p className="text-[#121212] text-[48px] font-semibold inline-block mt-12 lg:mt-0">
               Sign In
             </p>
-            <p className="text-lg text-[#aaaaaa] mt-3 hidden lg:inline-block">
+            <p className="text-lg text-[#aaaaaa] hidden lg:inline-block">
               Sign in with your data that you entered during your registration
             </p>
             <p className="mt-12 text-base text-[#4E4B66]">Email</p>
@@ -50,7 +50,7 @@ function Login() {
               onChange={(e) => {
                 setFormData({ ...formData, email: e.target.value });
               }}
-              className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] h-16 p-6"
+              className="mt-3 outline-none border border-solid border-[#dedede] w-[95%]   h-16 p-6"
               placeholder=" Write your email"
             />
             <p className="mt-9 text-base text-[#4E4B66]">Password</p>
@@ -60,15 +60,16 @@ function Login() {
               onChange={(e) => {
                 setFormData({ ...formData, password: e.target.value });
               }}
-              className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] h-16 p-6"
+              className="mt-3 outline-none border border-solid border-[#dedede] w-[95%]  h-16 p-6"
               placeholder=" Write your password"
             />
+
             <button
               type="submit"
               onClick={handleLogin}
-              className="flex justify-center rounded btn-primary text-white font--bold p-5 w-[95%]  h-[64px] mt-7"
+              className="rounded btn-primary text-white font--bold p-5 w-[95%]  h-[64px] mt-7"
             >
-              Sign In
+              Sign in
             </button>
             <p className="text-[#696F79] mt-8 text-center">
               Forgot your password?{" "}
@@ -81,13 +82,13 @@ function Login() {
                 Reset now
               </span>
             </p>
-            <div className="flex items-center justify-center mt-10 w-[95%]">
-              <hr className="w-[40%]  h-[1px] bg-[#dedede]" />
+            <div className="flex items-center mt-10 w-[95%] justify-center">
+              <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede]" />
               <p className="text-[#aaaaaa] ml-9 text-xs">Or</p>
-              <hr className="w-[40%]  h-[1px] bg-[#dedede] ml-9" />
+              <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede] ml-9" />
             </div>
-            <div className="flex justify-center w-[95%] ">
-              <div className="flex w-full cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg h-[64px]">
+            <div className="flex justify-center w-[95%]">
+              <div className="flex cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-full h-[64px]">
                 <Image
                   src="/google.svg"
                   width={24}

@@ -43,7 +43,7 @@ function Profile() {
 
   const setImgProfile = () => {
     if (form.image) {
-      return URL.createObjectURL(form.image);
+      return form.image;
     }
     return placeholder;
   };
@@ -67,7 +67,7 @@ function Profile() {
       console.log(error);
     }
   };
-
+  console.log(form.image);
   const Submit = async (e) => {
     e.preventDefault();
     try {

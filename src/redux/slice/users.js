@@ -33,6 +33,12 @@ const userSlice = createSlice({
         data: [],
       };
     },
+    updateData: (prevState, action) => {
+      return {
+        ...prevState,
+        data: action.payload,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -66,6 +72,6 @@ const userSlice = createSlice({
 export const usersAction = {
   ...userSlice.actions,
   storeLogin,
+  updateData, // menambahkan aksi baru untuk memperbarui data
 };
 export default userSlice.reducer;
-2;
