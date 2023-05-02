@@ -29,8 +29,8 @@ function Login() {
     <>
       <div className="lg:flex">
         <SideForAuth />
-        <form className="lg:flex-[1] bg-slate-300/20">
-          <div className="lg:ml-[83px] ml-6  mt-[55px] lg:w-[75%]">
+        <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
+          <div className="lg:ml-[83px] ml-6 pt-[55px] lg:w-[75%]">
             <Image
               src="/logo.svg"
               width={120}
@@ -86,7 +86,7 @@ function Login() {
               <p className="text-[#aaaaaa] ml-9 text-xs">Or</p>
               <hr className="w-[40%]  h-[1px] bg-[#dedede] ml-9" />
             </div>
-            <div className="flex justify-center w-[95%]">
+            <div className="flex justify-center w-[95%] ">
               <div className="flex w-full cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg h-[64px]">
                 <Image
                   src="/google.svg"
