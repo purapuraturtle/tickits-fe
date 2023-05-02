@@ -51,27 +51,6 @@ function MovieDetails() {
       time: ["08:20", "09:20", "10:20", "11:20", "12:20", "13:20", "16:20"],
       price: 10,
     },
-    {
-      name: "ebv.id",
-      address: "Whatever street No.12, South Purwokerto",
-      image: "/images/ebuid.svg",
-      time: ["08:20", "09:20", "10:20", "11:20", "12:20", "13:20", "16:20"],
-      price: 10,
-    },
-    {
-      name: "CineOne21",
-      address: "Downcare street  No. 21, East Purwokerto",
-      image: "/images/cineone21.svg",
-      time: ["08:20", "09:20", "10:20", "11:20", "12:20", "13:20", "16:20"],
-      price: 10,
-    },
-    {
-      name: "hiflix Cinema",
-      address: "Colonel street No. 2, East Purwokerto",
-      image: "/images/hiflix.svg",
-      time: ["08:20", "09:20", "10:20", "11:20", "12:20", "13:20", "16:20"],
-      price: 10,
-    },
   ];
 
   const [location, setLocation] = useState("Jakarta");

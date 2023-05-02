@@ -12,6 +12,7 @@ import { orderAction } from "@/redux/slice/order";
 
 function Order() {
   const reduxStore = useSelector((state) => state.user);
+  console.log(reduxStore);
   const orderRedux = useSelector((state) => state.order);
   // console.log(reduxStore);
   const router = useRouter();
@@ -83,7 +84,7 @@ function Order() {
   };
 
   const fetching = async () => {
-    const token = reduxStore.data.data.token;
+    const token = reduxStore.data.token;
     const id = 8;
     try {
       const result = await getHistorySeat(token, id, controller);
@@ -176,9 +177,14 @@ function Order() {
               Order Info
             </h1>
             <div className="flex flex-col items-center px-6 pt-10 bg-white rounded-md">
-              <Image src={cineOne21} alt="cineone21" />
+              <Image
+                src={orderRedux.image}
+                alt="cineone21"
+                width={100}
+                height={80}
+              />
               <p className="text-2xl font-semibold text-[#14142B] mt-3 mb-8">
-                CineOne21 Cinema
+                {orderRedux.cinemaName} Cinema
               </p>
               <div className="flex flex-col gap-4 w-full border-b pb-10">
                 <div className="flex justify-between text-sm">

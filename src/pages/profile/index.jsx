@@ -3,12 +3,56 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 import placeholder from "@/Assets/profile/placeholder.png";
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { getProfile, editProfile } from "@/utils/https/user";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { usersAction } from "@/redux/slice/users";
 
 function Profile() {
+  const dispatch = useDispatch();
+  const controller = useMemo(() => new AbortController(), []);
+  const userStore = useSelector((state) => state.user.data);
+  // console.log(userStore);
+  const token = userStore.token;
+  const img = userStore.image;
+  console.log(token);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({});
+  const [form, setForm] = useState({
+    image: null,
+    first_name: "",
+    last_name: "",
+    phone: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "phone" && isNaN(value)) {
+      return;
+    }
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+    console.log(value);
+  };
+
+  const handleImageChange = (e) => {
+    const { name, files } = e.target;
+    setForm((prevForm) => ({ ...prevForm, [name]: files[0] }));
+  };
+
+  const setImgProfile = () => {
+    // console.log(form.image);
+    if (form.image) {
+      return URL.createObjectURL(form.image);
+    }
+    if (img) {
+      return img;
+    }
+    return placeholder;
+  };
 
   const handleShowNew = () => {
     setShowNew(!showNew);
@@ -18,7 +62,48 @@ function Profile() {
     setShowConfirm(!showConfirm);
   };
 
-  console.log(showNew);
+  const fetching = async () => {
+    setIsLoading(true);
+    try {
+      const result = await getProfile(token, controller);
+      const resultData = result.data.data[0];
+      // console.log(resultData);
+      setData(resultData);
+      setForm({ ...resultData, image: null });
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const Submit = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await editProfile(
+        token,
+        form.first_name,
+        form.last_name,
+        form.phone,
+        form.image,
+        controller
+      );
+      const resultData = result.data.data[0];
+      const first_name = resultData.first_name;
+      const last_name = resultData.last_name;
+      const image = resultData.image;
+      const phone = resultData.phone;
+      dispatch(
+        usersAction.editProfile({ first_name, last_name, image, phone })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetching();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout title={"Profile"}>
@@ -36,20 +121,37 @@ function Profile() {
                 </div>
               </div>
               <div className="flex flex-col items-center mt-8">
-                <div className="w-[8.5rem] h-[8.5rem] rounded-full">
-                  <Image
-                    src={placeholder}
-                    alt="profile-img"
-                    className="w-full h-full object-cover rounded-full"
+                <label htmlFor="image">
+                  <div className="w-[8.5rem] h-[8.5rem] rounded-full">
+                    {isLoading ? (
+                      "Loading..."
+                    ) : (
+                      <Image
+                        src={setImgProfile()}
+                        alt="profile-img"
+                        width={200}
+                        height={200}
+                        className="w-full h-full object-contain rounded-full"
+                      />
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    hidden
+                    onChange={handleImageChange}
                   />
-                </div>
-                <p className="mt-8 font-semibold text-xl">Jonas El Rodriguez</p>
+                </label>
+                <p className="mt-8 font-semibold text-xl">{`${
+                  userStore.first_name
+                } ${" "} ${userStore.last_name}`}</p>
                 <p className="text-sm text-neutral">Moviegoers</p>
               </div>
             </div>
             <div className="pt-8 px-8 pb-20">
               <p className="mb-6">Loyalty Points</p>
-              <div className="w-[80%] md:w-[45%] lg:w-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
+              <div className="w-[80%] md:w-[45%] lg:w-full md:h-52 lg:h-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
                 <p>Moviegoers</p>
                 <p className="text-2xl mt-5">
                   320 <span className="text-xs">points</span>
@@ -87,6 +189,10 @@ function Profile() {
                       <input
                         type="text"
                         id="firstName"
+                        name="first_name"
+                        value={form.first_name}
+                        onChange={handleInputChange}
+                        placeholder="Input First Name"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -97,6 +203,10 @@ function Profile() {
                       <input
                         type="text"
                         id="lastName"
+                        name="last_name"
+                        value={form.last_name}
+                        onChange={handleInputChange}
+                        placeholder="Input Last Name"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -109,6 +219,9 @@ function Profile() {
                       <input
                         type="text"
                         id="email"
+                        value={data.email}
+                        disabled
+                        placeholder="Input Email"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                       />
                     </div>
@@ -119,6 +232,10 @@ function Profile() {
                       <input
                         type="text"
                         id="phoneNumber"
+                        name="phone"
+                        value={form.phone === "null" ? "" : form.phone}
+                        onChange={handleInputChange}
+                        placeholder="Input Number"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none  pl-20 pr-6 rounded focus:border-primary "
                       />
                       <span className="absolute left-0 bottom-3 px-4 py-2 border-r h-10">
@@ -138,6 +255,7 @@ function Profile() {
                     <input
                       type={showNew ? "text" : "password"}
                       id="firstName"
+                      placeholder="Input New Password"
                       className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border  outline-none py-5 px-6 rounded focus:border-primary"
                     />
                     <i
@@ -154,6 +272,7 @@ function Profile() {
                     <input
                       type={showConfirm ? "text" : "password"}
                       id="lastName"
+                      placeholder="Input Confirm Password"
                       className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
                     />
                     <i
@@ -164,7 +283,10 @@ function Profile() {
                     ></i>
                   </div>
                 </div>
-                <button className="mt-14 btn btn-primary w-full md:w-[40%]">
+                <button
+                  className="mt-14 btn btn-primary w-full md:w-[40%]"
+                  onClick={Submit}
+                >
                   Update changes
                 </button>
               </div>
