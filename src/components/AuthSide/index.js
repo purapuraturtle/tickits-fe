@@ -4,8 +4,8 @@ function SideForAuth() {
   const router = useRouter();
   return (
     <>
-      <div className="lg:flex-[1.5] min-[1440px]:flex-[1.3] w-full">
-        <div className="bg-hero-pattern object-cover w-full h-[1024px] bg-no-repeat hidden lg:inline-block">
+      <div className="lg:flex-[1.5] w-full">
+        <div className="bg-hero-pattern bg-cover w-full h-[1024px] bg-no-repeat hidden lg:inline-block bg-slate-300/20">
           {router.pathname === "/signup" && (
             <>
               <div className="pt-20 lg:ml-14 min-[1440px]:ml-28">

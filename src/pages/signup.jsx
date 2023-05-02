@@ -26,7 +26,7 @@ function Signup() {
     <>
       <div className="lg:flex">
         <SideForAuth />
-        <form className="lg:flex-[1] min-[1440px]:flex-[1.3] bg-slate-300/20">
+        <form className="lg:flex-[1] bg-slate-300/20">
           <div className="w-full m-auto ml-6 lg:m-[83px] mt-[54px] lg:mt-[176px] lg:w-[75%] ">
             <Image
               src="/logo.svg"
