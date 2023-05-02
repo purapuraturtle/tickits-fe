@@ -19,7 +19,7 @@ function Forgot() {
   return (
     <div className="lg:flex">
       <SideForAuth />
-      <div className="lg:flex-[1] min-[1440px]:flex-[1.3] bg-slate-300/20">
+      <div className="lg:flex-[1] bg-slate-300/20">
         <div className="ml-6 lg:ml-[83px] lg:mt-[176px] mt-14 lg:w-[77%]">
           <Image
             src="/logo.svg"

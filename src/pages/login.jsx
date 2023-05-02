@@ -29,7 +29,7 @@ function Login() {
     <>
       <div className="lg:flex">
         <SideForAuth />
-        <form className="lg:flex-[1] min-[1440px]:flex-[1.3] bg-slate-300/20">
+        <form className="lg:flex-[1] bg-slate-300/20">
           <div className="lg:ml-[83px] ml-6  mt-[55px] lg:w-[75%]">
             <Image
               src="/logo.svg"
