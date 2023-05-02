@@ -10,6 +10,14 @@ const nextConfig = {
         pathname: "/dare4eibk/image/upload/**",
       },
     ],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/dare4eibk/image/upload/**",
+      },
+    ],
   },
 };
 
