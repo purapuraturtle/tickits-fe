@@ -14,10 +14,10 @@ function Profile() {
   const dispatch = useDispatch();
   const controller = useMemo(() => new AbortController(), []);
   const userStore = useSelector((state) => state.user.data);
-  console.log(userStore);
+  // console.log(userStore);
   const token = userStore.token;
   const img = userStore.image;
-  console.log(img);
+  console.log(token);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [iconSave, setIconSave] = useState(false);
