@@ -50,7 +50,10 @@ function CardMovies(props) {
           />
         </div>
         <div className="flex justify-end gap-5 mt-auto">
-          <button className="btn btn-outline btn-primary flex-1">
+          <button
+            onClick={() => router.push(`/movies/${props.id}`)}
+            className="btn btn-outline btn-primary flex-1"
+          >
             Details
           </button>
           <button onClick={handleBooking} className="btn btn-primary flex-1">

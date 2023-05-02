@@ -3,7 +3,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { getMovies } from "@/utils/https/movies";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 function Movies() {

@@ -3,10 +3,32 @@ import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import placeholder from "@/Assets/profile/poster.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CardCinema from "@/components/CardCinema";
+import { useRouter } from "next/router";
+import { getMovieDetails } from "@/utils/https/movies";
 
 function MovieDetails() {
+  const router = useRouter();
+  const controller = useMemo(() => new AbortController(), []);
+  const [dataMovie, setDataMovie] = useState({});
+  // console.log(router.query.movie_id);
+
+  const fetching = async () => {
+    const movieId = router.query.movie_id;
+    try {
+      const result = await getMovieDetails(movieId, controller);
+      console.log(result);
+      setDataMovie(result.data.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetching();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const data = [
     {
       name: "ebv.id",
@@ -64,7 +86,7 @@ function MovieDetails() {
               <div className="p-5 md:w-[20.75rem] border border-primary rounded-2xl relative">
                 <span className="w-full h-full flex bg-slate-500">
                   <Image
-                    src={placeholder}
+                    src={dataMovie.image || placeholder}
                     alt="img-movie"
                     width={100}
                     height={100}
@@ -73,41 +95,40 @@ function MovieDetails() {
                 </span>
               </div>
               <div>
-                <h1 className="font-bold text-2xl">Spider-Man: Homecoming</h1>
+                <h1 className="font-bold text-2xl">
+                  {dataMovie.movie_name || "Title Movie"}
+                </h1>
                 <p className="text-[#4E4B66] text-lg">
-                  Adventure, Action, Sci-Fi
+                  {dataMovie.genre_name || "category"}
                 </p>
                 <div className="mt-8">
                   <p className="text-[#8692A6] text-sm">Release date</p>
-                  <p className="text-base">June 28, 2017</p>
+                  <p className="text-base">
+                    {dataMovie.release_date || "June 28, 2017"}
+                  </p>
                 </div>
                 <div className="mt-8">
                   <p className="text-[#8692A6] text-sm">Duration</p>
-                  <p className="text-base">2 hours 13 minutes </p>
+                  <p className="text-base">
+                    {`${dataMovie.duration_hour} hours, ${dataMovie.duration_minute} minutes` ||
+                      "2 hours 13 minutes"}
+                  </p>
                 </div>
                 <div className="mt-8">
                   <p className="text-[#8692A6] text-sm">Directed by</p>
-                  <p className="text-base">Jon Watss</p>
+                  <p className="text-base">
+                    {dataMovie.director || "director"}
+                  </p>
                 </div>
                 <div className="mt-8">
                   <p className="text-[#8692A6] text-sm">Casts</p>
-                  <p className="text-base">
-                    Tom Holland, Michael Keaton, Robert Downey Jr., ...
-                  </p>
+                  <p className="text-base">{dataMovie.aktors || "actors"}</p>
                 </div>
               </div>
             </div>
             <div className="mt-14">
               <h2 className="font-semibold text-xl">Synopsis</h2>
-              <p className="text-base">
-                Thrilled by his experience with the Avengers, Peter returns
-                home, where he lives with his Aunt May, under the watchful eye
-                of his new mentor Tony Stark, Peter tries to fall back into his
-                normal daily routine - distracted by thoughts of proving himself
-                to be more than just your friendly neighborhood Spider-Man - but
-                when the Vulture emerges as a new villain, everything that Peter
-                holds most important will be threatened.
-              </p>
+              <p className="text-base">{dataMovie.sinopsis || "synopsis"}</p>
             </div>
           </div>
           <div className="flex flex-col items-center mt-36">
