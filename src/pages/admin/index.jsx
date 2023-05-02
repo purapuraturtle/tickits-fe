@@ -28,6 +28,8 @@ function CreateSchedule() {
   const [teather, setTeather] = useState(0);
   const [addTime, setAddTime] = useState("");
   const [dataTime, setDataTime] = useState([]);
+  const [addPrice, setAddPrice] = useState("");
+  const [dataPrice, setDataPrice] = useState([]);
   const [image, setImage] = useState();
   const [form, setForm] = useState({
     movie_name: "",
@@ -109,7 +111,9 @@ function CreateSchedule() {
 
   const handleAddTime = () => {
     setDataTime([...dataTime, addTime]);
+    setDataPrice([...dataPrice, addPrice]);
     setAddTime("");
+    setAddPrice("");
   };
 
   useEffect(() => {
@@ -396,6 +400,13 @@ function CreateSchedule() {
                   className="flex-1 border border-primary-focus outline-none w-20 rounded-md px-4"
                   placeholder="ex 08:30"
                 />
+                <input
+                  type="text"
+                  value={addPrice}
+                  onChange={(e) => setAddPrice(e.target.value)}
+                  className="flex-1 border border-primary-focus outline-none w-20 rounded-md px-4"
+                  placeholder="set price"
+                />
 
                 <button
                   className="btn btn-primary btn-outline w-fit px-3 "
@@ -405,13 +416,18 @@ function CreateSchedule() {
                   <i className="bi bi-plus text-2xl"></i>
                 </button>
               </div>
-              <div className="w-full flex flex-wrap justify-center transition-all gap-4">
-                {dataTime.map((item, idx) => (
-                  <p key={idx} className="font-bold transition-all">
-                    {item}
-                  </p>
-                ))}
-              </div>
+              {dataTime.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="w-full flex justify-center gap-5 font-bold transition-all"
+                >
+                  <span className="flex gap-2">
+                    <p className="text-gray-400">Time : </p>
+                    <p>{item}</p>
+                  </span>
+                  <p>{dataPrice[idx]}</p>
+                </div>
+              ))}
             </div>
             <button className="btn btn-primary mt-10" onClick={handleSubmit}>
               Save

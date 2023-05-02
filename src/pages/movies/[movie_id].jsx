@@ -18,7 +18,7 @@ function MovieDetails() {
     const movieId = router.query.movie_id;
     try {
       const result = await getMovieDetails(movieId, controller);
-      console.log(result);
+      // console.log(result);
       setDataMovie(result.data.data[0]);
     } catch (error) {
       console.log(error);
