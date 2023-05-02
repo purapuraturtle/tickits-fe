@@ -16,21 +16,28 @@ const storeLogin = createAsyncThunk(
     try {
       const response = await login(email, password);
       const { data } = response;
-      return fulfillWithValue(data);
+      return fulfillWithValue(data.data);
     } catch (err) {
       return rejectWithValue(err);
     }
   }
 );
 
+
 const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    reset: (prevState) => {
+    editProfile: (prevState, action) => {
       return {
         ...prevState,
-        data: [],
+        data: {
+          ...prevState.data,
+          first_name: action.payload.first_name,
+          last_name: action.payload.last_name,
+          image: action.payload.image,
+          phone: action.payload.phone,
+        },
       };
     },
   },

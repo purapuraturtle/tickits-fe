@@ -7,15 +7,21 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { getProfile, editProfile } from "@/utils/https/user";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { usersAction } from "@/redux/slice/users";
 
 function Profile() {
+  const dispatch = useDispatch();
   const controller = useMemo(() => new AbortController(), []);
-  const userStore = useSelector((state) => state.user.data.data);
-  // console.log(userStore);
+  const userStore = useSelector((state) => state.user.data);
+  console.log(userStore);
   const token = userStore.token;
+  const img = userStore.image;
+  console.log(img);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [iconSave, setIconSave] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
   const [form, setForm] = useState({
     image: null,
@@ -42,8 +48,12 @@ function Profile() {
   };
 
   const setImgProfile = () => {
+    // console.log(form.image);
     if (form.image) {
       return URL.createObjectURL(form.image);
+    }
+    if (img) {
+      return img;
     }
     return placeholder;
   };
@@ -57,12 +67,14 @@ function Profile() {
   };
 
   const fetching = async () => {
+    setIsLoading(true);
     try {
       const result = await getProfile(token, controller);
       const resultData = result.data.data[0];
       // console.log(resultData);
       setData(resultData);
-      setForm(resultData);
+      setForm({ ...resultData, image: null });
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +91,15 @@ function Profile() {
         form.image,
         controller
       );
-      console.log(result.data.data[0]);
+      const resultData = result.data.data[0];
+      const first_name = resultData.first_name;
+      const last_name = resultData.last_name;
+      const image = resultData.image;
+      const phone = resultData.phone;
+      dispatch(
+        usersAction.editProfile({ first_name, last_name, image, phone })
+      );
+      setIconSave(false);
     } catch (error) {
       console.log(error);
     }
@@ -108,13 +128,17 @@ function Profile() {
               <div className="flex flex-col items-center mt-8">
                 <label htmlFor="image">
                   <div className="w-[8.5rem] h-[8.5rem] rounded-full">
-                    <Image
-                      src={setImgProfile()}
-                      alt="profile-img"
-                      width={200}
-                      height={200}
-                      className="w-full h-full object-contain rounded-full"
-                    />
+                    {isLoading ? (
+                      "Loading..."
+                    ) : (
+                      <Image
+                        src={setImgProfile()}
+                        alt="profile-img"
+                        width={50}
+                        height={50}
+                        className="w-full h-full object-contain rounded-full"
+                      />
+                    )}
                   </div>
                   <input
                     type="file"
@@ -137,7 +161,7 @@ function Profile() {
             </div>
             <div className="pt-8 px-8 pb-20">
               <p className="mb-6">Loyalty Points</p>
-              <div className="w-[80%] md:w-[45%] lg:w-full md:h-40 lg:h-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
+              <div className="w-[80%] md:w-[45%] lg:w-full md:h-52 lg:h-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
                 <p>Moviegoers</p>
                 <p className="text-2xl mt-5">
                   320 <span className="text-xs">points</span>
