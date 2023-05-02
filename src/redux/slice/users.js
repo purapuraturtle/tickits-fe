@@ -1,19 +1,9 @@
-import { login } from '@/utils/https/authaxios';
-import {
-  createAsyncThunk,
-  createSlice,
-} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import { login } from "@/utils/https/authaxios";
 
 const initialState = {
-  data: {
-    token: "",
-    role_id: "",
-    email: "",
-    phone: "",
-    first_name: "",
-    last_name: "",
-    image: null,
-  },
+  data: [],
   isLoading: false,
   isRejected: false,
   isFulfilled: false,
@@ -41,12 +31,6 @@ const userSlice = createSlice({
       return {
         ...prevState,
         data: [],
-      };
-    },
-    updateData: (prevState, action) => {
-      return {
-        ...prevState,
-        data: action.payload,
       };
     },
   },
@@ -82,6 +66,6 @@ const userSlice = createSlice({
 export const usersAction = {
   ...userSlice.actions,
   storeLogin,
-  updateData, // menambahkan aksi baru untuk memperbarui data
 };
 export default userSlice.reducer;
+2;
