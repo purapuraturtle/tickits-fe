@@ -106,7 +106,7 @@ function Header() {
                   <div className="avatar absolute h-full -translate-y-5">
                     <div className="w-14 h-14 rounded-full">
                       <Image
-                        src={user.data?.data?.image || "/images/profile.png"}
+                        src={user.data?.image || "/images/profile.png"}
                         alt="photo"
                         width={56}
                         height={56}
@@ -229,7 +229,7 @@ function Header() {
                   <div className="avatar h-full">
                     <div className="w-10 h-10 rounded-full">
                       <Image
-                        src={user.data.data.image || "/images/profile.png"}
+                        src={user.data.image || "/images/profile.png"}
                         alt="photo"
                         width={56}
                         height={56}
@@ -237,7 +237,7 @@ function Header() {
                     </div>
                   </div>
                   <div className="">
-                    <p className="font-semibold">{`${user.data.data.first_name} ${user.data.data.last_name}`}</p>
+                    <p className="font-semibold">{`${user.data.first_name} ${user.data.last_name}`}</p>
                   </div>
                 </div>
               </div>
