@@ -20,7 +20,6 @@ function Profile() {
   console.log(token);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [iconSave, setIconSave] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
   const [form, setForm] = useState({
@@ -42,9 +41,6 @@ function Profile() {
   const handleImageChange = (e) => {
     const { name, files } = e.target;
     setForm((prevForm) => ({ ...prevForm, [name]: files[0] }));
-    if (e) {
-      setIconSave((prevState) => !prevState);
-    }
   };
 
   const setImgProfile = () => {
@@ -99,7 +95,6 @@ function Profile() {
       dispatch(
         usersAction.editProfile({ first_name, last_name, image, phone })
       );
-      setIconSave(false);
     } catch (error) {
       console.log(error);
     }
@@ -148,13 +143,6 @@ function Profile() {
                     onChange={handleImageChange}
                   />
                 </label>
-                {iconSave && (
-                  <button className="btn btn-primary btn-outline px-4">
-                    <i className="bi bi-check-square text-xl cursor-pointer">
-                      <span className="text-lg"> Save</span>
-                    </i>
-                  </button>
-                )}
                 <p className="mt-8 font-semibold text-xl">Jonas El Rodriguez</p>
                 <p className="text-sm text-neutral">Moviegoers</p>
               </div>
