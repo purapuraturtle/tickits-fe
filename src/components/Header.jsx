@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
-import SearchBar from "./SearchBar";
+import SearchBar from './SearchBar';
 
 function Header() {
   const navList = [
@@ -26,6 +27,8 @@ function Header() {
   const [search, setSearch] = useState("");
   const [searchBar, setSearchBar] = useState(false);
   const [drawer, setDrawer] = useState(false);
+
+  const user = useSelector((state) => state.user);
 
   const router = useRouter();
 
@@ -97,15 +100,30 @@ function Header() {
                 />
               </div>
             </div>
-            <div className="m-auto">
-              <div>
-                <button
-                  className="btn btn-primary text-white btn-sm h-10 m-auto"
-                  onClick={() => navigate("/signup")}
-                >
-                  Sign Up
-                </button>
-              </div>
+            <div className="m-auto relative min-w-[3rem] min-h-[1rem]">
+              {user.isFulfilled ? (
+                <Link href={"/profile"}>
+                  <div className="avatar absolute h-full -translate-y-5">
+                    <div className="w-14 h-14 rounded-full">
+                      <Image
+                        src={user.image || "/images/profile.png"}
+                        alt="photo"
+                        width={56}
+                        height={56}
+                      />
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <div>
+                  <button
+                    className="btn btn-primary text-white btn-sm h-10 m-auto"
+                    onClick={() => navigate("/signup")}
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="flex lg:hidden" key={"drawerBtnParent"}>
