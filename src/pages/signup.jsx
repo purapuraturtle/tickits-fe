@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { register } from "@/utils/https/authaxios";
 import { useRouter } from "next/router";
-
+import Layout from "@/components/Layout";
 function Signup() {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -23,7 +23,7 @@ function Signup() {
     }
   };
   return (
-    <>
+    <Layout title={"Sign Up"}>
       <div className="lg:flex">
         <SideForAuth />
         <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
@@ -120,7 +120,7 @@ function Signup() {
           </div>
         </form>
       </div>
-    </>
+    </Layout>
   );
 }
 

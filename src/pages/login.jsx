@@ -1,4 +1,5 @@
 import SideForAuth from "@/components/AuthSide";
+import Layout from "@/components/Layout";
 import { usersAction } from "@/redux/slice/users";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -26,7 +27,7 @@ function Login() {
     });
   };
   return (
-    <>
+    <Layout title={"Login"}>
       <div className="lg:flex">
         <SideForAuth />
         <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
@@ -112,7 +113,7 @@ function Login() {
           </div>
         </form>
       </div>
-    </>
+    </Layout>
   );
 }
 

@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import { useState } from "react";
+import Layout from "@/components/Layout";
 
 function Payment() {
   const [active, setActive] = useState(null);
@@ -10,7 +11,7 @@ function Payment() {
     setActive(index);
   };
   return (
-    <>
+    <Layout title={"Payment"}>
       <Header />
       <div className="flex min-[1300px]:flex-row  flex-col-reverse min-[1300px]:justify-between bg-slate-300/20 gap-6">
         <div className="pl-6 lg:pl-32 min-[1300px]:flex-[1.5] mr-6 lg:mr-32 min-[1300px]:mr-0">
@@ -169,7 +170,7 @@ function Payment() {
         </div>
       </div>
       <Footer />
-    </>
+    </Layout>
   );
 }
 

@@ -14,10 +14,8 @@ function Profile() {
   const dispatch = useDispatch();
   const controller = useMemo(() => new AbortController(), []);
   const userStore = useSelector((state) => state.user.data);
-  console.log(userStore);
-  const token = userStore.token;
+  const token = useSelector((state) => state.user.data?.data?.token);
   const img = userStore.image;
-  console.log(img);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [iconSave, setIconSave] = useState(false);
@@ -36,7 +34,6 @@ function Profile() {
       return;
     }
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
-    console.log(value);
   };
 
   const handleImageChange = (e) => {
@@ -100,6 +97,7 @@ function Profile() {
         usersAction.editProfile({ first_name, last_name, image, phone })
       );
       setIconSave(false);
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
