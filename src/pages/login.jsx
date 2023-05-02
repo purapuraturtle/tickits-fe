@@ -1,10 +1,12 @@
 import SideForAuth from "@/components/AuthSide";
 import { usersAction } from "@/redux/slice/users";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 function Login() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
@@ -18,19 +20,19 @@ function Login() {
       .unwrap()
       .then((response) => {
         console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+    router.push("/").catch((err) => {
+      console.log(err);
+    });
   };
   return (
     <>
       <div className="lg:flex">
         <SideForAuth />
-        <form className="lg:flex-[1] min-[1440px]:flex-[1.3]">
+        <form className="lg:flex-[1] min-[1440px]:flex-[1.3] bg-slate-300/20">
           <div className="lg:ml-[83px] ml-6  mt-[55px] lg:w-[75%]">
             <Image
-              src="/icon-blue.svg"
+              src="/logo.svg"
               width={120}
               height={62}
               className="lg:hidden "
@@ -64,13 +66,20 @@ function Login() {
             <button
               type="submit"
               onClick={handleLogin}
-              className="flex justify-center rounded bg-[#9570FE] text-white font--bold p-5 w-[95%]  h-[64px] mt-7"
+              className="flex justify-center rounded btn-primary text-white font--bold p-5 w-[95%]  h-[64px] mt-7"
             >
               Sign In
             </button>
             <p className="text-[#696F79] mt-8 text-center">
               Forgot your password?{" "}
-              <span className="text-[#9570FE] cursor-pointer">Reset now</span>
+              <span
+                onClick={() => {
+                  router.push("/reset-password");
+                }}
+                className="text-[#9570FE] cursor-pointer"
+              >
+                Reset now
+              </span>
             </p>
             <div className="flex items-center justify-center mt-10 w-[95%]">
               <hr className="w-[40%]  h-[1px] bg-[#dedede]" />
