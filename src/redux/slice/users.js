@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { login } from "@/utils/https/allAxios";
+import { login } from "@/utils/https/authaxios";
 
 const initialState = {
   data: [],

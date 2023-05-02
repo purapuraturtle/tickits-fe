@@ -1,5 +1,5 @@
 import SideForAuth from "@/components/AuthSide";
-import { checkEmail } from "@/utils/https/allAxios";
+import { checkEmail } from "@/utils/https/authaxios";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ function Forgot() {
   return (
     <div className="lg:flex">
       <SideForAuth />
-      <div className="lg:flex-[1] min-[1440px]:flex-[1.3]">
+      <div className="lg:flex-[1] min-[1440px]:flex-[1.3] bg-slate-300/20">
         <div className="ml-6 lg:ml-[83px] lg:mt-[176px] mt-14 lg:w-[77%]">
           <Image
             src="/logo.svg"

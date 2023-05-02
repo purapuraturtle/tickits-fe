@@ -1,7 +1,7 @@
 import SideForAuth from "@/components/AuthSide";
 import Image from "next/image";
 import { useState } from "react";
-import { register } from "@/utils/https/allAxios";
+import { register } from "@/utils/https/authaxios";
 import { useRouter } from "next/router";
 
 function Signup() {
@@ -26,7 +26,7 @@ function Signup() {
     <>
       <div className="lg:flex">
         <SideForAuth />
-        <form className="lg:flex-[1] min-[1440px]:flex-[1.3]">
+        <form className="lg:flex-[1] min-[1440px]:flex-[1.3] bg-slate-300/20">
           <div className="w-full m-auto ml-6 lg:m-[83px] mt-[54px] lg:mt-[176px] lg:w-[75%] ">
             <Image
               src="/logo.svg"

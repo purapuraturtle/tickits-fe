@@ -67,7 +67,7 @@ function SideForAuth() {
               </p>
             </>
           )}
-          {router.pathname === "/forgot" && (
+          {router.pathname === "/reset-password" && (
             <>
               <div className="pt-20 lg:ml-10 min-[1440px]:ml-28">
                 <div className="">
@@ -123,7 +123,7 @@ function SideForAuth() {
               </div>
             </>
           )}
-          {router.pathname === "/forgot/[otp]" && (
+          {router.pathname === "/reset-password/[otp]" && (
             <>
               <div className="pt-20 lg:ml-10 min-[1440px]:ml-28">
                 <div className="">
