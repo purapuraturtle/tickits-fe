@@ -61,6 +61,7 @@ function Movies() {
   };
 
   const addMovie = (id, name) => {
+    dispatch(orderAction.resetOrder());
     const payload = { id: id, name: name };
     dispatch(orderAction.addMovieId(payload));
     handleNavigate(`/movies/${id}`);
