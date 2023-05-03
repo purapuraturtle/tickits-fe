@@ -1,15 +1,14 @@
-import { useState } from "react";
-
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
-import { register } from "@/utils/https/authaxios";
+import { register } from "@/utils/https/auth";
 
 function Signup() {
+  const controller = useMemo(() => new AbortController(), []);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,6 +17,7 @@ function Signup() {
   });
   const [msg, setMsg] = useState("");
   const [invalid, setInvalid] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
 
   const handleCheckboxChange = () => {
@@ -26,32 +26,20 @@ function Signup() {
   const handleSignUp = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    const { email, password } = formData;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
-    if (!emailRegex.test(email)) {
-      setMsg("Email is invalid!");
-      setInvalid(true);
-      setIsLoading(false);
-      return;
-    }
-    if (!passwordRegex.test(password)) {
-      setMsg(
-        "Password must be at least 6 characters and contain at least 1 uppercase letter."
-      );
-      setInvalid(true);
-      setIsLoading(false);
-      return;
-    }
-
     try {
       const { email, password } = formData;
-      const result = await register(email, password);
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setMsg("Email is invalid!");
+        setInvalid(true);
+        setIsLoading(false);
+        return;
+      }
+      const result = await register(email, password, controller);
       console.log(result);
       setMsg("create account success");
-      setTimeout(() => {
-        router.push("/login");
-      }, 700);
+      setSuccess(true);
+      router.push("/login");
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -65,7 +53,7 @@ function Signup() {
       <Layout title={"Sign Up"}>
         <div className="lg:flex">
           <SideForAuth />
-          <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
+          <form className="lg:flex-[1] bg-slate-300/20 h-full">
             <div className=" ml-6 lg:ml-[83px] pt-[54px] lg:pt-[176px] lg:w-[75%] ">
               <Link href={"/"}>
                 <Image
@@ -121,7 +109,10 @@ function Signup() {
                   <span className="text-[#696F79] ml-[21px] hidden lg:inline-block">
                     I agree to terms & conditions
                   </span>
-                  <p className="text-info text-center mt-4">{invalid || msg}</p>
+                  <p className="text-info text-center mt-4">{invalid && msg}</p>
+                  <p className="text-success text-center mt-4">
+                    {success && msg}
+                  </p>
                 </label>
               </div>
               {isLoading ? (
@@ -154,7 +145,7 @@ function Signup() {
                 <p className="text-[#aaaaaa] ml-9 text-xs">Or</p>
                 <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede] ml-9" />
               </div>
-              <div className="flex justify-center w-[95%]">
+              <div className="flex justify-center w-[95%] pb-[181px]">
                 <div className="flex cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-full h-[64px]">
                   <Image
                     src="/google.svg"

@@ -87,10 +87,10 @@ function Payment() {
     <PrivateRouteNotLogin>
       <Layout title={"Payment"}>
         <Header />
-        <div className="flex min-[1300px]:flex-row  flex-col-reverse min-[1300px]:justify-between bg-slate-300/20 gap-6">
-          <div className="pl-6 lg:pl-32 min-[1300px]:flex-[1.5] mr-6 lg:mr-32 min-[1300px]:mr-0">
+        <div className="flex md:flex-row  flex-col-reverse md:justify-between bg-slate-300/20 gap-6">
+          <div className="pl-10 lg:pl-32 md:flex-[1.5] mr-6 lg:mr-0 md:mr-0">
             <div className="">
-              <p className="text-[#14142B] text-2xl pt-10 min-[1300px]:pt-[152px] font-bold">
+              <p className="text-[#14142B] text-2xl pt-10 md:pt-[152px] font-bold">
                 Payment Info
               </p>
               <div className="bg-white mt-6 h-full">
@@ -150,7 +150,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(1)}
                   >
-                    <Image src="/gpay.svg" width={74} height={30} />
+                    <Image
+                      src="/gpay.svg"
+                      alt="logo-payment"
+                      width={74}
+                      height={30}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -158,7 +163,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(2)}
                   >
-                    <Image src="/visa.svg" width={80} height={25.9} />
+                    <Image
+                      src="/visa.svg"
+                      alt="logo-payment"
+                      width={80}
+                      height={25.9}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -166,7 +176,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(3)}
                   >
-                    <Image src="/gopay.svg" width={106} height={35} />
+                    <Image
+                      src="/gopay.svg"
+                      alt="logo-payment"
+                      width={106}
+                      height={35}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -174,7 +189,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(4)}
                   >
-                    <Image src="/paypal.svg" width={31} height={37} />
+                    <Image
+                      src="/paypal.svg"
+                      alt="logo-payment"
+                      width={31}
+                      height={37}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -182,7 +202,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(5)}
                   >
-                    <Image src="/dana.svg" width={108} height={31} />
+                    <Image
+                      src="/dana.svg"
+                      alt="logo-payment"
+                      width={108}
+                      height={31}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -190,7 +215,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(6)}
                   >
-                    <Image src="/bca.svg" width={85} height={28} />
+                    <Image
+                      src="/bca.svg"
+                      alt="logo-payment"
+                      width={85}
+                      height={28}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -198,7 +228,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(7)}
                   >
-                    <Image src="/bri.svg" width={45} height={38} />
+                    <Image
+                      src="/bri.svg"
+                      alt="logo-payment"
+                      width={45}
+                      height={38}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center ${
@@ -206,7 +241,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(8)}
                   >
-                    <Image src="/ovo.svg" width={92} height={30} />
+                    <Image
+                      src="/ovo.svg"
+                      alt="logo-payment"
+                      width={92}
+                      height={30}
+                    />
                   </div>
                 </div>
                 <div className="flex items-center justify-center mt-10">
@@ -226,19 +266,19 @@ function Payment() {
                   onClick={() => {
                     router.push("/order");
                   }}
-                  className="btn btn-outline btn-primary rounded w-[300px] flex items-center h-14"
+                  className="btn btn-outline btn-primary rounded flex-[1] flex items-center h-14"
                 >
                   Previous step
                 </button>
                 {isLoading ? (
-                  <button className="btn btn-primary loading rounded w-[300px] h-14">
+                  <button className="btn btn-primary loading rounded flex-[1] h-14">
                     Loading
                   </button>
                 ) : (
                   <button
                     onClick={handlePayOrder}
                     disabled={active === "" || fill === true}
-                    className="btn btn-primary rounded w-[300px] h-14"
+                    className="btn btn-primary rounded flex-[1] h-14"
                   >
                     Pay your order
                   </button>
@@ -246,7 +286,7 @@ function Payment() {
               </div>
             </div>
           </div>
-          <div className="ml-6 lg:ml-32 min-[1300px]:ml-0 min-[1300px]:w-[400px] h-[548px] bg-white mt-[206px] mr-6 lg:mr-32 min-[1300px]:flex-[1]">
+          <div className="ml-6 md:ml-0 md:w-[400px] h-[548px] bg-white mt-[206px] mr-6 md:mr-10 lg:mr-32 md:flex-[1] overflow-hidden">
             <p className="ml-10 mt-12 text-[#696F79]">Full Name</p>
             <input
               disabled
@@ -258,21 +298,21 @@ function Payment() {
                   ? ""
                   : firstName + " " + lastName
               }
-              className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
+              className="w-[90%]  ml-10 flex md:w-[70%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded mt-[14px] pl-4"
               placeholder="Input your full name"
             />
             <p className="ml-10 mt-12 text-[#696F79]">Email</p>
             <input
               disabled
               value={email}
-              className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
+              className="w-[90%] md:w-[70%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
               placeholder="Input your full email"
             />
             <p className="ml-10 mt-12 text-[#696F79]">Phone Number</p>
             <input
               disabled
               value={phone === "null" || phone === null ? "" : phone}
-              className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
+              className="w-[90%] md:w-[70%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
               placeholder="Input your phone number"
             />
             {fill && (

@@ -25,10 +25,15 @@ This application is built using React.js, Next.js, Redux, axios, Lodash, Chart.j
 
 ## Features
 
-Tickitz has several main features:
+### Public
 
--
--
+- Login
+- Register
+- Forgot Password
+- Booking Movie
+- Payment Ticket
+- Edit Profile
+- Etc
 
 ## How to run the application
 
@@ -45,4 +50,12 @@ If you would like to contribute to this project, please send a pull request to t
 
 ## Documentation
 
-Waiting
+<img width="500" src="./public/readme/tickits8.png" alt="Landing page">
+<img width="500" src="./public/readme/tickits1.png" alt="Landing page">
+<img width="500" src="./public/readme/tickits2.png" alt="Landing page">
+<img width="500" src="./public/readme/tickits3.png" alt="Landing page">
+<img width="500" src="./public/readme/tickits4.png" alt="Landing page">
+<img width="500" src="./public/readme/tickits5.png" alt="Landing page">
+<img width="500" src="./public/readme/tickits6.png" alt="Landing page">
+<img width="500" src="./public/readme/tickits7.png" alt="Landing page">
+

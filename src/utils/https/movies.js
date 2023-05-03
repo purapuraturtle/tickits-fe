@@ -8,8 +8,8 @@ export const getGenre = (controller) => {
 };
 
 export const getMovies = (params, controller) => {
-  const { limit, page, search } = params;
-  const url = `${baseUrl}/movie?limit=${limit}&page=${page}&search=${search}`;
+  const { limit, page = 1, search = "", sort = "" } = params;
+  const url = `${baseUrl}/movie?limit=${limit}&page=${page}&search=${search}&sort=${sort}`;
   return axios.get(url, { signal: controller.signal });
 };
 
@@ -18,7 +18,8 @@ export const getMovieDetails = (movieId, controller) => {
   return axios.get(url, { signal: controller.signal });
 };
 
-export const getStudioTime = (controller) => {
-  const url = `${baseUrl}/teather`;
+export const getStudioTime = (info, controller) => {
+  const url = `${baseUrl}/teather?open_date=${info}`;
+  console.log(url);
   return axios.get(url, { signal: controller.signal });
 };

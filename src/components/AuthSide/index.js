@@ -7,8 +7,8 @@ function SideForAuth() {
   return (
     <>
       <div className="lg:flex-[1.5] w-full">
-        <div className="bg-hero-pattern bg-[#4f3c81] bg-cover w-full h-[1024px] bg-no-repeat hidden lg:inline-block bg-slate-300/20">
-          <div className="bg-primary/70 h-[1024px]  ">
+        <div className="bg-hero-pattern bg-[#4f3c81] bg-cover w-full h-full bg-no-repeat hidden lg:inline-block bg-slate-300/20">
+          <div className="bg-primary/70 h-full  ">
             {router.pathname === "/signup" && (
               <>
                 <div className="pt-20 lg:ml-14 min-[1440px]:ml-28">

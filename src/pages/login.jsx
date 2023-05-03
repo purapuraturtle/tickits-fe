@@ -6,7 +6,7 @@ import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
 import { usersAction } from "@/redux/slice/users";
-import { login } from "@/utils/https/authaxios";
+import { login } from "@/utils/https/auth";
 
 function Login() {
   const controller = useMemo(() => new AbortController(), []);
@@ -32,7 +32,7 @@ function Login() {
         setIsLoading(false);
         return;
       }
-      const result = await login(email, password, controller);
+      await login(email, password, controller);
       // console.log(result);
       dispatch(usersAction.storeLogin({ email, password, controller }));
       setIsLoading(false);
@@ -50,7 +50,7 @@ function Login() {
       <Layout title={"Login"}>
         <div className="lg:flex">
           <SideForAuth />
-          <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
+          <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-full">
             <div className=" ml-6 lg:ml-[83px] pt-[54px] lg:pt-[176px] lg:w-[75%] ">
               <Image
                 src="/images/logo.svg"
@@ -100,7 +100,8 @@ function Login() {
                   onClick={handleLogin}
                   disabled={
                     (formData.password === "" && formData.password === "") ||
-                    invalid
+                    invalid ||
+                    isLoading
                   }
                   className="btn btn-primary w-[94%] rounded mt-7"
                 >
@@ -125,7 +126,7 @@ function Login() {
                 <p className="text-[#aaaaaa] ml-9 text-xs">Or</p>
                 <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede] ml-9" />
               </div>
-              <div className="flex justify-center w-[95%]">
+              <div className="flex justify-center w-[95%] pb-[181px]">
                 <div className="flex cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-full h-[64px]">
                   <Image
                     src="/google.svg"

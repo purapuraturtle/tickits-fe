@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
+import { orderAction } from "@/redux/slice/order";
 import { usersAction } from "@/redux/slice/users";
 import { logout } from "@/utils/https/user";
 
@@ -28,6 +29,7 @@ function Logout({ isOpen, onClose, handler }) {
         setIsLoading(false);
         router.push("/login");
         dispatch(usersAction.logout());
+        dispatch(orderAction.resetOrder());
       })
       .catch((err) => {
         setIsLoading(false);

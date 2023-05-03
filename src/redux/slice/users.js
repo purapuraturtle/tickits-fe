@@ -1,4 +1,4 @@
-import { login } from "@/utils/https/authaxios";
+import { login } from "@/utils/https/auth";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

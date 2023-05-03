@@ -6,7 +6,7 @@ import Link from "next/link";
 import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
-import { checkEmail } from "@/utils/https/authaxios";
+import { checkEmail } from "@/utils/https/auth";
 
 function Forgot() {
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ function Forgot() {
       <Layout title={"Reset Password"}>
         <div className="lg:flex">
           <SideForAuth />
-          <div className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
+          <div className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-full pb-[533px]">
             <div className="ml-6 lg:ml-[83px] lg:pt-[176px] pt-14 lg:w-[77%]">
               <Link href={"/"}>
                 <Image

@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
-import { resetPassword } from "@/utils/https/authaxios";
+import { resetPassword } from "@/utils/https/auth";
 
 function ResetPassword({ isValidId }) {
   const router = useRouter();

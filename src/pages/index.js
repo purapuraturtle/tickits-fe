@@ -6,10 +6,18 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import { getMovies } from "@/utils/https/movies";
+import { useDispatch } from "react-redux";
+import { orderAction } from "@/redux/slice/order";
 
 function Home({ movies, error }) {
+  const dispatch = useDispatch();
   const router = useRouter();
   const handleNavigate = (url) => router.push(url);
+  const addMovie = (id, name) => {
+    const payload = { id: id, name: name };
+    dispatch(orderAction.addMovieId(payload));
+    handleNavigate(`/movies/${id}`);
+  };
 
   return (
     <Layout>
@@ -148,7 +156,7 @@ function Home({ movies, error }) {
               <button
                 className="mt-auto btn btn-sm btn-block btn-accent border-primary text-primary font-normal hover:border-primary-focus"
                 onClick={() => {
-                  handleNavigate(`/movies/${id}`);
+                  addMovie(id, movie_name);
                 }}
               >
                 Details
