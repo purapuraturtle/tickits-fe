@@ -70,10 +70,20 @@ function Profile() {
       );
       console.log(result);
       const resultData = result.data.data[0];
-      const first_name = resultData.first_name;
-      const last_name = resultData.last_name;
+      let first_name = resultData.first_name;
+      let last_name = resultData.last_name;
+      if (first_name === "null") {
+        first_name = null;
+      }
+      if (last_name === "null") {
+        last_name = null;
+      }
+
       const image = resultData.image;
-      const phone = resultData.phone;
+      let phone = resultData.phone;
+      if (phone === "null") {
+        phone = null;
+      }
       dispatch(
         usersAction.editProfile({ first_name, last_name, image, phone })
       );
@@ -105,7 +115,7 @@ function Profile() {
                         "Loading..."
                       ) : (
                         <Image
-                          src={blop || formData.image || "/visa.svg"}
+                          src={blop || formData.image || placeholder}
                           alt="profile-img"
                           width={200}
                           height={200}
@@ -123,8 +133,10 @@ function Profile() {
                   </label>
                   <p className="mt-8 font-semibold text-xl">
                     {firstLast.firstName || firstLast.lastName
-                      ? firstLast.firstName + " " + firstLast.lastName
-                      : ""}
+                      ? firstLast.firstName && firstLast.lastName
+                        ? `${firstLast.firstName} ${firstLast.lastName}`
+                        : firstLast.firstName || firstLast.lastName
+                      : " "}
                   </p>
 
                   <p className="text-sm text-neutral">Moviegoers</p>
