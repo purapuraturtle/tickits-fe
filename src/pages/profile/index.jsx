@@ -11,7 +11,7 @@ import Header from "@/components/Header";
 import Layout from "@/components/Layout";
 import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
 import { usersAction } from "@/redux/slice/users";
-import { editPassword } from "@/utils/https/authaxios";
+import { editPassword } from "@/utils/https/auth";
 import { editProfile } from "@/utils/https/user";
 
 function Profile() {

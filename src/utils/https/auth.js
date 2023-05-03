@@ -2,13 +2,15 @@ import axios from "axios";
 
 const baseUrl = process.env.NEXT_PUBLIC_ANALYTICS_ID;
 
-export const register = (email, password) => {
+export const register = (email, password, controller) => {
   const body = {
     email: email,
     password: password,
   };
   const url = `https://tickits-be.vercel.app/auth/register`;
-  return axios.post(url, body);
+  return axios.post(url, body, {
+    signal: controller.signal
+  });
 };
 
 export const login = (email, password, controller) => {
@@ -17,7 +19,9 @@ export const login = (email, password, controller) => {
     password: password,
   };
   const url = `${baseUrl}/auth/login`;
-  return axios.post(url, body, { signal: controller.signal });
+  return axios.post(url, body, {
+    signal: controller.signal
+  });
 };
 
 export const checkEmail = (email) => {

@@ -1,15 +1,14 @@
-import { useState } from "react";
-
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
-import { register } from "@/utils/https/authaxios";
+import { register } from "@/utils/https/auth";
 
 function Signup() {
+  const controller = useMemo(() => new AbortController(), []);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -26,15 +25,14 @@ function Signup() {
   const handleSignUp = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-
     try {
       const { email, password } = formData;
-      const result = await register(email, password);
+      const result = await register(email, password, controller);
       console.log(result);
       setMsg("create account success");
       setTimeout(() => {
         router.push("/login");
-      }, 700);
+      }, 1000);
     } catch (error) {
       console.log(error);
       setIsLoading(false);

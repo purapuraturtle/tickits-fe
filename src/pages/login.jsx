@@ -6,7 +6,7 @@ import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
 import { usersAction } from "@/redux/slice/users";
-import { login } from "@/utils/https/authaxios";
+import { login } from "@/utils/https/auth";
 
 function Login() {
   const controller = useMemo(() => new AbortController(), []);
@@ -100,7 +100,8 @@ function Login() {
                   onClick={handleLogin}
                   disabled={
                     (formData.password === "" && formData.password === "") ||
-                    invalid
+                    invalid ||
+                    isLoading
                   }
                   className="btn btn-primary w-[94%] rounded mt-7"
                 >
