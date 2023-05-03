@@ -28,6 +28,24 @@ export const checkEmail = (email) => {
   return axios.post(url, body);
 };
 
+export const editPassword = (
+  token,
+  { newPassword, confirmPassword },
+  controller
+) => {
+  const body = {
+    newPassword: newPassword,
+    confirmPassword: confirmPassword,
+  };
+  const url = `https://tickits-be.vercel.app/auth/edit-password`;
+  return axios.patch(url, body, {
+    signal: controller.signal,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const resetPassword = (id, newPassword, confirmPassword) => {
   const body = {
     newPassword: newPassword,

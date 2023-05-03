@@ -1,15 +1,18 @@
+import { useMemo, useState } from "react";
+
+import _ from "lodash";
 import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Layout from "@/components/Layout";
-import placeholder from "@/Assets/profile/placeholder.png";
-import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { getProfile, editProfile } from "@/utils/https/user";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { usersAction } from "@/redux/slice/users";
+import { useDispatch, useSelector } from "react-redux";
+
+import placeholder from "@/Assets/profile/placeholder.png";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Layout from "@/components/Layout";
 import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
+import { usersAction } from "@/redux/slice/users";
+import { editPassword } from "@/utils/https/authaxios";
+import { editProfile } from "@/utils/https/user";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -27,8 +30,20 @@ function Profile() {
     lastName: userStore.last_name,
     email: userStore.email,
     phone: userStore.phone,
+    newPassword: "",
+    confirmPassword: "",
     file: null,
   });
+
+  const initialErr = {
+    newPassword: "",
+    confirmPassword: "",
+    form: "",
+    success: false,
+  };
+
+  const [error, setError] = useState({ ...initialErr });
+
   const handleFirstName = (e) => {
     setFormData({ ...formData, firstName: e.target.value });
   };
@@ -56,7 +71,31 @@ function Profile() {
   const Submit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const file = formData.file ? formData.file : formData.image;
+
+      if (formData.newPassword !== "" && formData.confirmPassword !== "") {
+        if (!_.isEqual(formData.newPassword, formData.confirmPassword)) {
+          setError({
+            ...initialErr,
+            confirmPassword: "Must match the new password",
+            form: "Must match the new password",
+          });
+          setIsLoading(false);
+
+          return;
+        }
+        const editPass = await editPassword(
+          token,
+          {
+            newPassword: formData.newPassword,
+            confirmPassword: formData.confirmPassword,
+          },
+          controller
+        );
+        setFormData({ ...formData, newPassword: "", confirmPassword: "" });
+      }
+
       const result = await editProfile(
         token,
         formData.firstName,
@@ -65,7 +104,7 @@ function Profile() {
         file,
         controller
       );
-      console.log(result);
+      // console.log(result);
       const resultData = result.data.data[0];
       let first_name = resultData.first_name;
       let last_name = resultData.last_name;
@@ -81,11 +120,17 @@ function Profile() {
       if (phone === "null") {
         phone = null;
       }
+
       dispatch(
         usersAction.editProfile({ first_name, last_name, image, phone })
       );
+      setIsLoading(false);
+      setError({ ...error, success: true });
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      setError({ ...initialErr, form: "An error occurred!" });
+      // console.log(error);
     }
   };
 
@@ -94,7 +139,7 @@ function Profile() {
       <Layout title={"Profile"}>
         <Header />
         <main className="global-px py-[3.75rem] mt-16 select-none bg-slate-300/20">
-          <section className="flex flex-col lg:flex-row gap-8 rounded-md">
+          <section className="flex flex-col lg:flex-row gap-8 rounded-md tracking-wide">
             <div className="flex-1 bg-white">
               <div className="p-10 border-b">
                 <div className="flex items-center justify-between">
@@ -106,7 +151,6 @@ function Profile() {
                   </div>
                 </div>
                 <div className="flex flex-col items-center mt-8">
-
                   <label htmlFor="image" className="cursor-pointer">
                     <div className="w-[8.5rem] h-[8.5rem] rounded-full relative">
                       <Image
@@ -121,6 +165,7 @@ function Profile() {
                       onChange={onFileInput}
                       id="image"
                       name="image"
+                      accept=".jpg,.png"
                       hidden
                     />
                   </label>
@@ -140,7 +185,7 @@ function Profile() {
               </div>
               <div className="pt-8 px-8 pb-20">
                 <p className="mb-6">Loyalty Points</p>
-                <div className="w-[80%] md:w-[45%] lg:w-full md:h-52 lg:h-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
+                <div className="w-[80%] md:w-[45%] lg:w-full md:h-52 lg:h-full bg-gradient-to-r from-primary to-primary/80 bg-gradient-to-right-top px-4 py-6 rounded-lg text-white">
                   <p>Moviegoers</p>
                   <p className="text-2xl mt-5">
                     320 <span className="text-xs">points</span>
@@ -158,7 +203,7 @@ function Profile() {
               <form className="bg-white">
                 <div className="flex border-b px-8 py-6 gap-14 text-lg relative">
                   <div>
-                    <p className="w-36">Account Settings</p>
+                    <p className="min-w-[9rem]">Account Settings</p>
                     <div className="h-1 w-36 bg-primary absolute bottom-0"></div>
                   </div>
                   <Link href={"profile/history"}>
@@ -208,7 +253,7 @@ function Profile() {
                           type="text"
                           disabled
                           placeholder="Input Email"
-                          className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
+                          className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary disabled:bg-gray-300"
                         />
                       </div>
                       <div className="relative">
@@ -234,12 +279,20 @@ function Profile() {
                   </div>
                   <div className="flex flex-col md:flex-row w-full justify-between mt-12">
                     <div className="relative mb-8 md:mb-0">
-                      <label htmlFor="firstName" className="flex mb-3">
+                      <label htmlFor="newPassword" className="flex mb-3">
                         New Password
                       </label>
                       <input
                         type={showNew ? "text" : "password"}
-                        id="firstName"
+                        id="newPassword"
+                        name="newPassword"
+                        value={formData.newPassword}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
                         placeholder="Input New Password"
                         className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border  outline-none py-5 px-6 rounded focus:border-primary"
                       />
@@ -251,14 +304,24 @@ function Profile() {
                       ></i>
                     </div>
                     <div className="relative">
-                      <label htmlFor="lastName" className="flex mb-3">
+                      <label htmlFor="confirmPassword" className="flex mb-3">
                         Confirm Password
                       </label>
                       <input
                         type={showConfirm ? "text" : "password"}
-                        id="lastName"
+                        value={formData.confirmPassword}
+                        id="confirmPassword"
+                        name="confirmPassword"
                         placeholder="Input Confirm Password"
-                        className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            [e.target.name]: e.target.value,
+                          })
+                        }
+                        className={` w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary ${
+                          error.confirmPassword && "border-error"
+                        }`}
                       />
                       <i
                         className={`bi ${
@@ -268,12 +331,23 @@ function Profile() {
                       ></i>
                     </div>
                   </div>
-                  <button
-                    className="mt-14 btn btn-primary w-full md:w-[40%]"
-                    onClick={Submit}
-                  >
-                    Update changes
-                  </button>
+                  <div className="flex flex-col md:flex-row w-full items-center min-h-12 mt-14 gap-4">
+                    <button
+                      className={`btn btn-primary w-full md:w-[40%] text-white ${
+                        isLoading && "loading"
+                      }`}
+                      onClick={Submit}
+                      disabled={isLoading}
+                    >
+                      Update changes
+                    </button>
+                    <p className="text-error text-sm">{error.form}</p>
+                    {error.success && (
+                      <p className="text-success text-sm">
+                        Success update data
+                      </p>
+                    )}
+                  </div>
                 </div>
               </form>
             </div>
