@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -6,8 +6,13 @@ import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
 import { usersAction } from "@/redux/slice/users";
+import { login } from "@/utils/https/authaxios";
 
 function Login() {
+  const controller = useMemo(() => new AbortController(), []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [invalid, setInvalid] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -15,18 +20,31 @@ function Login() {
     password: "",
   });
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    const { email, password } = formData;
-    dispatch(usersAction.storeLogin({ email, password }))
-      .unwrap()
-      .then((response) => {
-        console.log(response);
-      });
-    router.push("/").catch((err) => {
-      console.log(err);
-    });
+    setIsLoading(true);
+    try {
+      const { email, password } = formData;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setMsg("Email is invalid!");
+        setInvalid(true);
+        setIsLoading(false);
+        return;
+      }
+      const result = await login(email, password, controller);
+      // console.log(result);
+      dispatch(usersAction.storeLogin({ email, password, controller }));
+      setIsLoading(false);
+      router.push("/");
+    } catch (err) {
+      // console.log(err.response.data.msg);
+      setMsg(err.response.data.msg);
+      setInvalid(true);
+      setIsLoading(false);
+    }
   };
+
   return (
     <PrivateRouteLOGIN>
       <Layout title={"Login"}>
@@ -52,7 +70,10 @@ function Login() {
                 type="email"
                 value={formData.email}
                 onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value });
+                  setFormData(
+                    { ...formData, email: e.target.value },
+                    setInvalid(false)
+                  );
                 }}
                 className="mt-3 outline-none border border-solid border-[#dedede] w-[95%]   h-16 p-6"
                 placeholder=" Write your email"
@@ -62,19 +83,32 @@ function Login() {
                 type="password"
                 value={formData.password}
                 onChange={(e) => {
-                  setFormData({ ...formData, password: e.target.value });
+                  setFormData({ ...formData, password: e.target.value }),
+                    setInvalid(false);
                 }}
                 className="mt-3 outline-none border border-solid border-[#dedede] w-[95%]  h-16 p-6"
                 placeholder=" Write your password"
               />
 
-              <button
-                type="submit"
-                onClick={handleLogin}
-                className="rounded btn-primary text-white font--bold p-5 w-[95%]  h-[64px] mt-7"
-              >
-                Sign in
-              </button>
+              {isLoading ? (
+                <button className="btn btn-primary loading  w-[94%] rounded mt-7">
+                  Sign in
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  onClick={handleLogin}
+                  disabled={
+                    (formData.password === "" && formData.password === "") ||
+                    invalid
+                  }
+                  className="btn btn-primary w-[94%] rounded mt-7"
+                >
+                  Sign in
+                </button>
+              )}
+
+              <p className="text-info text-center mt-4">{invalid && msg}</p>
               <p className="text-[#696F79] mt-8 text-center">
                 Forgot your password?{" "}
                 <span
