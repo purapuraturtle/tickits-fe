@@ -3,10 +3,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Layout from "@/components/Layout";
 import placeholder from "@/Assets/profile/placeholder.png";
-import { useState } from "react";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 function History() {
+  const userStore = useSelector((state) => state.user.data);
+  const image = userStore.image;
+  const firstName = userStore.first_name;
+  const lastName = userStore.last_name;
   return (
     <Layout title={"History"}>
       <Header />
@@ -25,12 +29,21 @@ function History() {
               <div className="flex flex-col items-center mt-8">
                 <div className="w-[8.5rem] h-[8.5rem] rounded-full">
                   <Image
-                    src={placeholder}
+                    src={image}
+                    width={136}
+                    height={136}
                     alt="profile-img"
                     className="w-full h-full object-cover rounded-full"
                   />
                 </div>
-                <p className="mt-8 font-semibold text-xl">Jonas El Rodriguez</p>
+                <p className="mt-8 font-semibold text-xl">
+                  {" "}
+                  {firstName || lastName
+                    ? firstName && lastName
+                      ? `${firstName} ${lastName}`
+                      : firstName || lastName
+                    : " "}
+                </p>
                 <p className="text-sm text-neutral">Moviegoers</p>
               </div>
             </div>
