@@ -193,7 +193,7 @@ function Order() {
                   height={80}
                 />
                 <p className="text-2xl font-semibold text-[#14142B] mt-3 mb-8">
-                  {orderRedux.cinemaName} Cinema
+                  {orderRedux.cinemaName}
                 </p>
                 <div className="flex flex-col gap-4 w-full border-b pb-10">
                   <div className="flex justify-between text-sm">
