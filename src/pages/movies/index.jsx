@@ -1,27 +1,51 @@
-import CardMovies from "@/components/CardMovies";
+import "react-loading-skeleton/dist/skeleton.css";
+
+import { useEffect, useMemo, useState } from "react";
+
+import Image from "next/image";
+import { useRouter } from "next/router";
+import Skeleton from "react-loading-skeleton";
+
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
-import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
-import { getMovies } from "@/utils/https/movies";
-import { useEffect, useMemo, useState } from "react";
+import { getGenre, getMovies } from "@/utils/https/movies";
 
 function Movies() {
   const controller = useMemo(() => new AbortController(), []);
   const [dataMovies, setDataMovies] = useState([]);
+  const [meta, setMeta] = useState({
+    totalpage: 1,
+    limit: "10",
+    page: 1,
+    totaldata: 0,
+  });
+
+  const [cat, setCat] = useState([]);
 
   const [isLoading, setLoading] = useState(true);
+  const [catLoad, setCatLoad] = useState(true);
+
+  const router = useRouter();
+  const handleNavigate = (url) => router.push(url);
 
   const fetching = async () => {
     const params = {
-      limit: 5,
+      limit: 12,
       page: 1,
       search: "",
     };
     try {
       const result = await getMovies(params, controller);
-      console.log(result);
+      // console.log(result);
       setDataMovies(result.data.data);
+      setMeta({
+        ...meta,
+        limit: result.data.limit,
+        page: result.data.page,
+        totalpage: result.data.totalpage,
+        totaldata: result.data.totaldata,
+      });
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -30,31 +54,197 @@ function Movies() {
 
   useEffect(() => {
     fetching();
+    getGenre(controller)
+      .then((result) => {
+        setCat(result.data.data);
+        setCatLoad(false);
+      })
+      .catch((err) => {
+        setCatLoad(false);
+        console.log(err);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <PrivateRouteNotLogin>
+    <>
       <Layout title={"All Movies"}>
         <Header />
-        <main className="w-full min-h-[47vh] global-px flex flex-col items-center mt-24 py-10 bg-slate-300/20">
-          <h1 className="text-2xl font-bold mb-4 mr-auto">All Movies</h1>
-          <div className="w-full flex flex-col gap-4">
-            {isLoading
-              ? "LOADING"
-              : dataMovies.map((item) => (
-                  <CardMovies
-                    key={item.id}
-                    id={item.id}
-                    name={item.movie_name}
-                    image={item.image}
-                    category={item.category}
-                  />
+        <main className="w-full mt-12 md:mt-[5.5rem] bg-accent py-10">
+          <section className="mw-global global-px h-auto">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-bold mb-4 mr-auto">All Movies</h1>
+              <select className="select w-52 max-w-xs">
+                <option disabled selected>
+                  Sort
+                </option>
+                <option>Newest (Release Date)</option>
+                <option>Oldest (Release Date)</option>
+              </select>
+            </div>
+          </section>
+
+          <div className="mw-global global-px flex gap-4 mt-6 pb-16 overflow-x-scroll no-scrollbar">
+            {catLoad ? (
+              <>
+                {Array("", "", "", "", "", "", "").map((item, idx) => (
+                  <Skeleton key={idx} width={128} height={48} />
                 ))}
+              </>
+            ) : (
+              <>
+                <button className="btn btn-primary text-white btn-sm h-12  min-w-[8rem]">
+                  All
+                </button>
+                {cat.map(({ id, genre_name }) => (
+                  <button
+                    className="btn bg-white hover:bg-gray-200 border-primary text-primary  btn-sm h-12  min-w-[8rem]"
+                    key={id}
+                  >
+                    {genre_name}
+                  </button>
+                ))}
+              </>
+            )}
           </div>
+
+          <section className="mw-global global-px ">
+            <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mb-10 justify-center justify-items-center">
+              {isLoading
+                ? Array("", "", "", "", "", "", "", "").map((item, idx) => (
+                    <Skeleton key={idx} count="1" width={224} height={480} />
+                  ))
+                : dataMovies.map(
+                    ({ id, movie_name, image, genre_name, category }) => (
+                      <div
+                        className={`w-56 p-8 bg-white/20 border-[0.5px] border-primary-line rounded-md flex flex-col  items-center text-center gap-5 min-h-[10rem]`}
+                        key={id}
+                      >
+                        <div className="w-36 h-56 relative">
+                          <Image
+                            src={image}
+                            alt=""
+                            fill
+                            className="object-cover"
+                          ></Image>
+                        </div>
+                        <div className="flex flex-col gap-1 mb-3">
+                          <p class="font-bold text-lg text-primary-title text-center">
+                            {movie_name}
+                          </p>
+                          <p class="text-xs text-gray-400 text-center">
+                            {category}
+                          </p>
+                        </div>
+                        <button
+                          className="mt-auto btn btn-sm btn-block btn-accent border-primary text-primary font-normal hover:border-primary-focus"
+                          onClick={() => {
+                            handleNavigate(`/movies/${id}`);
+                          }}
+                        >
+                          Details
+                        </button>
+                      </div>
+                    )
+                  )}
+            </div>
+          </section>
+          <section className="global-px mw-global">
+            <div className="flex  gap-10 justify-center relative mt-20">
+              {isLoading ? (
+                <>
+                  <Skeleton count="1" width={168} height={48} />
+                  <Skeleton count="1" width={168} height={48} />
+                  <div className="absolute right-0 bottom-0 text-sm">
+                    <Skeleton count="1" width={80} height={20} />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <button className="group btn btn-primary border-primary text-white  btn-sm h-12  min-w-[8rem] flex gap-2 items-center">
+                    <svg
+                      width="25"
+                      height="25"
+                      viewBox="0 -4.5 20 20"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlnsXlink="http://www.w3.org/1999/xlink"
+                      className="group-hover:-translate-x-1 duration-150"
+                    >
+                      <g
+                        id="Page-1"
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fill-rule="evenodd"
+                      >
+                        <g
+                          id="Dribbble-Light-Preview"
+                          transform="translate(-260.000000, -6643.000000)"
+                          fill="#ffffff"
+                        >
+                          <g
+                            id="icons"
+                            transform="translate(56.000000, 160.000000)"
+                          >
+                            <polygon
+                              id="arrow_left-[#347]"
+                              points="209.657 6494 211.071 6492.46965 207.829 6489.17544 224 6489.17544 224 6487.24561 207.829 6487.24561 211.071 6484.28237 209.657 6483 204 6488.25105"
+                            ></polygon>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                    <p>Prev Page</p>
+                  </button>
+                  <button className="group btn btn-primary border-primary text-white  btn-sm h-12  min-w-[8rem] flex gap-2 items-center">
+                    <p>Next Page</p>
+                    <svg
+                      width="25px"
+                      height="25px"
+                      viewBox="0 -4.5 20 20"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="group-hover:translate-x-1 duration-150"
+                      xmlnsXlink="http://www.w3.org/1999/xlink"
+                    >
+                      <g
+                        id="Page-1"
+                        stroke="none"
+                        stroke-width="1"
+                        fill="none"
+                        fillRule="evenodd"
+                      >
+                        <g
+                          id="Dribbble-Light-Preview"
+                          transform="translate(-300.000000, -6643.000000)"
+                          fill="#fff"
+                        >
+                          <g
+                            id="icons"
+                            transform="translate(56.000000, 160.000000)"
+                          >
+                            <polygon
+                              id="arrow_right-[#346]"
+                              points="264 6488.26683 258.343 6483 256.929 6484.21678 260.172 6487.2264 244 6487.2264 244 6489.18481 260.172 6489.18481 256.929 6492.53046 258.343 6494"
+                            ></polygon>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </button>
+                  <div className="absolute right-0 bottom-0 text-sm hidden md:block">
+                    <p>
+                      Page {meta.page} of {meta.totalpage}
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          </section>
         </main>
         <Footer />
       </Layout>
-    </PrivateRouteNotLogin>
+    </>
   );
 }
 
