@@ -11,7 +11,7 @@ import SearchBar from "./SearchBar";
 function Header() {
   const navList = [
     { title: "Movies", url: "/movies" },
-    { title: "Cinemas", url: "/" },
+    { title: "Cinemas", url: "/cinemas" },
     { title: "Buy Ticket", url: "/" },
   ];
   const locations = [
@@ -129,7 +129,7 @@ function Header() {
                   </div>
 
                   <div
-                    class={`${
+                    className={`${
                       isOpen
                         ? "dropdown transition duration-300 ease-in-out opacity-100 transform translate-y-2"
                         : "dropdown transition duration-200 ease-in-out opacity-0 transform -translate-y-0 invisible"
@@ -142,17 +142,29 @@ function Header() {
                     <div class="py-1" role="none">
                       <Link
                         href="/profile"
-                        class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                        className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
                         role="menuitem"
                         tabindex="-1"
                         id="menu-item-0"
                       >
                         Profile
                       </Link>
+                      {user.data.role_id === "2" && (
+                        <Link
+                          href="/admin"
+                          className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                          role="menuitem"
+                          tabindex="-1"
+                          id="menu-item-0"
+                        >
+                          Admin Panel
+                        </Link>
+                      )}
+
                       {/* <form method="POST" action="#" role="none"> */}
                       <button
                         // type="submit"
-                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                        className="text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
                         role="menuitem"
                         tabindex="-1"
                         id="menu-item-3"
@@ -209,7 +221,7 @@ function Header() {
         </div>
         <div
           className={`h-screen bg-black transition-all ${
-            drawer ? `bg-opacity-80 visible` : `bg-opacity-0 invisible`
+            drawer ? `bg-opacity-80 visible ` : `bg-opacity-0 invisible hidden`
           } lg:hidden`}
           onClick={() => setDrawer(!drawer)}
         >
@@ -295,16 +307,28 @@ function Header() {
                     </div>
                   </div>
                 </div>
-
+                {user.data.role_id === "2" && <></>}
                 <hr />
-                <div
-                  className="global-px mw-global font-semibold py-4 flex items-center gap-2 cursor-pointer"
-                  onClick={() => {
-                    setDrawer(false);
-                    setLogout(true);
-                  }}
-                >
-                  Logout
+                <div className="flex justify-center text-center">
+                  {user.data.role_id === "2" && (
+                    <div
+                      className="flex-1 font-semibold py-4 flex justify-center items-center gap-2 cursor-pointer border-r"
+                      onClick={() => {
+                        navigate("/admin");
+                      }}
+                    >
+                      Admin Panel
+                    </div>
+                  )}
+                  <div
+                    className="flex-1 font-semibold py-4 flex justify-center items-center gap-2 cursor-pointer"
+                    onClick={() => {
+                      setDrawer(false);
+                      setLogout(true);
+                    }}
+                  >
+                    Logout
+                  </div>
                 </div>
               </>
             ) : (
