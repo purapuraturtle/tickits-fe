@@ -2,6 +2,7 @@ import CardMovies from "@/components/CardMovies";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
+import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
 import { getMovies } from "@/utils/https/movies";
 import { useEffect, useMemo, useState } from "react";
 
@@ -32,26 +33,28 @@ function Movies() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Layout title={"All Movies"}>
-      <Header />
-      <main className="w-full min-h-[47vh] global-px flex flex-col items-center mt-24 py-10 bg-slate-300/20">
-        <h1 className="text-2xl font-bold mb-4 mr-auto">All Movies</h1>
-        <div className="w-full flex flex-col gap-4">
-          {isLoading
-            ? "LOADING"
-            : dataMovies.map((item) => (
-                <CardMovies
-                  key={item.id}
-                  id={item.id}
-                  name={item.movie_name}
-                  image={item.image}
-                  category={item.category}
-                />
-              ))}
-        </div>
-      </main>
-      <Footer />
-    </Layout>
+    <PrivateRouteNotLogin>
+      <Layout title={"All Movies"}>
+        <Header />
+        <main className="w-full min-h-[47vh] global-px flex flex-col items-center mt-24 py-10 bg-slate-300/20">
+          <h1 className="text-2xl font-bold mb-4 mr-auto">All Movies</h1>
+          <div className="w-full flex flex-col gap-4">
+            {isLoading
+              ? "LOADING"
+              : dataMovies.map((item) => (
+                  <CardMovies
+                    key={item.id}
+                    id={item.id}
+                    name={item.movie_name}
+                    image={item.image}
+                    category={item.category}
+                  />
+                ))}
+          </div>
+        </main>
+        <Footer />
+      </Layout>
+    </PrivateRouteNotLogin>
   );
 }
 
