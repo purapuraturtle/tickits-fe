@@ -179,7 +179,12 @@ function Payment() {
                 >
                   Previous step
                 </button>
-                <button className="bg-primary text-white w-[300px] h-14">
+                <button
+                  onClick={() => {
+                    router.push("/ticket-result");
+                  }}
+                  className="bg-primary text-white w-[300px] h-14"
+                >
                   Pay your order
                 </button>
               </div>
