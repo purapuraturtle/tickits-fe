@@ -105,7 +105,11 @@ function Cinemas() {
                   tabIndex={0}
                   className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg w-full"
                 >
-                  <li onClick={() => setLocation("Select City")}>
+                  <li
+                    onClick={() => {
+                      setLocation("Select City"), setNameCinema("");
+                    }}
+                  >
                     <a>Select City</a>
                   </li>
                   <li
