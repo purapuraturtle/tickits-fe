@@ -8,11 +8,11 @@ import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { orderAction } from "@/redux/slice/order";
+// import { orderAction } from "@/redux/slice/order";
 function TicketResult() {
   const router = useRouter();
   // console.log(router.query.qrCode);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const [qrCodeImage, setQrCodeImage] = useState("purapura-turtle");
   const qrCodeImage = router.query.qrCode;
   const payment = useSelector((state) => state.order?.totalPrice);
@@ -20,10 +20,10 @@ function TicketResult() {
   const seat = useSelector((state) => state.order?.dataSeat);
   const tickets = useSelector((state) => state.order?.dataSeat?.length);
 
-  useEffect(() => {
-    dispatch(orderAction.resetOrder());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  // dispatch(orderAction.resetOrder());
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   return (
     <PrivateRouteNotLogin>
       <Layout title={"Tiket Result"}>
