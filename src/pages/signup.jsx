@@ -26,6 +26,23 @@ function Signup() {
   const handleSignUp = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    const { email, password } = formData;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
+    if (!emailRegex.test(email)) {
+      setMsg("Email is invalid!");
+      setInvalid(true);
+      setIsLoading(false);
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      setMsg(
+        "Password must be at least 6 characters and contain at least 1 uppercase letter."
+      );
+      setInvalid(true);
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const { email, password } = formData;
@@ -104,7 +121,7 @@ function Signup() {
                   <span className="text-[#696F79] ml-[21px] hidden lg:inline-block">
                     I agree to terms & conditions
                   </span>
-                  <p className="text-info text-center mt-4">{invalid && msg}</p>
+                  <p className="text-info text-center mt-4">{invalid || msg}</p>
                 </label>
               </div>
               {isLoading ? (
