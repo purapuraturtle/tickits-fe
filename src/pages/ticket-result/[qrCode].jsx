@@ -29,7 +29,7 @@ function TicketResult() {
   const time = useSelector((state) => state.order?.time);
   const [hour, minute] = time.split(":");
   const formattedTime = `${hour}:${minute}`;
-  console.log(seat);
+  // console.log(seat);
   // useEffect(() => {
   // dispatch(orderAction.resetOrder());
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
