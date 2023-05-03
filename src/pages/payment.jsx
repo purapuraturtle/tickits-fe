@@ -7,6 +7,7 @@ import Layout from "@/components/Layout";
 import { useRouter } from "next/router";
 import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
 import { createBooking } from "@/utils/https/transaction";
+import order from "@/redux/slice/order";
 
 function Payment() {
   const userRedux = useSelector((state) => state.user.data);
@@ -74,7 +75,9 @@ function Payment() {
   const handleDivClick = (index) => {
     setActive(index);
   };
-
+  const time = orderRedux.time;
+  const [hour, minute] = time.split(":");
+  const formattedTime = `${hour}:${minute}`;
   const date = new Date(orderRedux.date);
   const year = date.getFullYear();
   const mounth = String(date.getMonth() + 1).padStart(2, "0");
@@ -97,7 +100,7 @@ function Payment() {
                       Date & time
                     </p>
                     <p className="text-xl flex-[2]  text-[#000000] text-right">
-                      {formatedDate} at {orderRedux.time}
+                      {formatedDate} at {formattedTime}
                     </p>
                   </div>
                   <div className="flex mt-6 border-b border-[#E6E6E6] border-solid pb-5 w-[95%]">
@@ -211,9 +214,11 @@ function Payment() {
                   <p className="text-[#aaaaaa] ml-9 text-xs">Or</p>
                   <hr className="w-[38%]  h-[1px] bg-[#dedede] ml-9" />
                 </div>
-                <p className="text-center mt-9">
+                <p className="text-center mt-9 pb-14">
                   Pay via cash.{" "}
-                  <span className="text-primary">See how it work</span>
+                  <span className="text-primary cursor-pointer">
+                    See how it work
+                  </span>
                 </p>
               </div>
               <div className="flex justify-between mt-10 pb-[72px] gap-6">
@@ -232,7 +237,7 @@ function Payment() {
                 ) : (
                   <button
                     onClick={handlePayOrder}
-                    disabled={active === ""}
+                    disabled={active === "" || fill === true}
                     className="btn btn-primary rounded w-[300px] h-14"
                   >
                     Pay your order
@@ -246,7 +251,10 @@ function Payment() {
             <input
               disabled
               value={
-                firstName === "null" || lastName === "null"
+                firstName === "null" ||
+                lastName === "null" ||
+                firstName === null ||
+                lastName === null
                   ? ""
                   : firstName + " " + lastName
               }
@@ -263,13 +271,13 @@ function Payment() {
             <p className="ml-10 mt-12 text-[#696F79]">Phone Number</p>
             <input
               disabled
-              value={phone === "null" ? "" : phone}
+              value={phone === "null" || phone === null ? "" : phone}
               className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
               placeholder="Input your phone number"
             />
             {fill && (
-              <p className="ml-10 bg-yellow-200 w-[85%] text-center mt-11">
-                Fill Your Data Correctly{" "}
+              <p className="ml-10 bg-yellow-200 w-[85%] text-center mt-6">
+                Fill Your Data Correctly to go to the next step{" "}
                 <span
                   onClick={() => {
                     router.push("/profile");
