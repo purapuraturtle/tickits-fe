@@ -147,7 +147,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(1)}
                   >
-                    <Image src="/gpay.svg" width={74} height={30} />
+                    <Image
+                      src="/gpay.svg"
+                      alt="logo-payment"
+                      width={74}
+                      height={30}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -155,7 +160,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(2)}
                   >
-                    <Image src="/visa.svg" width={80} height={25.9} />
+                    <Image
+                      src="/visa.svg"
+                      alt="logo-payment"
+                      width={80}
+                      height={25.9}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -163,7 +173,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(3)}
                   >
-                    <Image src="/gopay.svg" width={106} height={35} />
+                    <Image
+                      src="/gopay.svg"
+                      alt="logo-payment"
+                      width={106}
+                      height={35}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -171,7 +186,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(4)}
                   >
-                    <Image src="/paypal.svg" width={31} height={37} />
+                    <Image
+                      src="/paypal.svg"
+                      alt="logo-payment"
+                      width={31}
+                      height={37}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -179,7 +199,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(5)}
                   >
-                    <Image src="/dana.svg" width={108} height={31} />
+                    <Image
+                      src="/dana.svg"
+                      alt="logo-payment"
+                      width={108}
+                      height={31}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -187,7 +212,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(6)}
                   >
-                    <Image src="/bca.svg" width={85} height={28} />
+                    <Image
+                      src="/bca.svg"
+                      alt="logo-payment"
+                      width={85}
+                      height={28}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -195,7 +225,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(7)}
                   >
-                    <Image src="/bri.svg" width={45} height={38} />
+                    <Image
+                      src="/bri.svg"
+                      alt="logo-payment"
+                      width={45}
+                      height={38}
+                    />
                   </div>
                   <div
                     className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center ${
@@ -203,7 +238,12 @@ function Payment() {
                     }`}
                     onClick={() => handleDivClick(8)}
                   >
-                    <Image src="/ovo.svg" width={92} height={30} />
+                    <Image
+                      src="/ovo.svg"
+                      alt="logo-payment"
+                      width={92}
+                      height={30}
+                    />
                   </div>
                 </div>
                 <div className="flex items-center justify-center mt-10">
