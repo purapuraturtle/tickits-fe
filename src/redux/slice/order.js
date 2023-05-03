@@ -4,9 +4,12 @@ const initialState = {
   dataSeat: [],
   movieId: null,
   movieName: null,
+  cinemaId: null,
   cinemaName: null,
   image: null,
+  date: null,
   time: null,
+  price: null,
   teathstudioId: null,
   totalPrice: null,
 };
@@ -21,15 +24,19 @@ const orderSlice = createSlice({
         movieId: action.payload.id,
         movieName: action.payload.name,
         cinemaName: action.payload.cinemaName,
-        image: action.payload.image
+        image: action.payload.image,
       };
     },
     addDataBookNow: (prevState, action) => {
+      console.log(action.payload);
       return {
         ...prevState,
+        cinemaId: action.payload.cinemaId,
         cinemaName: action.payload.cinemaName,
         image: action.payload.image,
-        time: action.payload.time
+        date: action.payload.date,
+        time: action.payload.time,
+        price: action.payload.price,
       };
     },
     addSeats: (prevState, action) => {

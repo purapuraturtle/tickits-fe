@@ -21,7 +21,7 @@ function Order() {
   // const onSelected = [];
   const [dataHistorySeat, setHistorySeat] = useState([]);
   // const [onSelected, setSelectSeat] = useState([]);
-  const [price, setPrice] = useState(10);
+  // const [price, setPrice] = useState(10);
 
   // const handleSelected = (blockName, blockNumber) => {
   //   const seat = `${blockName}${blockNumber}`;
@@ -52,10 +52,11 @@ function Order() {
     // });
     const data = {
       // dataSeats: onBookingFormatted,
-      teathstudioId: 8,
-      totalPrice: price * orderRedux.dataSeat.length,
+      teathstudioId: orderRedux.cinemaId,
+      totalPrice: orderRedux.price * orderRedux.dataSeat.length,
     };
     dispatch(orderAction.addOrder(data));
+    router.push("/payment");
     // setLoading(true);
     // const onBookingFormatted = onSelected.map((seat) => {
     //   return {
@@ -85,7 +86,7 @@ function Order() {
 
   const fetching = async () => {
     const token = reduxStore.data.token;
-    const id = 8;
+    const id = orderRedux.cinemaId;
     try {
       const result = await getHistorySeat(token, id, controller);
       // console.log(result);
@@ -99,6 +100,12 @@ function Order() {
     fetching();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const date = new Date(orderRedux.date);
+  const year = date.getFullYear();
+  const mounth = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const formatedDate = `${day}/${mounth}/${year}`;
 
   return (
     <Layout title={"Order"}>
@@ -194,12 +201,16 @@ function Order() {
                   </p>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <p className="text-[#6B6B6B] ">Tuesday, 07 July 2020</p>
-                  <p className="font-semibold text-[#14142B]">02:00pm</p>
+                  <p className="text-[#6B6B6B] ">{formatedDate}</p>
+                  <p className="font-semibold text-[#14142B]">
+                    {orderRedux.time}
+                  </p>
                 </div>
                 <div className="flex justify-between text-sm">
                   <p className="text-[#6B6B6B] ">One ticket price</p>
-                  <p className="font-semibold text-[#14142B]">${price}</p>
+                  <p className="font-semibold text-[#14142B]">
+                    ${orderRedux.price}
+                  </p>
                 </div>
                 <div className="flex justify-between  text-sm">
                   <p className="text-[#6B6B6B] w-[6rem] ">Seat choosed</p>
@@ -215,7 +226,7 @@ function Order() {
                   Total Payment
                 </p>
                 <p className="font-bold text-2xl text-font-primary ">
-                  ${price * orderRedux.dataSeat.length}
+                  ${orderRedux.price * orderRedux.dataSeat.length}
                 </p>
               </div>
             </div>

@@ -6,12 +6,28 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import CardCinema from "@/components/CardCinema";
 import { useRouter } from "next/router";
-import { getMovieDetails } from "@/utils/https/movies";
+import { getMovieDetails, getStudioTime } from "@/utils/https/movies";
+
+function ListDate(props) {
+  // console.log(props);
+  const date = new Date(props.date);
+  const year = date.getFullYear();
+  const mounth = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const formatedDate = `${day}/${mounth}/${year}`;
+
+  return (
+    <li>
+      <a>{formatedDate}</a>
+    </li>
+  );
+}
 
 function MovieDetails() {
   const router = useRouter();
   const controller = useMemo(() => new AbortController(), []);
   const [dataMovie, setDataMovie] = useState({});
+  const [dataStudio, setDataStudio] = useState([]);
   // console.log(router.query.movie_id);
 
   const fetching = async () => {
@@ -20,6 +36,9 @@ function MovieDetails() {
       const result = await getMovieDetails(movieId, controller);
       // console.log(result);
       setDataMovie(result.data.data[0]);
+      const getStudio = await getStudioTime(controller);
+      console.log(getStudio);
+      setDataStudio(getStudio.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -55,6 +74,7 @@ function MovieDetails() {
 
   const [location, setLocation] = useState("Jakarta");
 
+  console.log(dataStudio);
   return (
     <Layout title={"Movie Details"}>
       <Header />
@@ -114,12 +134,25 @@ function MovieDetails() {
             <h1 className="text-2xl font-bold">Showtimes and Tickets</h1>
             <div className="flex items-center mt-10 gap-6">
               <div className="form-control flex-1 ">
-                <input
-                  type="date"
-                  id="release-date"
-                  name="release_date"
-                  className="input input-bordered input-primary rounded w-[10rem] md:w-[16.375rem]"
-                />
+                <div className="w-full flex flex-col gap-5 ">
+                  {/* SET DATE */}
+                  <div className="dropdown z-0">
+                    <label
+                      tabIndex={0}
+                      className="btn btn-outline btn-primary  w-[10rem] md:w-[16.375rem] rounded"
+                    >
+                      Select Date
+                    </label>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg w-full"
+                    >
+                      {dataStudio.map((date, idx) => (
+                        <ListDate key={idx} date={date.open_date} />
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
               <div className="w-full flex flex-col gap-5 ">
                 <div className="dropdown z-0">
@@ -144,16 +177,29 @@ function MovieDetails() {
               </div>
             </div>
             <div className="flex flex-wrap justify-between gap-y-5 w-full mt-16">
-              {data.map((datas, idx) => (
-                <CardCinema
-                  key={idx}
-                  name={datas.name}
-                  address={datas.address}
-                  image={datas.image}
-                  time={datas.time}
-                  price={datas.price}
-                />
-              ))}
+              {
+                dataStudio.map((studio, idx) => (
+                  <CardCinema
+                    key={idx}
+                    name={studio.teather_name}
+                    address={studio.address}
+                    image={studio.image}
+                    date={studio.open_date}
+                    time={studio.open_time}
+                    price={10}
+                  />
+                ))
+                // : data.map((datas, idx) => (
+                //     <CardCinema
+                //       key={idx}
+                //       name={datas.name}
+                //       address={datas.address}
+                //       image={datas.image}
+                //       time={datas.time}
+                //       price={datas.price}
+                //     />
+                //   ))
+              }
             </div>
           </div>
         </section>

@@ -2,15 +2,34 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { orderAction } from "@/redux/slice/order";
+import { useState } from "react";
 
 function CardCinema(props) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [selectTime, setSelectTime] = useState("");
+  const [price, setPrice] = useState(0);
+  const [cinemaId, setCinemaId] = useState(0);
+
+  const handleSelectTime = (time, id, price) => {
+    if (selectTime === time) {
+      setSelectTime("");
+      setCinemaId(0);
+      setPrice(0);
+      return;
+    }
+    setSelectTime(time);
+    setCinemaId(id);
+    setPrice(price);
+  };
   const handleBooking = () => {
     const payload = {
       image: props.image,
+      cinemaId: cinemaId,
       cinemaName: props.name,
-      time: props.time,
+      date: props.date,
+      time: selectTime,
+      price: price,
     };
     dispatch(orderAction.addDataBookNow(payload));
     router.push("/order");
@@ -36,8 +55,18 @@ function CardCinema(props) {
         <div className=" p-6">
           <div className="flex flex-wrap gap-x-12 gap-y-4">
             {props.time.map((item, idx) => (
-              <p key={idx} className="font-semibold text-xs">
-                {item}
+              <p
+                onClick={() =>
+                  handleSelectTime(item.open_time, item.id, item.price)
+                }
+                key={idx}
+                className={`text-xs cursor-pointer ${
+                  selectTime === item.open_time
+                    ? "text-primary font-bold underline"
+                    : "font-semibold"
+                }`}
+              >
+                {item.open_time}
               </p>
             ))}
           </div>
@@ -46,12 +75,13 @@ function CardCinema(props) {
             <p className="font-semibold">${props.price}.00/seat</p>
           </div>
           <div className="flex justify-between items-center mt-4">
-            <div
+            <button
               className="btn btn-primary px-4 rounded"
               onClick={handleBooking}
+              disabled={selectTime === ""}
             >
               Book now
-            </div>
+            </button>
             <p className="text-primary cursor-pointer">Add to cart</p>
           </div>
         </div>

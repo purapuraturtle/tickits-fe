@@ -2,13 +2,21 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function Payment() {
+  const orderRedux = useSelector((state) => state.order);
   const [active, setActive] = useState(null);
 
   const handleDivClick = (index) => {
     setActive(index);
   };
+
+  const date = new Date(orderRedux.date);
+  const year = date.getFullYear();
+  const mounth = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const formatedDate = `${day}/${mounth}/${year}`;
   return (
     <>
       <Header />
@@ -25,19 +33,19 @@ function Payment() {
                     Date & time
                   </p>
                   <p className="text-xl flex-[2]  text-[#000000] text-right">
-                    Tuesday, 07 july 2020 at 02:00pm
+                    {formatedDate} at {orderRedux.time}
                   </p>
                 </div>
                 <div className="flex mt-6 border-b border-[#E6E6E6] border-solid pb-5 w-[95%]">
                   <p className="text-[#6B6B6B] flex-[1] text-xl">Movie title</p>
                   <p className="text-xl flex-[2] text-[#000000] text-right">
-                    Spider-Man:Homecoming
+                    {orderRedux.movieName}
                   </p>
                 </div>
                 <div className="flex mt-6 border-b border-[#E6E6E6] border-solid pb-5 w-[95%]">
                   <p className="text-[#6B6B6B] text-xl flex-[1]">Cinema name</p>
                   <p className="text-xl flex-[2] text-[#000000] text-right">
-                    CineOne21 Cinema
+                    {orderRedux.cinemaName}
                   </p>
                 </div>
                 <div className="flex mt-6 border-b border-[#E6E6E6] border-solid pb-5 w-[95%]">
@@ -45,7 +53,7 @@ function Payment() {
                     Number of tickets
                   </p>
                   <p className="text-xl flex-[2] text-[#000000] text-right">
-                    3 pieces
+                    {orderRedux.dataSeat.length} pieces
                   </p>
                 </div>
                 <div className="flex mt-6  pb-5 w-[95%]">
@@ -53,7 +61,7 @@ function Payment() {
                     Total payment
                   </p>
                   <p className="text-xl flex-[2] text-[#000000] text-right">
-                    $30,00
+                    {orderRedux.totalPrice}
                   </p>
                 </div>
               </div>
@@ -71,7 +79,12 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(0)}
                 >
-                  <Image src="/gpay.svg" width={74} height={30} />
+                  <Image
+                    src="/gpay.svg"
+                    alt="logo-payment"
+                    width={74}
+                    height={30}
+                  />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -79,7 +92,12 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(1)}
                 >
-                  <Image src="/visa.svg" width={80} height={25.9} />
+                  <Image
+                    src="/visa.svg"
+                    alt="logo-payment"
+                    width={80}
+                    height={25.9}
+                  />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -87,7 +105,12 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(2)}
                 >
-                  <Image src="/gopay.svg" width={106} height={35} />
+                  <Image
+                    src="/gopay.svg"
+                    alt="logo-payment"
+                    width={106}
+                    height={35}
+                  />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -95,7 +118,12 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(3)}
                 >
-                  <Image src="/paypal.svg" width={31} height={37} />
+                  <Image
+                    src="/paypal.svg"
+                    alt="logo-payment"
+                    width={31}
+                    height={37}
+                  />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -103,7 +131,12 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(4)}
                 >
-                  <Image src="/dana.svg" width={108} height={31} />
+                  <Image
+                    src="/dana.svg"
+                    alt="logo-payment"
+                    width={108}
+                    height={31}
+                  />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -111,7 +144,12 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(5)}
                 >
-                  <Image src="/bca.svg" width={85} height={28} />
+                  <Image
+                    src="/bca.svg"
+                    alt="logo-payment"
+                    width={85}
+                    height={28}
+                  />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center  ${
@@ -119,7 +157,12 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(6)}
                 >
-                  <Image src="/bri.svg" width={45} height={38} />
+                  <Image
+                    src="/bri.svg"
+                    alt="logo-payment"
+                    width={45}
+                    height={38}
+                  />
                 </div>
                 <div
                   className={`w-[146px] h-[58px] border-[2px] border-solid border-[#DEDEDE] rounded flex justify-center items-center ${
@@ -127,7 +170,12 @@ function Payment() {
                   }`}
                   onClick={() => handleDivClick(7)}
                 >
-                  <Image src="/ovo.svg" width={92} height={30} />
+                  <Image
+                    src="/ovo.svg"
+                    alt="logo-payment"
+                    width={92}
+                    height={30}
+                  />
                 </div>
               </div>
               <div className="flex items-center justify-center mt-10">
