@@ -1,9 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 import { login } from "@/utils/https/authaxios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: [],
+  data: {},
   isLoading: false,
   isRejected: false,
   isFulfilled: false,
@@ -23,7 +22,6 @@ const storeLogin = createAsyncThunk(
   }
 );
 
-
 const userSlice = createSlice({
   name: "users",
   initialState,
@@ -38,6 +36,11 @@ const userSlice = createSlice({
           image: action.payload.image,
           phone: action.payload.phone,
         },
+      };
+    },
+    logout: (prevState, action) => {
+      return {
+        ...initialState,
       };
     },
   },

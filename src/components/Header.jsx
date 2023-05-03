@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
-import SearchBar from './SearchBar';
+import Logout from "./Logout";
+import SearchBar from "./SearchBar";
 
 function Header() {
   const navList = [
@@ -28,6 +29,13 @@ function Header() {
   const [searchBar, setSearchBar] = useState(false);
   const [drawer, setDrawer] = useState(false);
 
+  const [logout, setLogout] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setIsOpen(!isOpen);
+  };
   const user = useSelector((state) => state.user);
 
   const router = useRouter();
@@ -38,6 +46,7 @@ function Header() {
 
   return (
     <>
+      <Logout isOpen={logout} onClose={() => setLogout(false)} />
       <header className="fixed top-0 w-full z-40">
         <div className="mw-global w-full global-px flex py-4 md:py-7 justify-between items-center bg-white lg:bg-opacity-90 lg:backdrop-blur-sm z-20 ">
           <div className="flex items-center gap-14">
@@ -90,7 +99,9 @@ function Header() {
               </button>
               <div
                 className={`absolute bg-white shadow rounded-md right-0 top-[4.5rem] p-3 ${
-                  !searchBar && `invisible`
+                  searchBar
+                    ? "dropdown transition duration-300 ease-in-out opacity-100 transform translate-y-1"
+                    : "dropdown transition duration-200 ease-in-out opacity-0 transform -translate-y-1 invisible"
                 }`}
               >
                 <SearchBar
@@ -102,8 +113,11 @@ function Header() {
             </div>
             <div className="m-auto relative min-w-[3rem] min-h-[1rem]">
               {user.isFulfilled ? (
-                <Link href={"/profile"}>
-                  <div className="avatar absolute h-full -translate-y-5">
+                <div>
+                  <div
+                    className="avatar absolute h-full -translate-y-5 cursor-pointer"
+                    onClick={handleMenuToggle}
+                  >
                     <div className="w-14 h-14 rounded-full">
                       <Image
                         src={user.data?.image || "/images/profile.png"}
@@ -113,7 +127,46 @@ function Header() {
                       />
                     </div>
                   </div>
-                </Link>
+
+                  <div
+                    class={`${
+                      isOpen
+                        ? "dropdown transition duration-300 ease-in-out opacity-100 transform translate-y-2"
+                        : "dropdown transition duration-200 ease-in-out opacity-0 transform -translate-y-0 invisible"
+                    }  absolute right-0 z-10 mt-2 top-8 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabindex="-1"
+                  >
+                    <div class="py-1" role="none">
+                      <Link
+                        href="/profile"
+                        class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="menu-item-0"
+                      >
+                        Profile
+                      </Link>
+                      {/* <form method="POST" action="#" role="none"> */}
+                      <button
+                        // type="submit"
+                        class="text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                        role="menuitem"
+                        tabindex="-1"
+                        id="menu-item-3"
+                        onClick={() => {
+                          setIsOpen(false);
+                          setLogout(true);
+                        }}
+                      >
+                        Logout
+                      </button>
+                      {/* </form> */}
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <div>
                   <button
@@ -156,12 +209,12 @@ function Header() {
         </div>
         <div
           className={`h-screen bg-black transition-all ${
-            drawer ? `bg-opacity-80 visible` : `bg-opacity-0 invisible hidden`
+            drawer ? `bg-opacity-80 visible` : `bg-opacity-0 invisible`
           } lg:hidden`}
           onClick={() => setDrawer(!drawer)}
         >
           <div
-            className={`bg-white w-full flex flex-col transform-gpu transition-all z-10 ${
+            className={`h-full bg-white w-full flex flex-col transform-gpu transition-all z-10 ${
               drawer ? `translate-x-0` : `-translate-x-full`
             }  `}
             onClick={(e) => {
@@ -221,26 +274,39 @@ function Header() {
             <hr />
 
             {user.isFulfilled ? (
-              <div className="flex global-px py-4">
-                <div
-                  className="flex flex-col gap-3 mx-auto items-center  cursor-pointer"
-                  onClick={() => navigate("/profile")}
-                >
-                  <div className="avatar h-full">
-                    <div className="w-10 h-10 rounded-full">
-                      <Image
-                        src={user.data.image || "/images/profile.png"}
-                        alt="photo"
-                        width={56}
-                        height={56}
-                      />
+              <>
+                <div className="flex global-px py-4">
+                  <div
+                    className="flex flex-col gap-3 mx-auto items-center  cursor-pointer"
+                    onClick={() => navigate("/profile")}
+                  >
+                    <div className="avatar h-full">
+                      <div className="w-10 h-10 rounded-full">
+                        <Image
+                          src={user.data.image || "/images/profile.png"}
+                          alt="photo"
+                          width={56}
+                          height={56}
+                        />
+                      </div>
+                    </div>
+                    <div className="">
+                      <p className="font-semibold">{`${user.data.first_name} ${user.data.last_name}`}</p>
                     </div>
                   </div>
-                  <div className="">
-                    <p className="font-semibold">{`${user.data.first_name} ${user.data.last_name}`}</p>
-                  </div>
                 </div>
-              </div>
+
+                <hr />
+                <div
+                  className="global-px mw-global font-semibold py-4 flex items-center gap-2 cursor-pointer"
+                  onClick={() => {
+                    setDrawer(false);
+                    setLogout(true);
+                  }}
+                >
+                  Logout
+                </div>
+              </>
             ) : (
               <div className="global-px flex flex-col py-4 gap-4">
                 <button
