@@ -74,6 +74,10 @@ function MovieDetails() {
   ];
 
   const [location, setLocation] = useState("Jakarta");
+  let date = new Date(dataMovie.release_date);
+  let options = { year: "numeric", month: "long", day: "numeric" };
+  let new_date = date.toLocaleDateString("en-US", options);
+  console.log(new_date);
 
   console.log(dataStudio);
   return (
@@ -104,9 +108,7 @@ function MovieDetails() {
                   </p>
                   <div className="mt-8">
                     <p className="text-[#8692A6] text-sm">Release date</p>
-                    <p className="text-base">
-                      {dataMovie.release_date || "June 28, 2017"}
-                    </p>
+                    <p className="text-base">{new_date || "June 28, 2017"}</p>
                   </div>
                   <div className="mt-8">
                     <p className="text-[#8692A6] text-sm">Duration</p>
