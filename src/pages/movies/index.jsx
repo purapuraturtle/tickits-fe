@@ -6,13 +6,16 @@ import _ from "lodash";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
+import { useDispatch } from "react-redux";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
+import { orderAction } from "@/redux/slice/order";
 import { getGenre, getMovies } from "@/utils/https/movies";
 
 function Movies() {
+  const dispatch = useDispatch();
   const controller = useMemo(() => new AbortController(), []);
   const [dataMovies, setDataMovies] = useState([]);
   const [meta, setMeta] = useState({
@@ -55,6 +58,12 @@ function Movies() {
     } catch (error) {
       // console.log(error);
     }
+  };
+
+  const addMovie = (id, name) => {
+    const payload = { id: id, name: name };
+    dispatch(orderAction.addMovieId(payload));
+    handleNavigate(`/movies/${id}`);
   };
 
   useEffect(() => {
@@ -193,7 +202,7 @@ function Movies() {
                         <button
                           className="mt-auto btn btn-sm btn-block btn-accent border-primary text-primary font-normal hover:border-primary-focus"
                           onClick={() => {
-                            handleNavigate(`/movies/${id}`);
+                            addMovie(id, movie_name);
                           }}
                         >
                           Details

@@ -11,22 +11,38 @@ import { register } from "@/utils/https/authaxios";
 
 function Signup() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [msg, setMsg] = useState("");
+  const [invalid, setInvalid] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
   const handleSignUp = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     try {
       const { email, password } = formData;
       const result = await register(email, password);
       console.log(result);
-      router.push("/login");
+      setMsg("create account success");
+      setTimeout(() => {
+        router.push("/login");
+      }, 700);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      setInvalid(true);
+      setMsg(error.response.data.msg);
     }
   };
+  const isDisabled = isChecked;
   return (
     <PrivateRouteLOGIN>
       <Layout title={"Sign Up"}>
@@ -54,7 +70,10 @@ function Signup() {
                 type="email"
                 value={formData.email}
                 onChange={(e) => {
-                  setFormData({ ...formData, email: e.target.value });
+                  setFormData(
+                    { ...formData, email: e.target.value },
+                    setInvalid(false)
+                  );
                 }}
                 className="mt-3 outline-none border border-solid border-[#dedede] w-[95%]   h-16 p-6"
                 placeholder=" Write your email"
@@ -64,7 +83,10 @@ function Signup() {
                 type="password"
                 value={formData.password}
                 onChange={(e) => {
-                  setFormData({ ...formData, password: e.target.value });
+                  setFormData(
+                    { ...formData, password: e.target.value },
+                    setInvalid(false)
+                  );
                 }}
                 className="mt-3 outline-none border border-solid border-[#dedede] w-[95%]  h-16 p-6"
                 placeholder=" Write your password"
@@ -74,20 +96,31 @@ function Signup() {
                   <input
                     type="checkbox"
                     id="checkbox"
+                    checked={!isChecked}
+                    onChange={handleCheckboxChange}
                     className="h-5 w-5 text-red-500 rounded focus:ring-0 focus:outline-none lg:inline-block hidden"
                   />
+
                   <span className="text-[#696F79] ml-[21px] hidden lg:inline-block">
                     I agree to terms & conditions
                   </span>
+                  <p className="text-info text-center mt-4">{invalid && msg}</p>
                 </label>
               </div>
-              <button
-                type="submit"
-                onClick={handleSignUp}
-                className="rounded btn-primary text-white font--bold p-5 w-[95%]  h-[64px] mt-7"
-              >
-                Join for free now
-              </button>
+              {isLoading ? (
+                <button className="btn btn-primary loading  w-[94%] rounded mt-7">
+                  Sign Up
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  onClick={handleSignUp}
+                  disabled={isDisabled || invalid}
+                  className="btn btn-primary w-[94%] rounded mt-7"
+                >
+                  Join for free
+                </button>
+              )}
               <p className="text-[#696F79] mt-8 text-center">
                 Do you already have an account?{" "}
                 <span

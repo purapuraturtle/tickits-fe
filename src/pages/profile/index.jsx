@@ -170,14 +170,16 @@ function Profile() {
                     />
                   </label>
                   <p className="mt-8 font-semibold text-xl tracking-wider">
-                    {`${
-                      userStore.first_name !== null ? userStore.first_name : ""
-                    }`}
-                    {`${
-                      userStore.last_name !== null
-                        ? " " + userStore.last_name
+                    {userStore.first_name === null ||
+                    userStore.first_name === "null"
+                      ? userStore.last_name !== null &&
+                        userStore.last_name !== "null"
+                        ? userStore.last_name
                         : ""
-                    }`}
+                      : userStore.last_name === null ||
+                        userStore.last_name === "null"
+                      ? userStore.first_name
+                      : userStore.first_name + " " + userStore.last_name}
                   </p>
 
                   <p className="text-sm text-neutral">Moviegoers</p>
@@ -236,7 +238,12 @@ function Profile() {
                         <input
                           name="lastName"
                           onChange={handleLastName}
-                          value={formData.lastName || ""}
+                          value={
+                            formData.lastName === "null" ||
+                            formData.lastName === null
+                              ? ""
+                              : formData.lastName
+                          }
                           type="text"
                           placeholder="Input Last Name"
                           className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none py-5 px-6 rounded focus:border-primary"
@@ -263,7 +270,11 @@ function Profile() {
                         <input
                           name="phone"
                           onChange={handlePhone}
-                          value={formData.phone || ""}
+                          value={
+                            formData.phone === "null" || formData.phone === null
+                              ? ""
+                              : formData.phone
+                          }
                           type="text"
                           placeholder="Input Number"
                           className=" w-full md:w-[18rem] lg:w-[20rem] h-16 border outline-none  pl-20 pr-6 rounded focus:border-primary "

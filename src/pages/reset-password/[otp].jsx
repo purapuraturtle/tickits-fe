@@ -60,8 +60,6 @@ function ResetPassword({ isValidId }) {
                   <p className="text-lg text-[#8692a6] mt-[10px] lg:mt-0">
                     we&apos;ll reset the password for you
                   </p>
-
-                  <p className="mt-12 text-base text-[#4E4B66]">Email</p>
                   <input
                     value={formData.newPassword}
                     onChange={(e) => {
@@ -88,7 +86,7 @@ function ResetPassword({ isValidId }) {
                     type="submit"
                     className="flex justify-center rounded btn-primary text-white font--bold p-5 w-[95%] h-[64px] mt-7"
                   >
-                    Activate Now
+                    Reset Now
                   </button>
                 </div>
               </div>
