@@ -26,6 +26,8 @@ function CreateSchedule() {
   const controller = useMemo(() => new AbortController(), []);
   const userRedux = useSelector((state) => state.user);
   const { token } = userRedux.data;
+
+  const [isLoading, setLoading] = useState(false);
   const [dataCategory, setDataCategory] = useState([]);
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState("CGV Jakarta Selatan");
@@ -34,7 +36,7 @@ function CreateSchedule() {
   const [dataTime, setDataTime] = useState([]);
   const [addPrice, setAddPrice] = useState("");
   const [dataPrice, setDataPrice] = useState([]);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState("");
   const [form, setForm] = useState({
     movie_name: "",
     category: "",
@@ -90,6 +92,7 @@ function CreateSchedule() {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     const categories = category.join(", ");
     const bodyMovie = {
       movie_name: form.movie_name,
@@ -117,11 +120,11 @@ function CreateSchedule() {
 
   const createSchedules = async (movieId) => {
     try {
-      const bodyTeatherStudio = dataTime.map((time) => ({
+      const bodyTeatherStudio = dataTime.map((time, i) => ({
         teather_id: teather,
         open_date: form.open_date,
         open_time: time,
-        price: dataPrice,
+        price: dataPrice[i],
         movie_id: movieId, //response movie
       }));
       console.log(bodyTeatherStudio);
@@ -131,6 +134,7 @@ function CreateSchedule() {
         controller
       );
       console.log(resultCreateSchedule);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -148,6 +152,7 @@ function CreateSchedule() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // console.log(category);
+  console.log(dataTime.length);
 
   return (
     <Layout title={"Create Schedule"}>
@@ -455,9 +460,30 @@ function CreateSchedule() {
                 </div>
               ))}
             </div>
-            <button className="btn btn-primary mt-10" onClick={handleSubmit}>
-              Save
-            </button>
+            {isLoading ? (
+              <button className="btn btn-primary loading mt-10">Loading</button>
+            ) : (
+              <button
+                disabled={
+                  teather === 0 ||
+                  dataTime.length < 1 ||
+                  category.length < 1 ||
+                  form.movie_name === "" ||
+                  form.release_date === "" ||
+                  form.duration_hour === "" ||
+                  form.duration_minute === "" ||
+                  form.director === "" ||
+                  form.aktors === "" ||
+                  form.sinopsis === "" ||
+                  form.open_date === "" ||
+                  image === ""
+                }
+                className="btn btn-primary mt-10"
+                onClick={handleSubmit}
+              >
+                Save
+              </button>
+            )}
           </div>
         </section>
       </main>
