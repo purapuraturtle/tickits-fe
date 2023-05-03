@@ -13,7 +13,7 @@ export const getHistorySeat = (token, id, controller) => {
 export const createMovie = (token, file, body, controller) => {
   const url = `${baseUrl}/movie`;
   const formData = new FormData();
-  if (file !== "") return formData.append("image", file);
+  if (file !== "") formData.append("image", file);
   Object.keys(body).forEach((key) => {
     formData.set(key, body[key]);
   });
