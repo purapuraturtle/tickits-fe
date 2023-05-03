@@ -13,7 +13,7 @@ import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
 
 function Order() {
   const reduxStore = useSelector((state) => state.user);
-  console.log(reduxStore);
+  // console.log(reduxStore);
   const orderRedux = useSelector((state) => state.order);
   // console.log(reduxStore);
   const router = useRouter();

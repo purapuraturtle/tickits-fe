@@ -10,29 +10,30 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 // import { orderAction } from "@/redux/slice/order";
 function TicketResult() {
-  const orderRedux = useSelector((state) => state.order);
   const router = useRouter();
   // console.log(router.query.qrCode);
   // const dispatch = useDispatch();
   // const [qrCodeImage, setQrCodeImage] = useState("purapura-turtle");
   const qrCodeImage = router.query.qrCode;
+  const orderRedux = useSelector((state) => state.order);
   const payment = useSelector((state) => state.order?.totalPrice);
   const movieName = useSelector((state) => state.order?.movieName);
   const seat = useSelector((state) => state.order?.dataSeat);
   const tickets = useSelector((state) => state.order?.dataSeat?.length);
-  const time = useSelector((state) => state.order?.time);
-  const [hour, minute] = time.split(":");
-  const formattedTime = `${hour}:${minute}`;
-  console.log(seat);
-  // useEffect(() => {
-  // dispatch(orderAction.resetOrder());
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+
   const date = new Date(orderRedux.date);
   const year = date.getFullYear();
   const mounth = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-  const formatedDate = `${day}/${mounth}/${year}`;
+  const formatedDate = `${day}-${mounth}-${year}`;
+  const time = useSelector((state) => state.order?.time);
+  const [hour, minute] = time.split(":");
+  const formattedTime = `${hour}:${minute}`;
+  // console.log(seat);
+  // useEffect(() => {
+  // dispatch(orderAction.resetOrder());
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   return (
     <PrivateRouteNotLogin>
       <Layout title={"Tiket Result"}>
@@ -40,7 +41,7 @@ function TicketResult() {
         <div className="w-full flex justify-center items-center bg-slate-400/20 global-px mt-24 py-16">
           <section className="w-full max-w-[1440px] flex flex-col justify-center items-center bg-white rounded-md p-5 md:px-10">
             <h1 className="text-2xl font-bold mb-5">Proof of Payment</h1>
-            <div className="w-full flex flex-row text-center overflow-hidden">
+            <div className="w-full flex flex-col-reverse md:flex-row text-center overflow-hidden">
               <div className="flex-1 flex flex-col border border-black border-r-0 rounded-s-lg overflow-hidden">
                 <span className="w-full flex items-center bg-primary px-4 md:px-5 py-2">
                   <Image
@@ -106,6 +107,14 @@ function TicketResult() {
                   <QRCodeGenerator data={qrCodeImage} />
                 </div>
               </div>
+            </div>
+            <div className="flex gap-5 mt-5">
+              <button className="md:w-52 btn btn-primary btn-outline gap-4 text-lg">
+                <i className="bi bi-download"></i> Download
+              </button>
+              <button className="md:w-52 btn btn-primary btn-outline gap-4 text-lg">
+                <i className="bi bi-printer"></i> Print
+              </button>
             </div>
           </section>
         </div>

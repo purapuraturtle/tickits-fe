@@ -82,7 +82,9 @@ function CardCinema(props) {
             >
               Book now
             </button>
-            <p className="text-primary cursor-pointer">Add to cart</p>
+            <p className="text-primary italic text-xs sm:text-sm text-end max-w-[50%] md:max-w-[70%]">
+              Choose a time first and continue to booking
+            </p>
           </div>
         </div>
       </div>

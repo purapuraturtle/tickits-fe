@@ -15,10 +15,10 @@ function ListDate(props) {
   const year = date.getFullYear();
   const mounth = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-  const formatedDate = `${day}/${mounth}/${year}`;
+  const formatedDate = `${year}-${mounth}-${day}`;
 
   return (
-    <li>
+    <li onClick={() => props.isClick(formatedDate)}>
       <a>{formatedDate}</a>
     </li>
   );
@@ -27,9 +27,26 @@ function ListDate(props) {
 function MovieDetails() {
   const router = useRouter();
   const controller = useMemo(() => new AbortController(), []);
+  const [dataDate, setDataDate] = useState([]);
+  const [selectDate, setSelectDate] = useState("");
   const [dataMovie, setDataMovie] = useState({});
   const [dataStudio, setDataStudio] = useState([]);
   // console.log(router.query.movie_id);
+
+  const handleSelectDate = (info) => {
+    setSelectDate(info);
+    fetchingSelectDate(info);
+  };
+
+  const fetchingSelectDate = async (date) => {
+    try {
+      const result = await getStudioTime(date, controller);
+      // console.log(result.data.data);
+      setDataStudio(result.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetching = async () => {
     const movieId = router.query.movie_id;
@@ -37,9 +54,10 @@ function MovieDetails() {
       const result = await getMovieDetails(movieId, controller);
       // console.log(result);
       setDataMovie(result.data.data[0]);
-      const getStudio = await getStudioTime(controller);
-      console.log(getStudio);
-      setDataStudio(getStudio.data.data);
+      const getStudio = await getStudioTime("", controller);
+      // console.log(getStudio);
+      setDataDate(getStudio.data.data);
+      // setDataStudio(getStudio.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +97,7 @@ function MovieDetails() {
   let new_date = date.toLocaleDateString("en-US", options);
   // console.log(new_date);
 
-  // console.log(dataStudio);
+  console.log(dataStudio);
   return (
     <PrivateRouteNotLogin>
       <Layout title={"Movie Details"}>
@@ -145,14 +163,18 @@ function MovieDetails() {
                         tabIndex={0}
                         className="btn btn-outline btn-primary  w-[10rem] md:w-[16.375rem] rounded"
                       >
-                        Select Date
+                        {selectDate === "" ? "Select Date" : selectDate}
                       </label>
                       <ul
                         tabIndex={0}
                         className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg w-full"
                       >
-                        {dataStudio.map((date, idx) => (
-                          <ListDate key={idx} date={date.open_date} />
+                        {dataDate.map((date, idx) => (
+                          <ListDate
+                            isClick={handleSelectDate}
+                            key={idx}
+                            date={date.open_date}
+                          />
                         ))}
                       </ul>
                     </div>
@@ -181,29 +203,17 @@ function MovieDetails() {
                 </div>
               </div>
               <div className="flex flex-wrap justify-between gap-y-5 w-full mt-16">
-                {
-                  dataStudio.map((studio, idx) => (
-                    <CardCinema
-                      key={idx}
-                      name={studio.teather_name}
-                      address={studio.address}
-                      image={studio.image}
-                      date={studio.open_date}
-                      time={studio.open_time}
-                      price={10}
-                    />
-                  ))
-                  // : data.map((datas, idx) => (
-                  //     <CardCinema
-                  //       key={idx}
-                  //       name={datas.name}
-                  //       address={datas.address}
-                  //       image={datas.image}
-                  //       time={datas.time}
-                  //       price={datas.price}
-                  //     />
-                  //   ))
-                }
+                {dataStudio.map((studio, idx) => (
+                  <CardCinema
+                    key={idx}
+                    name={studio.teather_name}
+                    address={studio.address}
+                    image={studio.image}
+                    date={studio.open_date}
+                    time={studio.open_time}
+                    price={10}
+                  />
+                ))}
               </div>
             </div>
           </section>
