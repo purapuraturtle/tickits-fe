@@ -137,14 +137,14 @@ function Header() {
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="menu-button"
-                    tabindex="-1"
+                    tabIndex="-1"
                   >
-                    <div class="py-1" role="none">
+                    <div className="py-1" role="none">
                       <Link
                         href="/profile"
                         className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
                         role="menuitem"
-                        tabindex="-1"
+                        tabIndex="-1"
                         id="menu-item-0"
                       >
                         Profile
@@ -154,7 +154,7 @@ function Header() {
                           href="/admin"
                           className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
                           role="menuitem"
-                          tabindex="-1"
+                          tabIndex="-1"
                           id="menu-item-0"
                         >
                           Admin Panel
@@ -166,7 +166,7 @@ function Header() {
                         // type="submit"
                         className="text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors"
                         role="menuitem"
-                        tabindex="-1"
+                        tabIndex="-1"
                         id="menu-item-3"
                         onClick={() => {
                           setIsOpen(false);
