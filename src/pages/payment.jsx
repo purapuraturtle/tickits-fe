@@ -2,15 +2,18 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Layout from "@/components/Layout";
 import { useRouter } from "next/router";
 import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
+import { createBooking } from "@/utils/https/transaction";
 
 function Payment() {
+  const userRedux = useSelector((state) => state.user.data);
   const orderRedux = useSelector((state) => state.order);
   const router = useRouter();
-  const [active, setActive] = useState(null);
+  const controller = useMemo(() => new AbortController(), []);
+  const [active, setActive] = useState("");
   const [fill, setFill] = useState(false);
   const movieName = useSelector((state) => state.order?.movieName);
   const cinema = useSelector((state) => state.order?.cinemaName);
@@ -20,7 +23,39 @@ function Payment() {
   const lastName = useSelector((state) => state.user?.data?.last_name);
   const email = useSelector((state) => state.user?.data?.email);
   const phone = useSelector((state) => state.user?.data?.phone);
-  console.log(firstName + lastName);
+
+  const [isLoading, setLoading] = useState(false);
+  // console.log(firstName + lastName);
+
+  const handlePayOrder = async () => {
+    // setLoading(true);
+    const onBookingFormatted = orderRedux.dataSeat.map((seat) => {
+      return {
+        block_name: seat.substring(0, 1),
+        block_number: seat.substring(1),
+      };
+    });
+    const data = {
+      user_id: userRedux.id,
+      movie_id: orderRedux.movieId,
+      teathstudio_id: orderRedux.cinemaId,
+      seat: onBookingFormatted,
+      total_price: orderRedux.totalPrice,
+      payment_id: active,
+    };
+    console.log(data);
+    const qrCode = `${orderRedux.cinemaId}-${orderRedux.dataSeat}`;
+    console.log(qrCode);
+    try {
+      const result = await createBooking(data, controller);
+      console.log(result);
+      setLoading(false);
+      router.push(`/ticket-result/${qrCode}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (
@@ -388,18 +423,23 @@ function Payment() {
                     onClick={() => {
                       router.push("/order");
                     }}
-                    className="border-[3px] border-solid border-primary text-primary flex items-center justify-center w-[300px] h-14"
+                    className="btn btn-outline btn-primary rounded w-[300px] h-14"
                   >
                     Previous step
                   </button>
-                  <button
-                    onClick={() => {
-                      router.push("/ticket-result");
-                    }}
-                    className="bg-primary text-white w-[300px] h-14"
-                  >
-                    Pay your order
-                  </button>
+                  {isLoading ? (
+                    <button className="btn btn-primary loading rounded w-[300px] h-14">
+                      Loading
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handlePayOrder}
+                      disabled={active === ""}
+                      className="btn btn-primary rounded w-[300px] h-14"
+                    >
+                      Pay your order
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
