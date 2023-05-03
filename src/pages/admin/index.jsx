@@ -5,6 +5,8 @@ import { getGenre } from "@/utils/https/getGenre";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import placeholder from "@/Assets/profile/poster.png";
+import { createMovie, createSchedule } from "@/utils/https/admin";
+import { useSelector } from "react-redux";
 
 function ListCategory({ name, listCategory, handleClick }) {
   const isCategory = listCategory && listCategory.includes(name);
@@ -22,6 +24,8 @@ function ListCategory({ name, listCategory, handleClick }) {
 
 function CreateSchedule() {
   const controller = useMemo(() => new AbortController(), []);
+  const userRedux = useSelector((state) => state.user);
+  const { token } = userRedux.data;
   const [dataCategory, setDataCategory] = useState([]);
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState("CGV Jakarta Selatan");
@@ -85,7 +89,7 @@ function CreateSchedule() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const categories = category.join(", ");
     const bodyMovie = {
       movie_name: form.movie_name,
@@ -97,16 +101,39 @@ function CreateSchedule() {
       aktors: form.aktors,
       sinopsis: form.sinopsis,
     };
-    // NEXT RESPONSE
-    const bodyTeatherStudio = dataTime.map((time) => ({
-      teather_id: teather,
-      open_date: form.open_date,
-      open_time: time,
-      price: 10,
-      movie_id: 1, //response movie
-    }));
     console.log(bodyMovie);
-    console.log(bodyTeatherStudio);
+    try {
+      const result = await createMovie(token, image, bodyMovie, controller);
+      console.log(result);
+      // NEXT RESPONSE
+      if (result && result.data && result.data.data) {
+        console.log("TEST");
+        createSchedules(result.data.data.id);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createSchedules = async (movieId) => {
+    try {
+      const bodyTeatherStudio = dataTime.map((time) => ({
+        teather_id: teather,
+        open_date: form.open_date,
+        open_time: time,
+        price: dataPrice,
+        movie_id: movieId, //response movie
+      }));
+      console.log(bodyTeatherStudio);
+      const resultCreateSchedule = await createSchedule(
+        token,
+        bodyTeatherStudio,
+        controller
+      );
+      console.log(resultCreateSchedule);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleAddTime = () => {
@@ -421,11 +448,10 @@ function CreateSchedule() {
                   key={idx}
                   className="w-full flex justify-center gap-5 font-bold transition-all"
                 >
-                  <span className="flex gap-2">
-                    <p className="text-gray-400">Time : </p>
-                    <p>{item}</p>
-                  </span>
-                  <p>{dataPrice[idx]}</p>
+                  <p className="text-gray-400">Time : </p>
+                  <p>{item}, </p>
+                  <p className="text-gray-400">Price :</p>
+                  <p>${dataPrice[idx]}</p>
                 </div>
               ))}
             </div>
