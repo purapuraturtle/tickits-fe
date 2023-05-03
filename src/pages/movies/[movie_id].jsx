@@ -136,44 +136,6 @@ function MovieDetails() {
               <h1 className="text-2xl font-bold">Showtimes and Tickets</h1>
               <div className="flex items-center mt-10 gap-6">
                 <div className="form-control flex-1 ">
-                  <input
-                    type="date"
-                    id="release-date"
-                    name="release_date"
-                    className="input input-bordered input-primary rounded w-[10rem] md:w-[16.375rem]"
-                  />
-                </div>
-                <div className="w-full flex flex-col gap-5 ">
-                  <div className="dropdown z-0">
-                    <label
-                      tabIndex={0}
-                      className="btn btn-primary  w-[10rem] md:w-[16.375rem] rounded"
-                    >
-                      {location}
-                    </label>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg w-full"
-                    >
-                      <li onClick={() => setLocation("Jakarta")}>
-                        <a>Jakarta</a>
-                      </li>
-                      <li onClick={() => setLocation("Bandung")}>
-                        <a> Bandung</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mt-14">
-              <h2 className="font-semibold text-xl">Synopsis</h2>
-              <p className="text-base">{dataMovie.sinopsis || "synopsis"}</p>
-            </div>
-            <div className="flex flex-col items-center mt-36">
-              <h1 className="text-2xl font-bold">Showtimes and Tickets</h1>
-              <div className="flex items-center mt-10 gap-6">
-                <div className="form-control flex-1 ">
                   <div className="w-full flex flex-col gap-5 ">
                     {/* SET DATE */}
                     <div className="dropdown z-0">
