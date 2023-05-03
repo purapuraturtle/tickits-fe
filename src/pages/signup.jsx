@@ -1,8 +1,12 @@
-import SideForAuth from "@/components/AuthSide";
-import Image from "next/image";
-import { useState } from "react";
-import { register } from "@/utils/https/authaxios";
-import { useRouter } from "next/router";
+import { useState } from 'react';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import SideForAuth from '@/components/AuthSide';
+import Layout from '@/components/Layout';
+import { register } from '@/utils/https/authaxios';
 
 function Signup() {
   const router = useRouter();
@@ -23,21 +27,24 @@ function Signup() {
     }
   };
   return (
-    <>
+    <Layout title={"Sign Up"}>
       <div className="lg:flex">
         <SideForAuth />
-        <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
+        <form className="lg:flex-[1] bg-slate-300/20 min-h-screen lg:h-[1024px]">
           <div className=" m-auto ml-6 lg:m-[83px] pt-[54px] lg:mt-[176px] lg:w-[75%] ">
-            <Image
-              src="/logo.svg"
-              width={120}
-              height={62}
-              className="lg:hidden "
-            />
+            <Link href={"/"}>
+              <Image
+                src="/images/logo.svg"
+                width={120}
+                height={62}
+                className="lg:hidden "
+                alt="Logo"
+              />
+            </Link>
             <p className="text-[#121212] text-[26px] font-semibold hidden lg:inline-block">
               Fill your additional details
             </p>
-            <p className="text-4xl font-semibold text-[#121212] mt-12 lg:hidden">
+            <p className="text-3xl font-semibold text-[#121212] mt-12 lg:hidden">
               Sign Up
             </p>
             <p className="mt-12 text-base text-[#4E4B66]">Email</p>
@@ -96,7 +103,7 @@ function Signup() {
               <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede] ml-9" />
             </div>
             <div className="flex justify-center w-[95%]">
-              <div className="flex cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-full h-[64px]">
+              <div className="flex cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-16 lg:w-full h-[64px]">
                 <Image
                   src="/google.svg"
                   width={24}
@@ -104,9 +111,9 @@ function Signup() {
                   className="absolute left-5"
                   alt="google"
                 />
-                <button className="text-[#A0A3BD]">Google</button>
+                <p className="text-[#A0A3BD] hidden lg:block">Google</p>
               </div>
-              <div className="flex ml-9 cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-full h-[64px]">
+              <div className="flex ml-9 cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg  w-16 lg:w-full h-[64px]">
                 <Image
                   src="/facebook.svg"
                   width={24}
@@ -114,13 +121,16 @@ function Signup() {
                   className="absolute left-5"
                   alt="google"
                 />
-                <button className="text-[#A0A3BD]">Facebook</button>
+                <button className="text-[#A0A3BD]  hidden lg:block">
+                  Facebook
+                </button>
               </div>
             </div>
+            <div className="h-12 lg:hidden"></div>
           </div>
         </form>
       </div>
-    </>
+    </Layout>
   );
 }
 

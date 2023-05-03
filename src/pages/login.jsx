@@ -1,9 +1,13 @@
-import SideForAuth from "@/components/AuthSide";
-import { usersAction } from "@/redux/slice/users";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from 'react';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+
+import SideForAuth from '@/components/AuthSide';
+import Layout from '@/components/Layout';
+import { usersAction } from '@/redux/slice/users';
 
 function Login() {
   const router = useRouter();
@@ -26,17 +30,20 @@ function Login() {
     });
   };
   return (
-    <>
+    <Layout title={"Login"}>
       <div className="lg:flex">
         <SideForAuth />
         <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
           <div className="lg:ml-[83px] ml-6 pt-[55px] lg:w-[75%]">
-            <Image
-              src="/logo.svg"
-              width={120}
-              height={62}
-              className="lg:hidden "
-            />
+            <Link href={"/"}>
+              <Image
+                src="/logo.svg"
+                width={120}
+                height={62}
+                className="lg:hidden"
+                alt="Tickits"
+              />
+            </Link>
             <p className="font-semibold text-5xl mt-[50px] lg:mt-[176px] text-[#121212]">
               Sign In
             </p>
@@ -111,7 +118,7 @@ function Login() {
           </div>
         </form>
       </div>
-    </>
+    </Layout>
   );
 }
 
