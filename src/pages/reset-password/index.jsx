@@ -1,9 +1,12 @@
+import { useState } from "react";
+
+import Image from "next/image";
+import Link from "next/link";
+
 import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
 import { checkEmail } from "@/utils/https/authaxios";
-import Image from "next/image";
-import { useState } from "react";
 
 function Forgot() {
   const [email, setEmail] = useState("");
@@ -25,12 +28,15 @@ function Forgot() {
           <SideForAuth />
           <div className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
             <div className="ml-6 lg:ml-[83px] lg:pt-[176px] pt-14 lg:w-[77%]">
-              <Image
-                src="/logo.svg"
-                width={120}
-                height={62}
-                className="lg:hidden "
-              />
+              <Link href={"/"}>
+                <Image
+                  src="/images/logo.svg"
+                  width={120}
+                  height={62}
+                  className="lg:hidden "
+                  alt="Tickits"
+                />
+              </Link>
               <p className="text-[#121212] text-[26px] font-semibold mt-11 lg:hidden">
                 Forgot Password
               </p>
