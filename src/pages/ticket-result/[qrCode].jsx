@@ -26,7 +26,10 @@ function TicketResult() {
   const mounth = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   const formatedDate = `${day}-${mounth}-${year}`;
-
+  const time = useSelector((state) => state.order?.time);
+  const [hour, minute] = time.split(":");
+  const formattedTime = `${hour}:${minute}`;
+  console.log(seat);
   // useEffect(() => {
   // dispatch(orderAction.resetOrder());
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,7 +67,7 @@ function TicketResult() {
                     </span>
                     <span className="flex-1 flex flex-col items-start">
                       <p className="text-gray-400 text-sm">Time</p>
-                      <h2 className="font-bold">{orderRedux.time}</h2>
+                      <h2 className="font-bold">{formattedTime}</h2>
                     </span>
                     <span className="flex-1 flex flex-col items-start">
                       <p className="text-gray-400 text-sm">Category</p>
@@ -79,7 +82,7 @@ function TicketResult() {
                     </span>
                     <span className="flex-1 flex flex-col items-start">
                       <p className="text-gray-400 text-sm">Seats</p>
-                      <h2 className="font-bold">{seat}</h2>
+                      <h2 className="font-bold">{seat.join(", ")}</h2>
                     </span>
                     <span className="flex-1 flex flex-col items-start">
                       <p className="text-gray-400 text-sm">Price</p>
