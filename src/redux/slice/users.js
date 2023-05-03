@@ -1,19 +1,9 @@
-import { login } from '@/utils/https/authaxios';
-import {
-  createAsyncThunk,
-  createSlice,
-} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import { login } from "@/utils/https/authaxios";
 
 const initialState = {
-  data: {
-    token: "",
-    role_id: "",
-    email: "",
-    phone: "",
-    first_name: "",
-    last_name: "",
-    image: null,
-  },
+  data: [],
   isLoading: false,
   isRejected: false,
   isFulfilled: false,

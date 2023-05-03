@@ -4,11 +4,16 @@ import Header from "@/components/Header";
 import Image from "next/image";
 import QRCodeGenerator from "@/utils/qrCode";
 import { useState } from "react";
-
+import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
+import { useSelector } from "react-redux";
 function TicketResult() {
   const [qrCodeImage, setQrCodeImage] = useState("purapura-turtle");
+  const payment = useSelector((state) => state.order?.totalPrice);
+  const movieName = useSelector((state) => state.order?.movieName);
+  const seat = useSelector((state) => state.order?.dataSeat);
+  const tickets = useSelector((state) => state.order?.dataSeat?.length);
   return (
-    <>
+    <PrivateRouteNotLogin>
       <Layout title={"Tiket Result"}>
         <Header />
         <div className="w-full flex justify-center items-center bg-slate-400/20 global-px mt-24 py-16">
@@ -30,7 +35,7 @@ function TicketResult() {
                   {/* MOVIE */}
                   <div className="w-full flex flex-col items-start">
                     <p className="text-gray-400 text-sm">Movie</p>
-                    <h2 className="font-bold">Spider-Man: Homecoming</h2>
+                    <h2 className="font-bold">{movieName}</h2>
                   </div>
                   {/* DATE TIME CATEGORY */}
                   <div className="w-full flex justify-between">
@@ -51,15 +56,15 @@ function TicketResult() {
                   <div className="w-full flex justify-between">
                     <span className="flex-1 flex flex-col items-start">
                       <p className="text-gray-400 text-sm">Count</p>
-                      <h2 className="font-bold">3 pieces</h2>
+                      <h2 className="font-bold">{tickets} pieces</h2>
                     </span>
                     <span className="flex-1 flex flex-col items-start">
                       <p className="text-gray-400 text-sm">Seats</p>
-                      <h2 className="font-bold">C4, C5, C6</h2>
+                      <h2 className="font-bold">{seat}</h2>
                     </span>
                     <span className="flex-1 flex flex-col items-start">
                       <p className="text-gray-400 text-sm">Price</p>
-                      <h2 className="font-bold">$30</h2>
+                      <h2 className="font-bold">{payment} $</h2>
                     </span>
                   </div>
                 </span>
@@ -85,7 +90,7 @@ function TicketResult() {
         </div>
         <Footer />
       </Layout>
-    </>
+    </PrivateRouteNotLogin>
   );
 }
 
