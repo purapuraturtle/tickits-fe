@@ -1,10 +1,14 @@
-import SideForAuth from "@/components/AuthSide";
-import Image from "next/image";
 import { useState } from "react";
-import { register } from "@/utils/https/authaxios";
+
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
+
+import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
+import { register } from "@/utils/https/authaxios";
+
 function Signup() {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -30,12 +34,15 @@ function Signup() {
           <SideForAuth />
           <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
             <div className=" ml-6 lg:ml-[83px] pt-[54px] lg:pt-[176px] lg:w-[75%] ">
-              <Image
-                src="/logo.svg"
-                width={120}
-                height={62}
-                className="lg:hidden "
-              />
+              <Link href={"/"}>
+                <Image
+                  src="/images/logo.svg"
+                  width={120}
+                  height={62}
+                  className="lg:hidden "
+                  alt="Tickits"
+                />
+              </Link>
               <p className="text-[#121212] text-[26px] font-semibold hidden lg:inline-block">
                 Fill your additional details
               </p>

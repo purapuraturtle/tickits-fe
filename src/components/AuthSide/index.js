@@ -1,21 +1,25 @@
-import Image from "next/image";
-import { useRouter } from "next/router";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 function SideForAuth() {
   const router = useRouter();
   return (
     <>
       <div className="lg:flex-[1.5] w-full">
-        <div className="bg-hero-pattern bg-cover w-full h-[1024px] bg-no-repeat hidden lg:inline-block bg-slate-300/20">
+        <div className="bg-hero-pattern bg-[#4f3c81] bg-cover w-full h-[1024px] bg-no-repeat hidden lg:inline-block bg-slate-300/20">
           {router.pathname === "/signup" && (
             <>
               <div className="pt-20 lg:ml-14 min-[1440px]:ml-28">
                 <div className="">
-                  <Image
-                    src="/favicon.svg"
-                    width={276}
-                    height={104}
-                    alt="icon"
-                  />
+                  <Link href={"/"}>
+                    <Image
+                      src="/images/logo-white.svg"
+                      width={276}
+                      height={104}
+                      alt="icon"
+                    />
+                  </Link>
                 </div>
                 <p className="text-white lg:text-4xl min-[1440px]:text-5xl mt-[101px] lg:w-[99%]">
                   Lets build your account
@@ -55,13 +59,15 @@ function SideForAuth() {
           )}
           {router.pathname === "/login" && (
             <>
-              <Image
-                src="/favicon.svg"
-                width={500}
-                height={190}
-                className="m-auto pt-[383px]"
-                alt="icon"
-              />{" "}
+              <Link href={"/"}>
+                <Image
+                  src="/images/logo-white.svg"
+                  width={500}
+                  height={190}
+                  className="m-auto pt-[383px]"
+                  alt="icon"
+                />
+              </Link>{" "}
               <p className="text-5xl text-white/80 text-center mt-[9px]">
                 wait, watch, wow!
               </p>
@@ -71,12 +77,14 @@ function SideForAuth() {
             <>
               <div className="pt-20 lg:ml-10 min-[1440px]:ml-28">
                 <div className="">
-                  <Image
-                    src="/favicon.svg"
-                    width={276}
-                    height={104}
-                    alt="icon"
-                  />
+                  <Link href={"/"}>
+                    <Image
+                      src="/favicon.svg"
+                      width={276}
+                      height={104}
+                      alt="icon"
+                    />
+                  </Link>
                 </div>
                 <p className="text-white text-4xl min-[1440px]:text-5xl mt-[101px] lg:w-[99%]">
                   Lets reset your password
@@ -126,14 +134,16 @@ function SideForAuth() {
           {router.pathname === "/reset-password/[otp]" && (
             <>
               <div className="pt-20 lg:ml-10 min-[1440px]:ml-28">
-                <div className="">
-                  <Image
-                    src="/favicon.svg"
-                    width={276}
-                    height={104}
-                    alt="icon"
-                  />
-                </div>
+                <Link href={"/"}>
+                  <div className="">
+                    <Image
+                      src="/favicon.svg"
+                      width={276}
+                      height={104}
+                      alt="icon"
+                    />
+                  </div>
+                </Link>
                 <p className="text-white text-4xl min-[1440px]:text-5xl mt-[101px] lg:w-[99%]">
                   Lets reset your password
                 </p>

@@ -1,11 +1,13 @@
-import SideForAuth from "@/components/AuthSide";
-import Layout from "@/components/Layout";
-import { usersAction } from "@/redux/slice/users";
+import { useState } from "react";
+
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+import SideForAuth from "@/components/AuthSide";
+import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
+import { usersAction } from "@/redux/slice/users";
 
 function Login() {
   const router = useRouter();
@@ -35,10 +37,11 @@ function Login() {
           <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
             <div className=" ml-6 lg:ml-[83px] pt-[54px] lg:pt-[176px] lg:w-[75%] ">
               <Image
-                src="/logo.svg"
+                src="/images/logo.svg"
                 width={120}
                 height={62}
                 className="lg:hidden "
+                alt="Tickits"
               />
               <p className="text-[#121212] text-[48px] font-semibold inline-block mt-12 lg:mt-0">
                 Sign In
