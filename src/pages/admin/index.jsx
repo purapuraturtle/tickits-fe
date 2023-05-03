@@ -159,7 +159,7 @@ function CreateSchedule() {
       <Header />
       <main className="global-px py-[3.75rem] mt-16 select-none bg-slate-300/20">
         <section className="w-full flex flex-col md:flex-row gap-4">
-          <div className="w-full md:w-2/3 flex flex-col">
+          <div className="w-full lg:w-2/3 flex flex-col">
             <h1 className="font-bold text-xl mb-6">Movie Description</h1>
             <div className="w-full flex flex-col bg-base-100 rounded-lg p-5 gap-5">
               <span className="flex flex-col md:flex-row gap-5">
@@ -239,9 +239,9 @@ function CreateSchedule() {
                     </div>
                   </div>
                   {/* TIME GROUP */}
-                  <div className="w-full flex gap-3">
+                  <div className="w-full flex flex-col xl:flex-row gap-3">
                     {/* RELEASE DATE */}
-                    <div className="form-control flex-1">
+                    <div className="form-control md:flex-1">
                       <label className="label" htmlFor="release-date">
                         <span className="label-text">Release Date</span>
                       </label>
@@ -251,13 +251,13 @@ function CreateSchedule() {
                         name="release_date"
                         value={form.release_date}
                         onChange={onChangeForm}
-                        className="input input-bordered input-primary rounded"
+                        className="input input-bordered input-primary rounded w-full px-2"
                       />
                     </div>
                     {/* DURATION-H */}
                     <div className="form-control flex-1">
                       <label className="label">
-                        <span className="label-text">
+                        <span className="label-text w-fit">
                           {"Duration ( hour / minute )"}
                         </span>
                       </label>
@@ -424,26 +424,34 @@ function CreateSchedule() {
                   className="input input-bordered input-primary rounded"
                 />
               </div>
-              <div className="flex gap-2 justify-end">
+              <div className="flex md:flex-col lg:flex-row gap-2 justify-end">
                 <input
-                  type="text"
+                  type="time"
                   value={addTime}
-                  onChange={(e) => setAddTime(e.target.value)}
-                  className="flex-1 border border-primary-focus outline-none w-20 rounded-md px-4"
+                  onChange={(e) => {
+                    setAddTime(e.target.value);
+                    console.log(addTime);
+                  }}
+                  className="flex-1 border border-primary-focus outline-none w-20 md:w-full lg:w-20 rounded px-4 py-2  cursor-pointer"
                   placeholder="ex 08:30"
                 />
                 <input
                   type="text"
                   value={addPrice}
-                  onChange={(e) => setAddPrice(e.target.value)}
-                  className="flex-1 border border-primary-focus outline-none w-20 rounded-md px-4"
+                  onChange={(e) => {
+                    if (isNaN(e.target.value)) {
+                      return false;
+                    }
+                    setAddPrice(e.target.value);
+                  }}
+                  className="flex-1 border border-primary-focus outline-none w-20 md:w-full lg:w-20  rounded px-4"
                   placeholder="set price"
                 />
 
                 <button
-                  className="btn btn-primary btn-outline w-fit px-3 "
+                  className="btn btn-primary btn-outline w-fit px-3 rounded "
                   onClick={handleAddTime}
-                  disabled={addTime === "" || addTime.length < 4}
+                  disabled={addTime === "" || addPrice === ""}
                 >
                   <i className="bi bi-plus text-2xl"></i>
                 </button>
