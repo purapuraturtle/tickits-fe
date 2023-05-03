@@ -11,10 +11,11 @@ const initialState = {
 
 const storeLogin = createAsyncThunk(
   "users/post",
-  async ({ email, password }, { rejectWithValue, fulfillWithValue }) => {
+  async ({ email, password, controller }, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const response = await login(email, password);
+      const response = await login(email, password, controller);
       const { data } = response;
+      // console.log(data.data);
       return fulfillWithValue(data.data);
     } catch (err) {
       return rejectWithValue(err);
@@ -55,6 +56,7 @@ const userSlice = createSlice({
         };
       })
       .addCase(storeLogin.fulfilled, (prevState, action) => {
+        // console.log(action.payload);
         return {
           ...prevState,
           isLoading: false,
