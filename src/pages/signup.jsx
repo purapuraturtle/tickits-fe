@@ -1,15 +1,14 @@
-import { useState } from "react";
-
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
-import { register } from "@/utils/https/authaxios";
+import { register } from "@/utils/https/auth";
 
 function Signup() {
+  const controller = useMemo(() => new AbortController(), []);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,6 +17,7 @@ function Signup() {
   });
   const [msg, setMsg] = useState("");
   const [invalid, setInvalid] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
 
   const handleCheckboxChange = () => {
@@ -26,15 +26,20 @@ function Signup() {
   const handleSignUp = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-
     try {
       const { email, password } = formData;
-      const result = await register(email, password);
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setMsg("Email is invalid!");
+        setInvalid(true);
+        setIsLoading(false);
+        return;
+      }
+      const result = await register(email, password, controller);
       console.log(result);
       setMsg("create account success");
-      setTimeout(() => {
-        router.push("/login");
-      }, 700);
+      setSuccess(true);
+      router.push("/login");
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -105,6 +110,9 @@ function Signup() {
                     I agree to terms & conditions
                   </span>
                   <p className="text-info text-center mt-4">{invalid && msg}</p>
+                  <p className="text-success text-center mt-4">
+                    {success && msg}
+                  </p>
                 </label>
               </div>
               {isLoading ? (
