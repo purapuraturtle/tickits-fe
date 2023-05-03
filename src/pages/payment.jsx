@@ -55,10 +55,18 @@ function Payment() {
       console.log(error);
     }
   };
-
+  console.log(fill);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (firstName === null || lastName === null || !email || phone === null) {
+    if (
+      firstName === null ||
+      firstName === "null" ||
+      lastName === "null" ||
+      lastName === null ||
+      !email ||
+      phone === null ||
+      phone === "null"
+    ) {
       setFill(true);
     }
   });
@@ -236,6 +244,7 @@ function Payment() {
           <div className="ml-6 lg:ml-32 min-[1300px]:ml-0 min-[1300px]:w-[400px] h-[548px] bg-white mt-[206px] mr-6 lg:mr-32 min-[1300px]:flex-[1]">
             <p className="ml-10 mt-12 text-[#696F79]">Full Name</p>
             <input
+              disabled
               value={
                 firstName === "null" || lastName === "null"
                   ? ""
@@ -246,12 +255,14 @@ function Payment() {
             />
             <p className="ml-10 mt-12 text-[#696F79]">Email</p>
             <input
+              disabled
               value={email}
               className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
               placeholder="Input your full email"
             />
             <p className="ml-10 mt-12 text-[#696F79]">Phone Number</p>
             <input
+              disabled
               value={phone === "null" ? "" : phone}
               className="w-[85%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
               placeholder="Input your phone number"
