@@ -25,15 +25,15 @@ This application is built using React.js, Next.js, Redux, axios, Lodash, Chart.j
 
 ## Features
 
-Tickitz has several main features:
+### Public
 
--Auth
--Movies
--Cinema
--Booking Ticket
+-Login
+-Register
+-Forgot Password
+-Booking Movie
 -Payment Ticket
--Profile
--Admin
+-Edit Profile
+-Etc
 
 ## How to run the application
 
