@@ -17,3 +17,8 @@ export const getMovieDetails = (movieId, controller) => {
   const url = `${baseUrl}/movie/${movieId}`;
   return axios.get(url, { signal: controller.signal });
 };
+
+export const getStudioTime = (controller) => {
+  const url = `${baseUrl}/teather`;
+  return axios.get(url, { signal: controller.signal });
+};
