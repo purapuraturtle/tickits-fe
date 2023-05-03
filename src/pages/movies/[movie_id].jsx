@@ -77,9 +77,9 @@ function MovieDetails() {
   let date = new Date(dataMovie.release_date);
   let options = { year: "numeric", month: "long", day: "numeric" };
   let new_date = date.toLocaleDateString("en-US", options);
-  console.log(new_date);
+  // console.log(new_date);
 
-  console.log(dataStudio);
+  // console.log(dataStudio);
   return (
     <PrivateRouteNotLogin>
       <Layout title={"Movie Details"}>
