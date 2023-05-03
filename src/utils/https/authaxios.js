@@ -34,3 +34,8 @@ export const resetPassword = (id, newPassword, confirmPassword) => {
   const url = `https://tickits-be.vercel.app/auth/reset-password/${id}`;
   return axios.post(url, body);
 };
+
+export const checkId = (id) => {
+  const url = `https://tickits-be.vercel.app/auth/reset-password/${id}`;
+  return axios.get(url);
+};
