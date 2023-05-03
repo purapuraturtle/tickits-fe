@@ -1,10 +1,11 @@
 import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Layout from "@/components/Layout";
-import placeholder from "@/Assets/profile/placeholder.png";
 import Link from "next/link";
 import { useSelector } from "react-redux";
+
+import placeholder from "@/Assets/profile/placeholder.png";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Layout from "@/components/Layout";
 
 function History() {
   const userStore = useSelector((state) => state.user.data);
@@ -15,7 +16,7 @@ function History() {
     <Layout title={"History"}>
       <Header />
       <main className="global-px py-[3.75rem] mt-16 select-none bg-slate-300/20">
-        <section className="flex flex-col lg:flex-row gap-8 rounded-md">
+        <section className="flex flex-col lg:flex-row gap-8 rounded-md  tracking-wide">
           <div className="flex-1 bg-white">
             <div className="p-10 border-b">
               <div className="flex items-center justify-between">
@@ -29,7 +30,7 @@ function History() {
               <div className="flex flex-col items-center mt-8">
                 <div className="w-[8.5rem] h-[8.5rem] rounded-full">
                   <Image
-                    src={image}
+                    src={image || placeholder}
                     width={136}
                     height={136}
                     alt="profile-img"
@@ -49,7 +50,7 @@ function History() {
             </div>
             <div className="pt-8 px-8 pb-20">
               <p className="mb-6">Loyalty Points</p>
-              <div className="w-[80%] md:w-[45%] lg:w-full bg-gradient-to-r from-teal-500 to-emerald-500 via-cyan-600 bg-gradient-to-right-top px-4 py-6 rounded-lg">
+              <div className="w-[80%] md:w-[45%] lg:w-full bg-gradient-to-r from-primary to-primary/80 bg-gradient-to-right-top px-4 py-6 rounded-lg text-white">
                 <p>Moviegoers</p>
                 <p className="text-2xl mt-5">
                   320 <span className="text-xs">points</span>
