@@ -1,9 +1,7 @@
 import { useState } from "react";
-
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-
 import SideForAuth from "@/components/AuthSide";
 import Layout from "@/components/Layout";
 import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
