@@ -70,7 +70,7 @@ function CreateSchedule() {
   const fetching = async () => {
     try {
       const result = await getGenre(controller);
-      // console.log(result);
+      console.log(result);
       setDataCategory(result.data.data);
     } catch (error) {
       console.log(error);
