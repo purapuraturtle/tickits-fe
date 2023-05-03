@@ -7,7 +7,6 @@ import { useEffect, useMemo, useState } from "react";
 import CardCinema from "@/components/CardCinema";
 import { useRouter } from "next/router";
 import { getMovieDetails, getStudioTime } from "@/utils/https/movies";
-import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
 
 function ListDate(props) {
   // console.log(props);
@@ -99,128 +98,126 @@ function MovieDetails() {
 
   console.log(dataStudio);
   return (
-    <PrivateRouteNotLogin>
-      <Layout title={"Movie Details"}>
-        <Header />
-        <main className="global-px py-[3.75rem] mt-16 select-none bg-slate-300/20">
-          <section className="w-full gap-6 justify-between">
-            <div>
-              <div className="flex flex-col md:flex-row gap-14">
-                <div className="p-5 md:w-[20.75rem] border border-primary rounded-2xl relative">
-                  <span className="w-full h-full flex bg-slate-500">
-                    <Image
-                      src={dataMovie.image || placeholder}
-                      alt="img-movie"
-                      width={100}
-                      height={100}
-                      className="w-full h-full object-cover"
-                    />
-                  </span>
-                </div>
-                <div>
-                  <h1 className="font-bold text-2xl">
-                    {dataMovie.movie_name || "Title Movie"}
-                  </h1>
-                  <p className="text-[#4E4B66] text-lg">
-                    {dataMovie.genre_name || "category"}
-                  </p>
-                  <div className="mt-8">
-                    <p className="text-[#8692A6] text-sm">Release date</p>
-                    <p className="text-base">{new_date || "June 28, 2017"}</p>
-                  </div>
-                  <div className="mt-8">
-                    <p className="text-[#8692A6] text-sm">Duration</p>
-                    <p className="text-base">
-                      {`${dataMovie.duration_hour} hours, ${dataMovie.duration_minute} minutes` ||
-                        "2 hours 13 minutes"}
-                    </p>
-                  </div>
-                  <div className="mt-8">
-                    <p className="text-[#8692A6] text-sm">Directed by</p>
-                    <p className="text-base">
-                      {dataMovie.director || "director"}
-                    </p>
-                  </div>
-                  <div className="mt-8">
-                    <p className="text-[#8692A6] text-sm">Casts</p>
-                    <p className="text-base">{dataMovie.aktors || "actors"}</p>
-                  </div>
-                </div>
+    <Layout title={"Movie Details"}>
+      <Header />
+      <main className="global-px py-[3.75rem] mt-16 select-none bg-slate-300/20">
+        <section className="w-full gap-6 justify-between">
+          <div>
+            <div className="flex flex-col md:flex-row gap-14">
+              <div className="p-5 md:w-[20.75rem] border border-primary rounded-2xl relative">
+                <span className="w-full h-full flex bg-slate-500">
+                  <Image
+                    src={dataMovie.image || placeholder}
+                    alt="img-movie"
+                    width={100}
+                    height={100}
+                    className="w-full h-full object-cover"
+                  />
+                </span>
               </div>
-              <div className="mt-14">
-                <h2 className="font-semibold text-xl">Synopsis</h2>
-                <p className="text-base">{dataMovie.sinopsis || "synopsis"}</p>
+              <div>
+                <h1 className="font-bold text-2xl">
+                  {dataMovie.movie_name || "Title Movie"}
+                </h1>
+                <p className="text-[#4E4B66] text-lg">
+                  {dataMovie.genre_name || "category"}
+                </p>
+                <div className="mt-8">
+                  <p className="text-[#8692A6] text-sm">Release date</p>
+                  <p className="text-base">{new_date || "June 28, 2017"}</p>
+                </div>
+                <div className="mt-8">
+                  <p className="text-[#8692A6] text-sm">Duration</p>
+                  <p className="text-base">
+                    {`${dataMovie.duration_hour} hours, ${dataMovie.duration_minute} minutes` ||
+                      "2 hours 13 minutes"}
+                  </p>
+                </div>
+                <div className="mt-8">
+                  <p className="text-[#8692A6] text-sm">Directed by</p>
+                  <p className="text-base">
+                    {dataMovie.director || "director"}
+                  </p>
+                </div>
+                <div className="mt-8">
+                  <p className="text-[#8692A6] text-sm">Casts</p>
+                  <p className="text-base">{dataMovie.aktors || "actors"}</p>
+                </div>
               </div>
             </div>
-            <div className="flex flex-col items-center mt-36">
-              <h1 className="text-2xl font-bold">Showtimes and Tickets</h1>
-              <div className="flex items-center mt-10 gap-6">
-                <div className="form-control flex-1 ">
-                  <div className="w-full flex flex-col gap-5 ">
-                    {/* SET DATE */}
-                    <div className="dropdown z-0">
-                      <label
-                        tabIndex={0}
-                        className="btn btn-outline btn-primary  w-[10rem] md:w-[16.375rem] rounded"
-                      >
-                        {selectDate === "" ? "Select Date" : selectDate}
-                      </label>
-                      <ul
-                        tabIndex={0}
-                        className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg w-full"
-                      >
-                        {dataDate.map((date, idx) => (
-                          <ListDate
-                            isClick={handleSelectDate}
-                            key={idx}
-                            date={date.open_date}
-                          />
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+            <div className="mt-14">
+              <h2 className="font-semibold text-xl">Synopsis</h2>
+              <p className="text-base">{dataMovie.sinopsis || "synopsis"}</p>
+            </div>
+          </div>
+          <div className="flex flex-col items-center mt-36">
+            <h1 className="text-2xl font-bold">Showtimes and Tickets</h1>
+            <div className="flex items-center mt-10 gap-6">
+              <div className="form-control flex-1 ">
                 <div className="w-full flex flex-col gap-5 ">
+                  {/* SET DATE */}
                   <div className="dropdown z-0">
                     <label
                       tabIndex={0}
-                      className="btn btn-primary  w-[10rem] md:w-[16.375rem] rounded"
+                      className="btn btn-outline btn-primary  w-[10rem] md:w-[16.375rem] rounded"
                     >
-                      {location}
+                      {selectDate === "" ? "Select Date" : selectDate}
                     </label>
                     <ul
                       tabIndex={0}
                       className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg w-full"
                     >
-                      <li onClick={() => setLocation("Jakarta")}>
-                        <a>Jakarta</a>
-                      </li>
-                      <li onClick={() => setLocation("Bandung")}>
-                        <a> Bandung</a>
-                      </li>
+                      {dataDate.map((date, idx) => (
+                        <ListDate
+                          isClick={handleSelectDate}
+                          key={idx}
+                          date={date.open_date}
+                        />
+                      ))}
                     </ul>
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap justify-between gap-y-5 w-full mt-16">
-                {dataStudio.map((studio, idx) => (
-                  <CardCinema
-                    key={idx}
-                    name={studio.teather_name}
-                    address={studio.address}
-                    image={studio.image}
-                    date={studio.open_date}
-                    time={studio.open_time}
-                    price={10}
-                  />
-                ))}
+              <div className="w-full flex flex-col gap-5 ">
+                <div className="dropdown z-0">
+                  <label
+                    tabIndex={0}
+                    className="btn btn-primary  w-[10rem] md:w-[16.375rem] rounded"
+                  >
+                    {location}
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-lg w-full"
+                  >
+                    <li onClick={() => setLocation("Jakarta")}>
+                      <a>Jakarta</a>
+                    </li>
+                    <li onClick={() => setLocation("Bandung")}>
+                      <a> Bandung</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </section>
-        </main>
-        <Footer />
-      </Layout>
-    </PrivateRouteNotLogin>
+            <div className="flex flex-wrap justify-between gap-y-5 w-full mt-16">
+              {dataStudio.map((studio, idx) => (
+                <CardCinema
+                  key={idx}
+                  name={studio.teather_name}
+                  address={studio.address}
+                  image={studio.image}
+                  date={studio.open_date}
+                  time={studio.open_time}
+                  price={10}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </Layout>
   );
 }
 
