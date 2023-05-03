@@ -20,10 +20,7 @@ function Profile() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [blop, setBlop] = useState(null);
-  const [firstLast, setFirstLast] = useState({
-    firstName: userStore.first_name,
-    lastName: userStore.last_name,
-  });
+
   const [formData, setFormData] = useState({
     image: userStore.image,
     firstName: userStore.first_name,
@@ -109,19 +106,15 @@ function Profile() {
                   </div>
                 </div>
                 <div className="flex flex-col items-center mt-8">
-                  <label htmlFor="image">
-                    <div className="w-[8.5rem] h-[8.5rem] rounded-full">
-                      {isLoading ? (
-                        "Loading..."
-                      ) : (
-                        <Image
-                          src={blop || formData.image || placeholder}
-                          alt="profile-img"
-                          width={200}
-                          height={200}
-                          className="w-full h-full object-contain rounded-full"
-                        />
-                      )}
+
+                  <label htmlFor="image" className="cursor-pointer">
+                    <div className="w-[8.5rem] h-[8.5rem] rounded-full relative">
+                      <Image
+                        src={blop || formData.image || placeholder}
+                        alt="profile-img"
+                        fill
+                        className="w-full h-full object-cover rounded-full"
+                      />
                     </div>
                     <input
                       type="file"
@@ -131,12 +124,15 @@ function Profile() {
                       hidden
                     />
                   </label>
-                  <p className="mt-8 font-semibold text-xl">
-                    {firstLast.firstName || firstLast.lastName
-                      ? firstLast.firstName && firstLast.lastName
-                        ? `${firstLast.firstName} ${firstLast.lastName}`
-                        : firstLast.firstName || firstLast.lastName
-                      : " "}
+                  <p className="mt-8 font-semibold text-xl tracking-wider">
+                    {`${
+                      userStore.first_name !== null ? userStore.first_name : ""
+                    }`}
+                    {`${
+                      userStore.last_name !== null
+                        ? " " + userStore.last_name
+                        : ""
+                    }`}
                   </p>
 
                   <p className="text-sm text-neutral">Moviegoers</p>
