@@ -4,11 +4,12 @@ import Header from "@/components/Header";
 import Image from "next/image";
 import QRCodeGenerator from "@/utils/qrCode";
 import { useState } from "react";
+import PrivateRouteNotLogin from "@/components/PrivateRouteNotLogin";
 
 function TicketResult() {
   const [qrCodeImage, setQrCodeImage] = useState("purapura-turtle");
   return (
-    <>
+    <PrivateRouteNotLogin>
       <Layout title={"Tiket Result"}>
         <Header />
         <div className="w-full flex justify-center items-center bg-slate-400/20 global-px mt-24 py-16">
@@ -85,7 +86,7 @@ function TicketResult() {
         </div>
         <Footer />
       </Layout>
-    </>
+    </PrivateRouteNotLogin>
   );
 }
 
