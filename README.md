@@ -27,13 +27,13 @@ This application is built using React.js, Next.js, Redux, axios, Lodash, Chart.j
 
 ### Public
 
--Login
--Register
--Forgot Password
--Booking Movie
--Payment Ticket
--Edit Profile
--Etc
+- Login
+- Register
+- Forgot Password
+- Booking Movie
+- Payment Ticket
+- Edit Profile
+- Etc
 
 ## How to run the application
 
