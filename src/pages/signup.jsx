@@ -17,6 +17,7 @@ function Signup() {
   });
   const [msg, setMsg] = useState("");
   const [invalid, setInvalid] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
 
   const handleCheckboxChange = () => {
@@ -27,12 +28,18 @@ function Signup() {
     setIsLoading(true);
     try {
       const { email, password } = formData;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setMsg("Email is invalid!");
+        setInvalid(true);
+        setIsLoading(false);
+        return;
+      }
       const result = await register(email, password, controller);
       console.log(result);
       setMsg("create account success");
-      setTimeout(() => {
-        router.push("/login");
-      }, 1000);
+      setSuccess(true);
+      router.push("/login");
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -103,6 +110,9 @@ function Signup() {
                     I agree to terms & conditions
                   </span>
                   <p className="text-info text-center mt-4">{invalid && msg}</p>
+                  <p className="text-success text-center mt-4">
+                    {success && msg}
+                  </p>
                 </label>
               </div>
               {isLoading ? (

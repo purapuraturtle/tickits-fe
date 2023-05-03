@@ -32,7 +32,7 @@ function Login() {
         setIsLoading(false);
         return;
       }
-      const result = await login(email, password, controller);
+      await login(email, password, controller);
       // console.log(result);
       dispatch(usersAction.storeLogin({ email, password, controller }));
       setIsLoading(false);
