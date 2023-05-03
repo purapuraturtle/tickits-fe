@@ -58,12 +58,7 @@ function Payment() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (
-      firstName === "null" ||
-      lastName === "null" ||
-      !email ||
-      phone === "null"
-    ) {
+    if (firstName === null || lastName === null || !email || phone === null) {
       setFill(true);
     }
   });
