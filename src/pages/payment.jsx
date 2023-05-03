@@ -21,12 +21,7 @@ function Payment() {
   const phone = useSelector((state) => state.user?.data?.phone);
   console.log(firstName + lastName);
   useEffect(() => {
-    if (
-      firstName === "null" ||
-      lastName === "null" ||
-      !email ||
-      phone === "null"
-    ) {
+    if (firstName === null || lastName === null || !email || phone === null) {
       setFill(true);
     }
   });
