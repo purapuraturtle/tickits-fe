@@ -37,9 +37,11 @@ function Signup() {
       }
       const result = await register(email, password, controller);
       console.log(result);
-      setMsg("create account success");
+      setMsg("Create account success");
       setSuccess(true);
-      router.push("/login");
+      setTimeout(() => {
+        router.push("/login");
+      }, 700);
     } catch (error) {
       console.log(error);
       setIsLoading(false);

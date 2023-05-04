@@ -12,6 +12,10 @@ import { resetPassword } from "@/utils/https/auth";
 
 function ResetPassword({ isValidId }) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [invalid, setInvalid] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
     newPassword: "",
     confirmPassword: "",
@@ -19,13 +23,27 @@ function ResetPassword({ isValidId }) {
   const id = router.query.otp;
   const reset = (e) => {
     e.preventDefault();
+    if (formData.newPassword !== formData.confirmPassword) {
+      setMsg("Your Password Not Match");
+      setInvalid(true);
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(true);
     resetPassword(id, formData.newPassword, formData.confirmPassword)
       .then((response) => {
-        // console.log(response);
-        router.push("/login");
+        setIsLoading(false);
+        setSuccess(true);
+        setMsg("Reset Password Success");
+        setTimeout(() => {
+          router.push("/login");
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
+        setInvalid(true);
+        setMsg(error.response.data.msg);
+        setIsLoading(false);
       });
   };
 
@@ -63,10 +81,11 @@ function ResetPassword({ isValidId }) {
                   <input
                     value={formData.newPassword}
                     onChange={(e) => {
-                      setFormData({ ...formData, newPassword: e.target.value });
+                      setFormData({ ...formData, newPassword: e.target.value }),
+                        setInvalid(false);
                     }}
                     type="password"
-                    className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] h-16 p-6"
+                    className="mt-10 outline-none border border-solid border-[#dedede] w-[95%] h-16 p-6"
                     placeholder=" Write your new password"
                   />
                   <input
@@ -75,19 +94,34 @@ function ResetPassword({ isValidId }) {
                       setFormData({
                         ...formData,
                         confirmPassword: e.target.value,
-                      });
+                      }),
+                        setInvalid(false);
                     }}
                     type="password"
                     className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] h-16 p-6"
                     placeholder=" Write your confirm password"
                   />
-                  <button
-                    onClick={reset}
-                    type="submit"
-                    className="flex justify-center rounded btn-primary text-white font--bold p-5 w-[95%] h-[64px] mt-7"
-                  >
-                    Reset Now
-                  </button>
+                  <p className="text-info text-center mt-4">{invalid && msg}</p>
+                  <p className="text-success text-center mt-4">
+                    {success && msg}
+                  </p>
+                  {isLoading ? (
+                    <button className="btn btn-primary loading  w-[94%] rounded mt-7">
+                      Resseting
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      onClick={reset}
+                      disabled={
+                        formData.confirmPassword === "" &&
+                        formData.newPassword === ""
+                      }
+                      className="btn btn-primary w-[94%] rounded mt-7"
+                    >
+                      Reset Now
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
