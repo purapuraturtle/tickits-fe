@@ -335,7 +335,7 @@ function Header() {
               <div className="global-px flex flex-col py-4 gap-4">
                 <button
                   className="btn btn-block btn-accent  m-auto"
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate("/login")}
                 >
                   Login
                 </button>

@@ -38,26 +38,26 @@ function ResetPassword({ isValidId }) {
       {isValidId ? (
         <PrivateRouteLOGIN>
           <Layout title={"Reset Password"}>
-            <div className="lg:flex">
+            <div className="md:flex">
               <SideForAuth />
-              <div className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
-                <div className="ml-6 lg:ml-[83px] lg:pt-[176px] pt-14 lg:w-[77%]">
+              <div className="md:flex-[1] bg-slate-300/20 h-screen md:h-[1024px]">
+                <div className="ml-6 md:ml-[83px] md:pt-[176px] pt-14 md:w-[77%]">
                   <Link href={"/"}>
                     <Image
                       src="/images/logo.svg"
                       width={120}
                       height={62}
-                      className="lg:hidden "
+                      className="md:hidden "
                       alt="Tickits"
                     />
                   </Link>
-                  <p className="text-[#121212] text-[26px] font-semibold mt-11 lg:hidden">
+                  <p className="text-[#121212] text-[26px] font-semibold mt-11 md:hidden">
                     Forgot Password
                   </p>
-                  <p className="text-[#121212] text-[26px] font-semibold hidden lg:inline-block">
+                  <p className="text-[#121212] text-[26px] font-semibold hidden md:inline-block">
                     Fill your new password
                   </p>
-                  <p className="text-lg text-[#8692a6] mt-[10px] lg:mt-0">
+                  <p className="text-md text-[#8692a6] mt-[10px] md:mt-0">
                     we&apos;ll reset the password for you
                   </p>
                   <input
@@ -95,19 +95,27 @@ function ResetPassword({ isValidId }) {
         </PrivateRouteLOGIN>
       ) : (
         <PrivateRouteLOGIN>
-          <div className="lg:flex">
+          <div className="md:flex">
             <SideForAuth />
-            <div className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
-              <div className="ml-6 lg:ml-[83px] lg:pt-[176px] pt-14 lg:w-[77%]">
+            <div className="md:flex-[1] bg-slate-300/20 h-screen md:h-[1024px]">
+              <div className="ml-6 pt-14">
                 <Image
                   src="/images/logo.svg"
                   width={120}
                   height={62}
-                  className="lg:hidden "
+                  className="md:hidden "
                   alt="Tickits"
                 />
-                <p className="text-[#121212] text-[26px] font-semibold mt-11 ">
+                <p className="text-[#121212] text-[26px] font-semibold mt-11 text-center pt-[300px] ">
                   Your Code Is Invalid, Please Make A Request First
+                </p>
+                <p
+                  onClick={() => {
+                    router.push("/reset-password");
+                  }}
+                  className="font-bold cursor-pointer mt-10 text-primary text-center"
+                >
+                  Click Here to Make Some Request
                 </p>
               </div>
             </div>
