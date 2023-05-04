@@ -62,7 +62,7 @@ function Login() {
               <p className="text-[#121212] text-3xl font-semibold inline-block mt-12 md:mt-0">
                 Sign In
               </p>
-              <p className="text-md text-[#aaaaaa] hidden md:inline-block">
+              <p className="text-md mt-3 text-[#aaaaaa] hidden md:inline-block">
                 Sign in with your data that you entered during your registration
               </p>
               <p className="mt-12 text-base text-[#4E4B66]">Email</p>
