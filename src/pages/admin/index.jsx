@@ -411,7 +411,7 @@ function CreateSchedule() {
               </div>
             </div>
             <h1 className="font-bold text-2xl mt-4 lg:mt-10 mb-6">Showtimes</h1>
-            <div className="w-full flex flex-col gap-5 py-4 px-8 bg-base-100 rounded-lg">
+            <div className="w-full h-72 flex flex-col gap-5 py-4 px-8 bg-base-100 rounded-lg overflow-y-auto">
               {/* OPEN DATE */}
               <div className="form-control flex-1">
                 <label className="label" htmlFor="open-date"></label>
@@ -484,7 +484,8 @@ function CreateSchedule() {
                   form.aktors === "" ||
                   form.sinopsis === "" ||
                   form.open_date === "" ||
-                  image === ""
+                  image === "" ||
+                  isLoading
                 }
                 className="btn btn-primary mt-10"
                 onClick={handleSubmit}
