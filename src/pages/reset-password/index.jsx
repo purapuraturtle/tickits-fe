@@ -24,26 +24,26 @@ function Forgot() {
   return (
     <PrivateRouteLOGIN>
       <Layout title={"Reset Password"}>
-        <div className="lg:flex">
+        <div className="md:flex">
           <SideForAuth />
-          <div className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
-            <div className="ml-6 lg:ml-[83px] lg:pt-[176px] pt-14 lg:w-[77%]">
+          <div className="md:flex-[1] bg-slate-300/20 h-screen md:h-full pb-[533px]">
+            <div className="ml-6 md:ml-[50px] lg:ml-[83px] pt-[54px] md:pt-[176px]  lg:w-[75%] ">
               <Link href={"/"}>
                 <Image
                   src="/images/logo.svg"
                   width={120}
                   height={62}
-                  className="lg:hidden "
+                  className="md:hidden "
                   alt="Tickits"
                 />
               </Link>
-              <p className="text-[#121212] text-[26px] font-semibold mt-11 lg:hidden">
+              <p className="text-[#121212] text-[26px] font-semibold mt-11 md:hidden">
                 Forgot Password
               </p>
-              <p className="text-[#121212] text-[26px] font-semibold hidden lg:inline-block">
+              <p className="text-[#121212] text-[26px] font-semibold hidden md:inline-block">
                 Fill your complete email
               </p>
-              <p className="text-lg text-[#8692a6] mt-[10px] lg:mt-0">
+              <p className="text-md text-[#8692a6] mt-[10px] md:mt-0">
                 we&apos;ll send a link to your email shortly
               </p>
 
@@ -53,7 +53,7 @@ function Forgot() {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
-                className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] lg:w-[95%]  h-16 p-6"
+                className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] md:w-[95%]  h-16 p-6"
                 placeholder=" Write your email"
               />
               <button

@@ -113,7 +113,7 @@ function Order() {
       <Layout title={"Order"}>
         <Header />
         <main className="global-px py-[3.75rem] mt-16 select-none bg-slate-300/20">
-          <section className="flex flex-col-reverse lg:flex-row w-full gap-6 justify-between">
+          <section className="flex max-[1348px]:flex-col-reverse  w-full gap-6 justify-between">
             <div className="lg:flex-[2]">
               <h1 className="font-bold mb-6 text-2xl text-[#14142B]">
                 Movie Selected

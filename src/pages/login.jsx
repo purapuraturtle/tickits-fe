@@ -48,21 +48,21 @@ function Login() {
   return (
     <PrivateRouteLOGIN>
       <Layout title={"Login"}>
-        <div className="lg:flex">
+        <div className="md:flex">
           <SideForAuth />
-          <form className="lg:flex-[1] bg-slate-300/20 h-screen lg:h-[1024px]">
-            <div className=" ml-6 lg:ml-[83px] pt-[54px] lg:pt-[176px] lg:w-[75%] ">
+          <form className="md:flex-[1] bg-slate-300/20 h-screen md:h-full">
+            <div className=" ml-6 md:ml-[50px] lg:ml-[83px] pt-[54px] md:pt-[176px]  lg:w-[75%] ">
               <Image
                 src="/images/logo.svg"
-                width={120}
-                height={62}
-                className="lg:hidden "
+                width={130}
+                height={72}
+                className="md:hidden "
                 alt="Tickits"
               />
-              <p className="text-[#121212] text-[48px] font-semibold inline-block mt-12 lg:mt-0">
+              <p className="text-[#121212] text-3xl font-semibold inline-block mt-12 md:mt-0">
                 Sign In
               </p>
-              <p className="text-lg text-[#aaaaaa] hidden lg:inline-block">
+              <p className="text-md text-[#aaaaaa] hidden md:inline-block">
                 Sign in with your data that you entered during your registration
               </p>
               <p className="mt-12 text-base text-[#4E4B66]">Email</p>
@@ -122,27 +122,27 @@ function Login() {
                 </span>
               </p>
               <div className="flex items-center mt-10 w-[95%] justify-center">
-                <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede]" />
+                <hr className="w-[36%] md:w-[41%]  h-[1px] bg-[#dedede]" />
                 <p className="text-[#aaaaaa] ml-9 text-xs">Or</p>
-                <hr className="w-[36%] md:w-[41%] lg:w-40 h-[1px] bg-[#dedede] ml-9" />
+                <hr className="w-[36%] md:w-[41%] h-[1px] bg-[#dedede] ml-9" />
               </div>
-              <div className="flex justify-center w-[95%]">
-                <div className="flex cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-full h-[64px]">
+              <div className="flex justify-center w-[95%] pb-[181px]">
+                <div className="flex gap-5 cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-md w-full h-[64px]">
                   <Image
                     src="/google.svg"
                     width={24}
                     height={24}
-                    className="absolute left-5"
+                    className="relative left-0"
                     alt="google"
                   />
                   <button className="text-[#A0A3BD]">Google</button>
                 </div>
-                <div className="flex ml-9 cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-lg w-full h-[64px]">
+                <div className="flex gap-5 ml-9 cursor-pointer items-center justify-center mt-14 bg-white drop-shadow-md w-full h-[64px]">
                   <Image
                     src="/facebook.svg"
                     width={24}
                     height={24}
-                    className="absolute left-5"
+                    className="relative left-0"
                     alt="google"
                   />
                   <button className="text-[#A0A3BD]">Facebook</button>
