@@ -1,13 +1,19 @@
-import { useState, useMemo } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import SideForAuth from "@/components/AuthSide";
-import Layout from "@/components/Layout";
-import PrivateRouteLOGIN from "@/components/PrivateRouteLogin";
-import { register } from "@/utils/https/auth";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-function Signup() {
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import SideForAuth from '@/components/AuthSide';
+import Layout from '@/components/Layout';
+import PrivateRouteLOGIN from '@/components/PrivateRouteLogin';
+import { register } from '@/utils/https/auth';
+
+function Signup(props) {
   const controller = useMemo(() => new AbortController(), []);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +25,13 @@ function Signup() {
   const [invalid, setInvalid] = useState(false);
   const [success, setSuccess] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    if (router.query.email) {
+      setFormData({ ...formData, email: router.query.email });
+    }
+  }, [router.isReady]);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);

@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -17,6 +19,22 @@ function Home({ movies, error }) {
     const payload = { id: id, name: name };
     dispatch(orderAction.addMovieId(payload));
     handleNavigate(`/movies/${id}`);
+  };
+
+  const [email, setEmail] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    router.push(
+      {
+        pathname: "/signup",
+        query: {
+          email,
+        },
+      },
+      "/signup"
+    );
+    console.log(email);
   };
 
   return (
@@ -95,11 +113,11 @@ function Home({ movies, error }) {
                     className="object-cover"
                   ></Image>
                 </div>
-                <div class="group-hover:flex flex-col gap-y-3 hidden">
-                  <p class="font-bold text-lg text-primary-title text-center">
+                <div className="group-hover:flex flex-col gap-y-3 hidden">
+                  <p className="font-bold text-lg text-primary-title text-center">
                     {movie_name}
                   </p>
-                  <p class="text-xs text-gray-400 text-center mb-4">
+                  <p className="text-xs text-gray-400 text-center mb-4">
                     {category}
                   </p>
                   <div className="m-auto w-full flex flex-col gap-3">
@@ -184,10 +202,10 @@ function Home({ movies, error }) {
                 ></Image>
               </div>
               <div className="flex flex-col gap-1 mb-3">
-                <p class="font-bold text-lg text-primary-title text-center">
+                <p className="font-bold text-lg text-primary-title text-center">
                   {movie_name}
                 </p>
-                <p class="text-xs text-gray-400 text-center">{category}</p>
+                <p className="text-xs text-gray-400 text-center">{category}</p>
               </div>
               <button
                 className="mt-auto btn btn-sm btn-block btn-accent border-primary text-primary font-normal hover:border-primary-focus"
@@ -208,13 +226,21 @@ function Home({ movies, error }) {
               </p>
               <p className="text-primary text-5xl font-bold">Moviegoers</p>
             </div>
-            <div className="flex flex-col md:flex-row gap-4">
+            <form
+              className="flex flex-col md:flex-row gap-4"
+              onSubmit={submitHandler}
+            >
               <input
                 className="px-4 border-primary-line border-2 h-12 rounded-md w-72 text-sm tracking-wider"
                 placeholder="Type your email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <button className="btn btn-primary text-white">Join now</button>
-            </div>
+              <button type="submit" className="btn btn-primary text-white">
+                Join now
+              </button>
+            </form>
             <div className="text-primary-label text-sm  tracking-wider">
               <p>By joining you as a Tickitz member,</p>
               <p>we will always send you the latest updates via email .</p>
