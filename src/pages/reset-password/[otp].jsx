@@ -85,7 +85,7 @@ function ResetPassword({ isValidId }) {
                         setInvalid(false);
                     }}
                     type="password"
-                    className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] h-16 p-6"
+                    className="mt-10 outline-none border border-solid border-[#dedede] w-[95%] h-16 p-6"
                     placeholder=" Write your new password"
                   />
                   <input
@@ -107,7 +107,7 @@ function ResetPassword({ isValidId }) {
                   </p>
                   {isLoading ? (
                     <button className="btn btn-primary loading  w-[94%] rounded mt-7">
-                      Reseting
+                      Resseting
                     </button>
                   ) : (
                     <button

@@ -286,7 +286,7 @@ function Payment() {
               </div>
             </div>
           </div>
-          <div className="ml-6 md:ml-0 md:w-[400px] h-[548px] bg-white mt-[206px] mr-6 md:mr-10 lg:mr-32 md:flex-[1] overflow-hidden">
+          <div className="ml-6 md:ml-0 md:w-[400px] h-[548px] bg-white max-[768px]:mt-[106px] mt-[206px] mr-6 md:mr-10 lg:mr-32 md:flex-[1] overflow-hidden">
             <p className="ml-10 mt-12 text-[#696F79]">Full Name</p>
             <input
               disabled
@@ -298,21 +298,21 @@ function Payment() {
                   ? ""
                   : firstName + " " + lastName
               }
-              className="w-[90%]  ml-10 flex md:w-[70%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded mt-[14px] pl-4"
+              className="w-[90%] max-[528px]:w-[80%]  ml-10 flex md:w-[70%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded mt-[14px] pl-4"
               placeholder="Input your full name"
             />
             <p className="ml-10 mt-12 text-[#696F79]">Email</p>
             <input
               disabled
               value={email}
-              className="w-[90%] md:w-[70%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
+              className="w-[90%] md:w-[70%] max-[528px]:w-[80%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
               placeholder="Input your full email"
             />
             <p className="ml-10 mt-12 text-[#696F79]">Phone Number</p>
             <input
               disabled
               value={phone === "null" || phone === null ? "" : phone}
-              className="w-[90%] md:w-[70%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
+              className="w-[90%] max-[528px]:w-[80%] md:w-[70%] xl:w-[80%] h-16 border border-solid border-[#DEDEDE] rounded ml-10 mt-[14px] pl-4"
               placeholder="Input your phone number"
             />
             {fill && (

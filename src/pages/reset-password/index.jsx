@@ -60,7 +60,7 @@ function Forgot() {
               <p className="text-[#121212] text-[26px] font-semibold hidden md:inline-block">
                 Fill your complete email
               </p>
-              <p className="text-md text-[#8692a6] mt-[10px] md:mt-0">
+              <p className="text-md text-[#8692a6] mt-[12px]">
                 we&apos;ll send a link to your email shortly
               </p>
 
