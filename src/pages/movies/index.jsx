@@ -40,6 +40,10 @@ function Movies() {
   const [isLoading, setLoading] = useState(true);
   const [catLoad, setCatLoad] = useState(true);
 
+  const moviesController = useMemo(
+    () => new AbortController(),
+    [sort, page, search]
+  );
   const handleNavigate = (url) => router.push(url);
 
   const fetching = async (page = 1, search = "", sort = "") => {
@@ -51,7 +55,8 @@ function Movies() {
     };
     try {
       setLoading(true);
-      const result = await getMovies(params, controller);
+      console.log(`page : ${page}`);
+      const result = await getMovies(params, moviesController);
       // console.log(result);
       setDataMovies(result.data.data);
       setMeta({
@@ -94,7 +99,10 @@ function Movies() {
   if (!isLoading && page > meta.totalpage)
     push({ query: { ...router.query, page: 1 } });
 
-  if (page < 1) push({ query: { ...router.query, page: 1 } });
+  if (page < 1) {
+    moviesController.abort();
+    push({ query: { ...router.query, page: 1 } });
+  }
 
   return (
     <>
