@@ -70,7 +70,7 @@ function Header() {
             </nav>
           </div>
           <div className="hidden lg:flex  items-center gap-8">
-            <div className="dropdown dropdown-hover bg-white">
+            <div className="dropdown dropdown-hover bg-transparent">
               <label
                 tabIndex={0}
                 className="font-medium flex items-center gap-3"
