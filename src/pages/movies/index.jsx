@@ -108,7 +108,7 @@ function Movies() {
                 className="select w-52 max-w-xs"
                 value={sort}
                 onChange={(e) => {
-                  if (sort !== e.target.value) return;
+                  if (sort === e.target.value) return;
                   push({
                     query: { ...router.query, sort: e.target.value },
                   });
