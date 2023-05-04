@@ -325,7 +325,13 @@ function Header() {
                       </div>
                     </div>
                     <div className="">
-                      <p className="font-semibold">{`${user.data.first_name} ${user.data.last_name}`}</p>
+                      <p className="font-semibold">{`${
+                        user.data.first_name !== null
+                          ? user.data.first_name
+                          : ""
+                      } ${
+                        user.data.last_name !== null ? user.data.last_name : ""
+                      }`}</p>
                     </div>
                   </div>
                 </div>
