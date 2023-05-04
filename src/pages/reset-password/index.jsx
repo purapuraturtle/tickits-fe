@@ -10,15 +10,32 @@ import { checkEmail } from "@/utils/https/auth";
 
 function Forgot() {
   const [email, setEmail] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [invalid, setInvalid] = useState(false);
+  const [success, setSuccess] = useState(false);
   const handleEmail = (e) => {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setMsg("Email is invalid!");
+      setInvalid(true);
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(true);
     checkEmail(email)
       .then((response) => {
         console.log(response);
+        setMsg("Your Request Has Been Send To Your Email");
+        setSuccess(true);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setInvalid(true);
+        setMsg(error.response.data.msg);
+        setIsLoading(false);
       });
   };
   return (
@@ -51,18 +68,27 @@ function Forgot() {
               <input
                 value={email}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setEmail(e.target.value), setInvalid(false);
                 }}
                 className="mt-3 outline-none border border-solid border-[#dedede] w-[95%] md:w-[95%]  h-16 p-6"
                 placeholder=" Write your email"
               />
-              <button
-                onClick={handleEmail}
-                type="submit"
-                className="flex justify-center rounded btn-primary text-white font--bold p-5 w-[95%] h-[64px] mt-7 "
-              >
-                Activate Now
-              </button>
+              <p className="text-info text-center mt-4">{invalid && msg}</p>
+              <p className="text-success text-center mt-4">{success && msg}</p>
+              {isLoading ? (
+                <button className="btn btn-primary loading  w-[94%] rounded mt-7">
+                  Activating
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  onClick={handleEmail}
+                  disabled={email === ""}
+                  className="btn btn-primary w-[94%] rounded mt-7"
+                >
+                  Activate Now
+                </button>
+              )}
             </div>
           </div>
         </div>
