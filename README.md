@@ -48,14 +48,38 @@ To run the application, follow these steps:
 
 If you would like to contribute to this project, please send a pull request to this repository. We greatly appreciate your contributions.
 
-## Documentation
+## Screenshots
 
-<img width="500" src="./public/readme/tickits8.png" alt="Landing page">
-<img width="500" src="./public/readme/tickits1.png" alt="Landing page">
-<img width="500" src="./public/readme/tickits2.png" alt="Landing page">
-<img width="500" src="./public/readme/tickits3.png" alt="Landing page">
-<img width="500" src="./public/readme/tickits4.png" alt="Landing page">
-<img width="500" src="./public/readme/tickits5.png" alt="Landing page">
-<img width="500" src="./public/readme/tickits6.png" alt="Landing page">
-<img width="500" src="./public/readme/tickits7.png" alt="Landing page">
+<div align="center">
+<img width="400" src="./public/readme/tickits8.png" alt="Landing page">
+<img width="400" src="./public/readme/tickits1.png" alt="Landing page">
+<img width="400" src="./public/readme/tickits2.png" alt="Landing page">
+<img width="400" src="./public/readme/tickits3.png" alt="Landing page">
+<img width="400" src="./public/readme/tickits4.png" alt="Landing page">
+<img width="400" src="./public/readme/tickits5.png" alt="Landing page">
+<img width="400" src="./public/readme/tickits6.png" alt="Landing page">
+<img width="400" src="./public/readme/tickits7.png" alt="Landing page">
+</div>
 
+## Contributors
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/afif-buchori"><img src="https://avatars.githubusercontent.com/u/123707908?v=4" width="100px;" alt="Afif Buchori"/><br /><sub><b>Afif Buchori</b></sub></a><br />Project Manager</td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/nyannss"><img src="https://avatars.githubusercontent.com/u/80017838?v=4" width="100px;" alt="Farhan Brillan W"/><br /><sub><b>Farhan Brillan W</b></sub></a><br />Fullstack Developer</td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/raihanirvana"><img src="https://avatars.githubusercontent.com/u/83262495?v=4" width="100px;" alt="Raihan Irvana"/><br /><sub><b>Raihan Irvana</b></sub></a><br />Front-end Developer</td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/zikriaulia28"><img src="https://avatars.githubusercontent.com/u/103765843?v=4" width="100px;" alt="Zikri Aulia"/><br /><sub><b>Zikri Aulia</b></sub></a><br />Front-end Developer</td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/abdulrosid21"><img src="https://avatars.githubusercontent.com/u/80371735?v=4" width="100px;" alt="Abdul Latif Rosid"/><br /><sub><b>Abdul Latif Rosid</b></sub></a><br />Back-end Developer</td>
+    </tr>
+  </tbody>
+</table>
+
+## Related Project
+
+- [tickits-be](https://github.com/purapuraturtle/tickits-be) - Rest API
+
+## Report
+
+Any error report you can pull request
+or contact: <purapuraturtle69@gmail.com>
